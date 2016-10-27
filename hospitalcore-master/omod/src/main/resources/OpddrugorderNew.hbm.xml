@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+	<class name="OpddrugorderNew" table="opddrugorder_new" batch-size="500">
+
+		<id name="Id" type="int" column="id"
+			unsaved-value="0">
+				<generator class="native" />
+		</id>
+		
+		<property name="orderId" column="order_id"/>
+                <property name="patientId" column="patient_id"/>
+                <property name="drugName" column="drug_name"/>
+                <property name="drugId" column="drug_id"/>
+                <property name="formulation" column="formulation"/>
+                 
+                <property name="frequency" column="frequency"  />
+                <property name="noOfDays" column="no_of_days"/>
+                 
+                <many-to-one name="creator" column="creator" class="org.openmrs.User"/>
+                
+                <property name="createdDate" column="created_date"/>
+               
+                <many-to-one name="encounter" column="encounter_id" class="org.openmrs.Encounter"/>
+                
+                 
+	</class>
+</hibernate-mapping>

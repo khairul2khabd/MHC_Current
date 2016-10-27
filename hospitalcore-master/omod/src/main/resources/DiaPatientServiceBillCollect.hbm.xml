@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+	<class name="DiaPatientServiceBillCollect" table="dia_billing_patietn_service_bill_collect"
+		batch-size="500">
+
+		<id name="billCollectId" type="int" column="bill_collect_id"
+			unsaved-value="0">
+			<generator class="native" />
+		</id>
+                <property name="patientId" column="patient_id" />
+                
+                <many-to-one name="diaPatientServiceBill" column="bill_id"
+			class="org.openmrs.module.hospitalcore.model.DiaPatientServiceBill" lazy="false"
+			foreign-key="fk_diapatientservicebillid_bill_id" />
+                <many-to-one name="user" column="User" class="org.openmrs.User"
+			foreign-key="fk_diapatientservicebillcollect_user" />
+                <property name="createdDate" column="created_date" />
+                
+                <property name="actualAmount" column="actual_amount" />
+                <property name="paidAmount" column="paid_amount" />
+                 
+                <property name="payableAmount" column="payable_amount" />
+                <property name="dueAmount" column="due_amount" />
+                <property name="duePaid" column="due_paid" />
+                <property name="discountAmount" column="discount_amount" />
+                <property name="duePaidStatus" column="due_paid_status" />
+                
+	</class>
+</hibernate-mapping>

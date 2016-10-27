@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+	<class name="DiaPatientServiceBillItem" table="dia_billing_patient_service_bill_item" batch-size="500">
+
+		<id name="billItemId" type="int" column="bill_item_id"
+			unsaved-value="0"> 
+                    <generator class="native" />
+		</id>
+                
+		<many-to-one name="service" column="service_id" 
+                             class="org.openmrs.module.hospitalcore.model.BillableService" lazy="false" 
+                             foreign-key="fk_diabillingpatientservicebillitem_serviceId"/>
+                
+		 <many-to-one name="diaPatientServiceBill" column="bill_id"
+			class="org.openmrs.module.hospitalcore.model.DiaPatientServiceBill" lazy="false"
+			foreign-key="fk_diapatientservicebill_billId" />
+                 <many-to-one name="order" column="order_id"  class="org.openmrs.Order" 
+                              foreign-key="fk_diapatientservicebillitem_orderId"/>
+                 
+		<property name="unitPrice" column="unitPrice"/>
+		<property name="amount" column="amount"/>
+		<property name="quantity" column="quantity"/>
+		<property name="name" column="name"/>
+		<property name="createdDate" column="created_date"  />
+                <property name="creator" column="creator"/>
+		<property name="voided" column="voided"  />
+		<property name="voidedDate" column="voided_date"  />
+                <property name="voidedBy" column="voided_by"  />
+		<property name="actualAmount" column="actual_amount"  />
+                			
+	</class>
+</hibernate-mapping>

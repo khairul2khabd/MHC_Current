@@ -1,0 +1,57 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 31, 2016, 11:03:00 AM
+    Author     : Khairul
+*/
+
+
+
+.phone:before{ content: "\260E"; }
+.ok:before{ content:  "\2705" " " "\Save"; }
+.back:before{ content:  "\2190" ; }
+.store:before{ content: "\1F4BE"; cursor: pointer; }
+.edit-pen:after {
+    content:"\270E";
+    display: inline-block;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    cursor: pointer;
+}
+.delete:before{ content: "\02237"; cursor: pointer; }
+
+.admission {
+    background-color: green;
+    width: 96px;
+    height: 96px; 
+    margin-left:20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.billing {
+    background-image: url(bill7.png);
+    width: 16px;
+    height: 16px;
+    margin-left:8px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.edit {
+    background-image: url(edit-1.png);
+    width: 16px;
+    height: 16px;
+    padding-top:10px;
+    cursor: pointer;
+}
+.delete-icon{
+    background-image: url(delete-icon.png);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.registration.model">
+
+	<class name="DiaPatient" table="dia_patient" batch-size="500">
+
+		<id name="newPatientId" type="int" column="new_patient_id"
+			unsaved-value="0">
+				<generator class="native"/>
+		</id>
+		<property name="oldPatientId" column="old_patient_id" />
+		<property name="creator" column="creator" /> 
+		<property name="createdDate" column="created_date" />
+	</class>
+</hibernate-mapping>

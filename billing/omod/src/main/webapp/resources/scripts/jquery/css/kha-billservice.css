@@ -1,0 +1,75 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 28, 2015, 9:27:14 PM
+    Author     : khairul
+*/
+
+ 
+    .kha-css { 
+        margin-left:auto;
+        margin-right:auto;
+        width: 1300px;
+        min-height:210px;
+        background: #D2E9FF;
+        padding: 10px 20px 20px 20px;
+        font: 16px Arial, Tahoma, Helvetica, sans-serif;
+        color: #000000;
+        line-height: 180%;
+        border-radius:10px;
+        border:1px solid #4e6096;
+        box-shadow: 10px 10px 5px #888888;
+    }
+    .kha-css h1 {
+        font: 20px "Tahoma", Arial, Helvetica, sans-serif;
+        padding: 4px 8px 4px 18px;
+        display: block;
+        background: #80C2FF;
+        color:white;
+        text-align: center;
+        border-bottom: 1px solid #B8DDFF;
+        margin: -10px -20px 15px;
+    }
+    .kha-css input[type="text"], .kha-css input[type="email"] {
+        color: #000;
+        width: 150px;
+        padding: 0px 0px 0px 10px;
+        border: 1px solid #C5E2FF;
+        outline: 0;
+        background: #fff;
+        box-shadow: 1px 1px 1px #4C6E91;
+        -webkit-box-shadow: 1px 1px 1px #4C6E91;
+        -moz-box-shadow: 1px 1px 1px #4C6E91;
+        border: none;
+        font: 200 16px/25px Arial, Helvetica, sans-serif;
+        text-align: center;
+        font-weight:bold;
+        height: 30px;
+        line-height:15px;
+        margin: 0px 6px 0px 0px;
+    }
+    .kha-css .bu{
+        padding: 6px 15px 6px 18px;
+        background: #47D147;
+        border: none;
+        color: #fff;
+        border-radius:4px;
+        box-shadow: 1px 1px 1px #4C6E91;
+        -webkit-box-shadow: 1px 1px 1px #4C6E91;
+        -moz-box-shadow: 1px 1px 1px #4C6E91;
+
+        font-size:16px;
+        font-weight:bold;
+        cursor:pointer;
+
+    }
+    .kha-css .bu:hover{
+        background: white;
+        color:green;
+        box-shadow: 5px 3px 5px 3px #888;
+        font-weight:bold;
+    }
+ 

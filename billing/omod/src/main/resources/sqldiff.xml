@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqldiff PUBLIC "-//OpenMRS//DTD OpenMRS SQL Diff Config 1.0//EN" "http://resources.openmrs.org/doctype/sqldiff-1.0.dtd">
+
+<sqldiff version="1.0">
+    <help>
+        USE:
+        The diffs are ordered by datamodel version number.
+        The script
+        can be run in a top down fashion and is
+        expected to not failor
+        overwrite old data
+
+        EXPECT:
+        - "use business-database-name;" was called
+        prior to
+        calling this script
+    </help>
+    <diff>
+        <version>3.1.0</version>
+        <author>Viet Nguyen</author>
+        <date>Otc 13rd 2010</date>
+        <description>
+            Create Tender table
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `billing_tender` (
+            `tender_id` int(11)
+            NOT NULL auto_increment,
+            `number` int(11) default NULL,
+            `name`
+            varchar(255) default NULL,
+            `description` varchar(255) default NULL,
+            `price` decimal(19,2) default NULL,
+            `opening_date` datetime default  NULL,
+            `closing_date` datetime default NULL,
+            `created_date` datetime  default NULL,
+            `retired` bit(1) default NULL,
+            `retired_date` datetime  default NULL,
+            PRIMARY KEY (`tender_id`)
+            ) ENGINE=InnoDB DEFAULT
+            CHARSET=utf8;
+
+            CREATE TABLE IF NOT EXISTS `billing_company` (
+            `company_id` int(11) NOT NULL auto_increment,
+            `name` varchar(255)
+            default NULL,
+            `address` varchar(255) default NULL,
+            `description`  varchar(255) default NULL,
+            `phone` varchar(20) default NULL,
+            `created_date` datetime default NULL,
+            `retired` bit(1) default NULL,
+            `retired_date` datetime default NULL,
+            PRIMARY KEY (`company_id`)
+            )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE IF NOT EXISTS
+            `billing_ambulance` (
+            `ambulance_id` int(11) NOT NULL auto_increment,
+            `name` varchar(255) default NULL,
+            `description` varchar(255) default  NULL,
+            `created_date` datetime default NULL,
+            `retired` bit(1) default   NULL,
+            `retired_date` datetime default NULL,
+            PRIMARY KEY
+            (`ambulance_id`)
+            )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE IF
+            NOT EXISTS `billing_driver` (
+            `driver_id` int(11) NOT NULL  auto_increment,
+            `name` varchar(255) default NULL,
+            `address`  varchar(255) default NULL,
+            `description` varchar(255) default NULL,
+            `phone` varchar(20) default NULL,
+            `created_date` datetime default  NULL,
+            `retired` bit(1) default NULL,
+            `retired_date` datetime default NULL,
+            PRIMARY KEY (`driver_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE IF NOT EXISTS `billing_service` (
+            `service_id` int(11)
+            NOT NULL auto_increment,
+            `concept_id` int(11) default NULL,
+            `name`  varchar(255) default NULL,
+            `short_name` varchar(255) default NULL,
+            `price` decimal(19,2) default NULL,
+            `disable` bit(1) default NULL,
+            PRIMARY KEY (`service_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE IF NOT EXISTS `billing_ambulance_bill` (
+            `ambulance__bill_id` int(11) NOT NULL auto_increment,
+            `description`
+            varchar(255) default NULL,
+            `creator` int(11) default NULL,
+            `amount`  decimal(19,2) default NULL,
+            `printed` bit(1) default NULL,
+            `created_date` datetime default NULL,
+            `voided` bit(1) default NULL,
+            `voided_date` datetime default NULL,
+            `driver_id` int(11) default NULL,
+            PRIMARY KEY (`ambulance__bill_id`),
+            KEY `fk_ambulancebill_driver`  (`driver_id`),
+            KEY `fk_ambulancebill_user` (`creator`),
+            CONSTRAINT `fk_ambulancebill_user` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`),
+            CONSTRAINT `fk_ambulancebill_driver` FOREIGN KEY (`driver_id`) REFERENCES `billing_driver` (`driver_id`)
+            ) ENGINE=InnoDB
+            DEFAULT CHARSET=utf8;
+
+            CREATE TABLE IF NOT EXISTS
+            `billing_ambulance_bill_item` (
+            `ambulance__bill_item_id` int(11) NOT  NULL auto_increment,
+            `ambulance_id` int(11) default NULL,
+            `ambulance_bill_id` int(11) default NULL,
+            `number_of_trip` int(11) default NULL,
+            `amount` decimal(19,2) default NULL,
+            `name` varchar(255) default NULL,
+            `created_date` datetime default NULL,
+            `voided` bit(1) default NULL,
+            `voided_date` datetime default NULL,
+            PRIMARY KEY  (`ambulance__bill_item_id`),
+            KEY `fk_ambulancebillitem_ambulancebill`  (`ambulance_bill_id`),
+            KEY `fk_ambulancebillitem_ambulance`  (`ambulance_id`),
+            CONSTRAINT `fk_ambulancebillitem_ambulance` FOREIGN
+            KEY (`ambulance_id`) REFERENCES `billing_ambulance` (`ambulance_id`),
+            CONSTRAINT `fk_ambulancebillitem_ambulancebill` FOREIGN KEY (`ambulance_bill_id`) REFERENCES `billing_ambulance_bill`
+            (`ambulance__bill_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE
+            TABLE IF NOT EXISTS `billing_patient_service_bill` (
+            `patient_service_bill_id` int(11) NOT NULL auto_increment,
+            `description` varchar(255) default NULL,
+            `creator` int(11) default  NULL,
+            `amount` decimal(19,2) default NULL,
+            `printed` bit(1) default  NULL,
+            `created_date` datetime default NULL,
+            `voided` bit(1) default  NULL,
+            `voided_date` datetime default NULL,
+            `patient_id` int(11) default NULL,
+            PRIMARY KEY (`patient_service_bill_id`),
+            KEY  `fk_patientservicebill_patient` (`patient_id`),
+            KEY  `fk_patientservicebill_user` (`creator`),
+            CONSTRAINT `fk_patientservicebill_user` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`),
+            CONSTRAINT `fk_patientservicebill_patient`  FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`)
+            )
+            ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE IF NOT EXISTS
+            `billing_patient_service_bill_item` (
+            `patient_service_bill_item_id`
+            int(11) NOT NULL auto_increment,
+            `service_id` int(11) default NULL,
+            `patient_service_bill_id` int(11) default NULL,
+            `unitPrice`  decimal(19,2) default NULL,
+            `amount` decimal(19,2) default NULL,
+            `quantity` int(11) default NULL,
+            `name` varchar(255) default NULL,
+            `created_date` datetime default NULL,
+            `voided` bit(1) default NULL,
+            `voided_date` datetime default NULL,
+            PRIMARY KEY (`patient_service_bill_item_id`),
+            KEY `fk_patientservicebillitem_service` (`service_id`),
+            KEY `fk_patientservicebillitem_patientservicebill` (`patient_service_bill_id`),
+            CONSTRAINT `fk_patientservicebillitem_patientservicebill` FOREIGN KEY (`patient_service_bill_id`) REFERENCES `billing_patient_service_bill`
+            (`patient_service_bill_id`),
+            CONSTRAINT `fk_patientservicebillitem_service` FOREIGN KEY (`service_id`)
+            REFERENCES `billing_service` (`service_id`)
+            ) ENGINE=InnoDB DEFAULT
+            CHARSET=utf8;
+
+            CREATE TABLE IF NOT EXISTS `billing_tender_bill` (
+            `tender_bill_id` int(11) NOT NULL auto_increment,
+            `description`
+            varchar(255) default NULL,
+            `creator` int(11) default NULL,
+            `amount` decimal(19,2) default NULL,
+            `printed` bit(1) default NULL,
+            `created_date` datetime default NULL,
+            `voided` bit(1) default NULL,
+            `voided_date` datetime default NULL,
+            `company_id` int(11) default  NULL,
+            PRIMARY KEY (`tender_bill_id`),
+            KEY `fk_tenderbill_company` (`company_id`),
+            KEY `fk_tenderbill_user` (`creator`),
+            CONSTRAINT `fk_tenderbill_user` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`),
+            CONSTRAINT `fk_tenderbill_company` FOREIGN KEY (`company_id`) REFERENCES `billing_company` (`company_id`)
+            )
+            ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE TABLE IF NOT EXISTS
+            `billing_tender_bill_item` (
+            `tender_bill_item_id` int(11) NOT NULL  auto_increment,
+            `name` varchar(255) default NULL,
+            `amount` decimal(19,2) default NULL,
+            `unit_price` decimal(19,2) default NULL,
+            `quantity` int(11) default NULL,
+            `created_date` datetime default NULL,
+            `voided` bit(1) default NULL,
+            `voided_date` datetime default NULL,
+            `tender_id` int(11) default NULL,
+            `tender_bill_id` int(11) default  NULL,
+            PRIMARY KEY (`tender_bill_item_id`),
+            KEY
+            `fk_tenderbillitem_tenderbill` (`tender_bill_id`),
+            KEY
+            `fk_tenderbillitem_tender` (`tender_id`),
+            CONSTRAINT
+            `fk_tenderbillitem_tender` FOREIGN KEY (`tender_id`) REFERENCES
+            `billing_tender` (`tender_id`),
+            CONSTRAINT
+            `fk_tenderbillitem_tenderbill` FOREIGN KEY (`tender_bill_id`)
+            REFERENCES `billing_tender_bill` (`tender_bill_id`)
+            )ENGINE=InnoDB
+            DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+
+    <diff>
+        <version>3.1.1</version>
+        <author>Viet Nguyen</author>
+        <date>Nov 09th 2010</date>
+        <description>
+            Change Service table to BillableService
+        </description>
+        <sql>
+            ALTER TABLE billing_patient_service_bill_item DROP FOREIGN KEY
+            `fk_patientservicebillitem_service`;
+            ALTER TABLE billing_service
+            RENAME billing_billable_service;
+            ALTER TABLE
+            billing_patient_service_bill_item ADD CONSTRAINT
+            `fk_patientservicebillitem_billableservice` FOREIGN KEY
+            (`service_id`) REFERENCES `billing_billable_service` (`service_id`);
+        </sql>
+    </diff>
+
+    <diff>
+        <version>3.1.2</version>
+        <author>Viet Nguyen</author>
+        <date>Nov 09th 2010</date>
+        <description>
+            Create tables for Miscellaneous service
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `billing_miscellaneous_service` (
+            `id`
+            int(11) NOT NULL auto_increment,
+            `name` varchar(255) default NULL,
+            `description` varchar(255) default NULL,
+            `price` decimal(19,2) default
+            NULL,
+            `retired` bit(1) default NULL,
+            `retired_date` datetime default
+            NULL,
+            `creator` int(11) default NULL,
+            `created_date` datetime default
+            NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            CREATE
+            TABLE IF NOT EXISTS `billing_miscellaneous_service_bill` (
+            `id`
+            int(11) NOT NULL auto_increment,
+            `liable_name` varchar(255) default
+            NULL,
+            `description` varchar(255) default NULL,
+            `amount` decimal(19,2)
+            default NULL,
+            `printed` bit(1) default NULL,
+            `creator` int(11) default
+            NULL,
+            `created_date` datetime default NULL,
+            `voided` bit(1) default
+            NULL,
+            `voided_date` datetime default NULL,
+            `service_id` int(11) default
+            NULL,
+            PRIMARY KEY (`id`),
+            KEY
+            `fk_miscellaneous_service_bill_miscellaneous_service_service`
+            (`service_id`),
+            CONSTRAINT
+            `fk_miscellaneous_service_bill_miscellaneous_service_service`
+            FOREIGN
+            KEY (`service_id`) REFERENCES `billing_miscellaneous_service`
+            (`id`)
+            )
+            ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+
+    <diff>
+        <version>3.1.3</version>
+        <author>Viet Nguyen</author>
+        <date>Dec 06th 2010</date>
+        <description>
+            Create table Receipt
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `billing_receipt` (
+            `id` int(11) NOT
+            NULL auto_increment,
+            `paid_date` datetime default NULL,
+            PRIMARY KEY
+            (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            ALTER TABLE
+            billing_patient_service_bill
+            ADD COLUMN `receipt_id` int(11)
+            default
+            NULL,
+            ADD CONSTRAINT `fk_patientservicebill_receipt` FOREIGN KEY
+            (`receipt_id`) REFERENCES `billing_receipt` (`id`);
+
+            ALTER TABLE
+            billing_ambulance_bill
+            ADD COLUMN `receipt_id` int(11) default
+            NULL,
+            ADD CONSTRAINT `fk_ambulance_receipt` FOREIGN KEY (`receipt_id`)
+            REFERENCES `billing_receipt` (`id`);
+
+            ALTER TABLE billing_tender_bill
+            ADD COLUMN `receipt_id` int(11) default
+            NULL,
+            ADD CONSTRAINT
+            `fk_tender_receipt` FOREIGN KEY (`receipt_id`) REFERENCES
+            `billing_receipt` (`id`);
+
+            ALTER TABLE
+            billing_miscellaneous_service_bill
+            ADD COLUMN `receipt_id`
+            int(11)
+            default NULL,
+            ADD CONSTRAINT `fk_miscellaneous_receipt` FOREIGN KEY
+            (`receipt_id`)
+            REFERENCES `billing_receipt` (`id`);
+        </sql>
+    </diff>
+
+    <diff>
+        <version>3.1.4</version>
+        <author>Viet Nguyen</author>
+        <date>Dec 06th 2010</date>
+        <description>
+            Add foreign keys for receipt
+        </description>
+        <sql>
+            ALTER TABLE billing_patient_service_bill
+            ADD COLUMN `free_bill`
+            bit(1)
+            default NULL;
+
+            ALTER TABLE billing_patient_service_bill_item
+            ADD
+            COLUMN `order_id` int(11)
+            default NULL,
+            ADD CONSTRAINT
+            `fk_patientservicebillitem_order` FOREIGN KEY
+            (`order_id`) REFERENCES
+            `orders` (`order_id`);
+            ALTER TABLE
+            billing_billable_service ADD
+            category INT(11);
+        </sql>
+    </diff>
+    <diff>
+        <version>3.1.5</version>
+        <author>Truong Ha</author>
+        <date>Sep 24th 2011</date>
+        <description>
+            Add `actual_amount` columns into table
+            `billing_patient_service_bill` and
+            `billing_patient_service_bill_item`
+        </description>
+        <sql>
+            ALTER TABLE `billing_patient_service_bill` ADD `actual_amount`
+            decimal(19,2) DEFAULT NULL;
+            ALTER TABLE
+            `billing_patient_service_bill_item` ADD `actual_amount` decimal(19,2)
+            DEFAULT NULL;
+        </sql>
+    </diff>
+    <!-- ghanshyam 07/07/2012 New Requirement #305: Additional details in Ambulance 
+    Bill -->
+    <diff>
+        <version>3.1.6</version>
+        <author>ghanshyam</author>
+        <date>July 7 2012</date>
+        <description>
+            Add column patient_name,receipt_number,origin,destination
+            for billing_ambulance_bill_item table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE billing_ambulance_bill_item ADD(`patient_name`
+            varchar(50),`receipt_number` varchar(13),`origin`
+            varchar(20),`destination` varchar(20));
+        </sql>
+    </diff>
+    <diff>
+        <version>3.1.7</version>
+        <author>kesavulu</author>
+        <date>July 10 2012</date>
+        <description>
+            Add column quantity for
+            'billing_miscellaneous_service_bill' table
+        </description>
+        <sql>
+            ALTER TABLE billing_miscellaneous_service_bill ADD quantity
+            integer NOT NULL;
+        </sql>
+    </diff>
+    <!-- ghanshyam 25-02-2013 New Requirement #966[Billing]Add Paid Bill/Add Free Bill for Bangladesh module-->
+    <diff>
+        <version>3.1.8</version>
+        <author>ghanshyam</author>
+        <date>February 25 2013</date>
+        <description>
+            Add column 'comment' for 'billing_patient_service_bill'
+            table
+        </description>
+        <sql>
+            ALTER TABLE billing_patient_service_bill ADD(`comment`
+            varchar(50));
+        </sql>
+    </diff>
+    <!-- ghanshyam 3-june-2013 New Requirement #1632 Orders from dashboard must be appear in billing queue.User must be able to generate bills from this queue -->
+    <diff>
+        <version>3.1.9</version>
+        <author>ghanshyan</author>
+        <date>June 3rd 2013</date>
+        <description>
+            Alter 'free_bill' column
+        </description>
+        <sql>
+            ALTER TABLE
+            billing_patient_service_bill MODIFY
+            free_bill INT(1);
+        </sql>
+    </diff>
+    
+    <!--Table add for Diagnosis Center -->
+    
+    <diff>
+        <version>4.1.1</version>
+        <author>Md Khairul Islam</author>
+        <date>29th Oct 2015</date>
+        <description>
+            Diagnosis Billing Receipt Table
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_billing_receipt` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `paid_date` DATETIME DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            )
+            ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    
+    <diff>
+        <version>4.1.2</version>
+        <author>Md Khairul Islam</author>
+        <date>29th Oct 2015</date>
+        <description>
+            Diagnosis Billing Patient Service Bill
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_billing_patient_service_bill` (
+            `bill_id` INT(11) NOT NULL AUTO_INCREMENT,
+            `patient_id` INT(11) NOT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `creator` INT(11) DEFAULT  NULL,
+            `amount` DECIMAL(19,2) DEFAULT NULL,
+            `printed` BIT(1) DEFAULT  NULL,
+            `receipt_id` INT(11) DEFAULT NULL,
+            `voided` BIT(1) DEFAULT  NULL,
+            `voided_description` VARCHAR(255) DEFAULT NULL,
+            `voided_date` DATETIME DEFAULT NULL,
+            `actual_amount` DECIMAL(19,2) DEFAULT NULL,
+            `comment` VARCHAR(50) DEFAULT NULL,
+                        
+            PRIMARY KEY (`bill_id`),
+            
+            KEY  `fk_diapatientservicebill_patient` (`patient_id`),
+            KEY  `fk_diapatientservicebill_user` (`creator`),
+            KEY `fk_diapatientservicebill_receipt` (`receipt_id`),
+            CONSTRAINT `fk_diapatientservicebill_patient`  FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
+            CONSTRAINT `fk_diapatientservicebill_user` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`),
+            CONSTRAINT `fk_diapatientservicebill_receipt` FOREIGN KEY (`receipt_id`) REFERENCES `dia_billing_receipt` (`id`)
+            )
+            ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>4.1.3</version>
+        <author>Md Khairul Islam</author>
+        <date>05th Nov 2015</date>
+        <description>
+            
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_billing_order` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `encounter_id` INT(11) DEFAULT NULL,
+            `patient_id` INT(11) DEFAULT NULL,
+            `order_id` INT(11) DEFAULT NULL,
+            `concept_id` INT(11) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `creator` INT(11) DEFAULT  NULL,             
+            PRIMARY KEY (`id`)
+            )
+            ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>4.1.4</version>
+        <author>Md Khairul Islam</author>
+        <date>05th Nov 2015</date>
+        <description>
+            Add column billing_status, cancel_status
+            for dia_billing_order table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_billing_order`
+            ADD(`billing_status`  SMALLINT(1) NOT NULL DEFAULT '0',
+            `cancel_status` SMALLINT(1) NOT NULL DEFAULT '0' );
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>4.1.5</version>
+        <author>Md Khairul Islam</author>
+        <date>11th Nov 2015</date>
+        <description>
+            Billing Collect Information
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_billing_patietn_service_bill_collect` (
+            `bill_collect_id` INT(11) NOT NULL AUTO_INCREMENT,
+            `patient_id` INT(11) DEFAULT NULL,
+            `bill_id` INT(11) DEFAULT NULL,
+            `User` INT(11) DEFAULT NULL,
+            `service_id` INT(11) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `actual_amount` DECIMAL(19,2) DEFAULT NULL,
+            `paid_amount` DECIMAL(19,2) DEFAULT NULL,
+            `payable_amount` DECIMAL(19,2) DEFAULT NULL,
+            `due_amount` DECIMAL(19,2) DEFAULT NULL,
+            `due_paid` DECIMAL(19,2) DEFAULT NULL,
+            `discount_amount` DECIMAL(19,2) DEFAULT NULL,            
+            PRIMARY KEY (`bill_collect_id`),
+            KEY  `fk_diapatientservicebillcollect_user` (`User`),
+            KEY `fk_diapatientservicebillid_bill_id` (`bill_id`),
+             
+            CONSTRAINT `fk_diapatientservicebillcollect_user` FOREIGN KEY (`User`) REFERENCES `users` (`user_id`),
+           
+            CONSTRAINT `fk_diapatientservicebillid_bill_id` FOREIGN KEY (`bill_id`) REFERENCES `dia_billing_patient_service_bill` (`bill_id`)
+            )
+            ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    
+    <diff>
+        <version>4.1.6</version>
+        <author>Md Khairul Islam</author>
+        <date>11th Nov 2015</date>
+        <description>
+            Add column billing_status, cancel_status
+            for dia_billing_patietn_service_bill_collect
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_billing_patient_service_bill`
+            ADD(`due_amount` DECIMAL(19,2) DEFAULT NULL, `voided_creator` INT(11) DEFAULT NULL,
+            `billing_status`  VARCHAR(10) DEFAULT NULL);
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>4.1.7</version>
+        <author>Md Khairul Islam</author>
+        <date>05th Nov 2015</date>
+        <description>
+            Add column delivery_date, delivery_time
+            for dia_billing_receipt table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_billing_receipt`
+            ADD(`delivery_date`  DATE DEFAULT NULL,
+            `delivery_time` VARCHAR(10) DEFAULT NULL,
+            `order_id` INT(11) DEFAULT NULL    );
+        </sql>
+    </diff>
+        
+    <diff>
+        <version>4.1.8</version>
+        <author>Md Khairul Islam</author>
+        <date>16th Nov 2015</date>
+        <description>
+            This table for details information store.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_billing_patient_service_bill_item` (
+            `bill_item_id` INT(11) NOT NULL AUTO_INCREMENT,
+            `service_id` INT(11) DEFAULT NULL,
+            `bill_id` INT(11) DEFAULT NULL,
+            `unitPrice`  DECIMAL(19,2) DEFAULT NULL,
+            `amount` DECIMAL(19,2) DEFAULT NULL,
+            `quantity` INT(11) DEFAULT NULL,
+            `name` VARCHAR(255) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `creator` INT(11) DEFAULT NULL,
+            `voided` BIT(1) DEFAULT NULL,
+            `voided_date` DATETIME DEFAULT NULL,
+            `voided_by`  INT(11) DEFAULT NULL,
+            PRIMARY KEY (`bill_item_id`),
+            KEY `fk_diabillingpatientservicebillitem_serviceId` (`service_id`),
+            KEY `fk_diapatientservicebill_billId` (`bill_id`),
+            CONSTRAINT `fk_diabillingpatientservicebillitem_serviceId` FOREIGN KEY (`service_id`) REFERENCES `billing_billable_service` (`service_id`),
+            CONSTRAINT `fk_diapatientservicebill_billId` FOREIGN KEY (`bill_id`) REFERENCES `dia_billing_patient_service_bill` (`bill_id`)
+            
+            ) ENGINE=INNODB DEFAULT  CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>4.1.9</version>
+        <author>Md Khairul Islam</author>
+        <date>17th Nov 2015</date>
+        <description>
+            Add column refDocId, marId
+            for dia_billing_patient_service_bill table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_billing_patient_service_bill`
+            ADD(`refDocId`  INT(11) DEFAULT NULL,
+            `refMarId`  INT(11) DEFAULT NULL );
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>5.1.0</version>
+        <author>Md Khairul Islam</author>
+        <date>05th Nov 2015</date>
+        <description>
+            Add column  order_id
+            for dia_billing_receipt table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_billing_receipt`
+            ADD( `order_id` INT(11) DEFAULT NULL    );
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>5.1.2</version>
+        <author>Md Khairul Islam</author>
+        <date>05th Dec 2015</date>
+        <description>
+            Add column  Discount Amount
+            for dia_billing_patient_service_bill table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_billing_patient_service_bill`
+            ADD( `discount_amount` DECIMAL(19,2) DEFAULT NULL );
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>5.1.3</version>
+        <author>Md Khairul Islam</author>
+        <date>24 Jan 2016</date>
+        <description>
+            Add column  Due Paid Status
+            for dia_billing_patietn_service_bill_collect table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_billing_patietn_service_bill_collect`
+            ADD( `due_paid_status` BIT(1) DEFAULT  NULL );
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>5.1.4</version>
+        <author>Md Khairul Islam</author>
+        <date>27 Mar 2016</date>
+        <description>
+            Add column Percentage 
+            for billing_billable_service table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `billing_billable_service`
+            ADD( `commission` varchar(10) DEFAULT  NULL );
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>5.1.5</version>
+        <author>Md Khairul Islam</author>
+        <date>27 Mar 2016</date>
+        <description>
+            This table for commssion calculation information save.
+        </description>
+        <sql>
+            CREATE TABLE `dia_commission_calculation` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `bill_id` int(11) DEFAULT NULL,
+            `patient_id` int(11) DEFAULT NULL,
+            `service_name` varchar(100) DEFAULT NULL,
+            `service_id` int(11) DEFAULT NULL,
+            `service_price` decimal(19,2) DEFAULT NULL,
+            `less_amount` decimal(19,2) DEFAULT NULL,
+            `com_percentage` varchar(10) DEFAULT NULL,
+            `created_date` datetime DEFAULT NULL,
+            `creator` int(11) DEFAULT NULL,
+            `ref_id` int(11) DEFAULT NULL,
+            `status` bit(1) DEFAULT NULL,
+            `com_paid_id` int(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `fk_diapatientservicebill` (`bill_id`),
+            KEY `fk_diacommissioncal_patient` (`patient_id`),
+            KEY `fk_diacommissioncal_paidid_idx` (`com_paid_id`),
+            CONSTRAINT `fk_diacommissioncal_paidid` FOREIGN KEY (`com_paid_id`) REFERENCES `dia_commission_calculation_paid` (`id`),
+            CONSTRAINT `fk_diacommissioncal_patient` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
+            CONSTRAINT `fk_diapatientservicebill` FOREIGN KEY (`bill_id`) REFERENCES `dia_billing_patient_service_bill` (`bill_id`)
+            ) ENGINE=INNODB DEFAULT  CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>5.1.7</version>
+        <author>Md Khairul Islam</author>
+        <date>02 April 2016</date>
+        <description>
+            This table for doctor commssion calculation paid information save.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_commission_calculation_paid` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `service_amount`  DECIMAL(19,2) DEFAULT NULL,
+            `net_amount` DECIMAL(19,2) DEFAULT NULL,
+            `less_amount` DECIMAL(19,2) DEFAULT NULL,
+            `doc_amount` DECIMAL(19,2) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `creator` INT(11) DEFAULT NULL,
+            `doc_id` INT(11) DEFAULT NULL,
+            `note` VARCHAR(300) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            
+            KEY `fk_user_id` (`creator`),
+            CONSTRAINT `fk_user_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`)            
+            ) ENGINE=INNODB DEFAULT  CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>5.1.8</version>
+        <author>Md Khairul Islam</author>
+        <date>03 May 2016</date>
+        <description>
+            Add column  For Ref RMP
+            for dia_billing_patient_service_bill table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_billing_patient_service_bill`
+            ADD( `refRmpId` INT(11) DEFAULT NULL );
+        </sql>
+    </diff>
+     
+    <diff>
+        <version>5.1.9</version>
+        <author>Md Khairul Islam</author>
+        <date>04 June 2016</date>
+        <description>
+            This table for sample id generate by barcode printer.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_lab_sampleid` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `patient_id` INT(11) DEFAULT NULL,
+            `sampleid` VARCHAR(50) DEFAULT NULL,
+            `bill_id` INT(11) DEFAULT NULL,
+            
+            PRIMARY KEY (`id`),
+            KEY `fk_dialab_patient` (`patient_id`),
+            KEY `fk_diapatientservicebill_bill_id` (`bill_id`),
+            CONSTRAINT `fk_dialab_patient` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
+            CONSTRAINT `fk_dialab_bill_id` FOREIGN KEY (`bill_id`) REFERENCES `dia_billing_patient_service_bill` (`bill_id`)
+            ) ENGINE=INNODB DEFAULT  CHARSET=utf8;
+
+        </sql>
+    </diff>
+    <diff>
+        <version>6.1.0</version>
+        <author>Md Khairul Islam</author>
+        <date>22 June 2016</date>
+        <description>
+            This table for rmp commssion calculation paid information save.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_rmp_comm_calculation_paid` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `service_amount`  DECIMAL(19,2) DEFAULT NULL,
+            `net_amount` DECIMAL(19,2) DEFAULT NULL,
+            `less_amount` DECIMAL(19,2) DEFAULT NULL,
+            `rmp_amount` DECIMAL(19,2) DEFAULT NULL,
+            `paid_amount` DECIMAL(19,2) DEFAULT NULL,
+            `due_amount` DECIMAL(19,2) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `creator` INT(11) DEFAULT NULL,
+            `rmp_id` INT(11) DEFAULT NULL,
+            `note` VARCHAR(300) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            
+            KEY `fk_user_id_creator` (`creator`),
+            CONSTRAINT `fk_user_id_creator` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`)            
+            ) ENGINE=INNODB DEFAULT  CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>6.1.1</version>
+        <author>Md Khairul Islam</author>
+        <date>22 June 2016</date>
+        <description>
+            Add column  For Ref RMP
+            for dia_commission_calculation_paid table
+        </description>
+        <sql>
+            <!-- ghanshyam 1/08/2012 feedback of New Requirement #305: Additional 
+            details in Ambulance Bill changed receiptNumber from Integer to varchar -->
+            ALTER TABLE `dia_commission_calculation_paid`
+            ADD( `paid_amount` DECIMAL(19,2) DEFAULT NULL, `due_amount` DECIMAL(19,2) DEFAULT NULL);
+        </sql>
+    </diff>
+
+    <diff>
+        <version>6.1.2</version>
+        <author>Md Khairul Islam</author>
+        <date>12th July 2016</date>
+        <description>
+            Doctor Commission Paid Adjust Information Save.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_commission_calculation_paid_adj` (
+            `com_adj_id` INT(11) NOT NULL AUTO_INCREMENT,
+            `com_paid_id` INT(11) DEFAULT NULL,
+            `payable_amount` DECIMAL(19,2) DEFAULT NULL,
+            `paid_amount` DECIMAL(19,2) DEFAULT NULL,
+            `due_amount` DECIMAL(19,2) DEFAULT NULL,
+            `User` INT(11) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+                       
+            PRIMARY KEY (`com_adj_id`),
+            KEY  `fk_diacompaid_adj_user` (`User`),
+            KEY `fk_diacompaid_id` (`com_paid_id`),
+             
+            CONSTRAINT `fk_diacompaid_adj_user` FOREIGN KEY (`User`) REFERENCES `users` (`user_id`),
+            CONSTRAINT `fk_diacompaid_id` FOREIGN KEY (`com_paid_id`) REFERENCES `dia_commission_calculation_paid` (`id`)
+            )
+            ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>6.1.3</version>
+        <author>Md Khairul Islam</author>
+        <date>12th July 2016</date>
+        <description>
+            RMP Commission Paid Adjust Information Save.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_rmp_comm_calculation_paid_adj` (
+            `rmp_com_adj_id` INT(11) NOT NULL AUTO_INCREMENT,
+            `com_paid_id` INT(11) DEFAULT NULL,
+            `payable_amount` DECIMAL(19,2) DEFAULT NULL,
+            `paid_amount` DECIMAL(19,2) DEFAULT NULL,
+            `due_amount` DECIMAL(19,2) DEFAULT NULL,
+            `User` INT(11) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+                       
+            PRIMARY KEY (`rmp_com_adj_id`),
+            KEY  `fk_diarmpcompaid_adj_user` (`User`),
+            KEY `fk_diacompaidrmp_id` (`com_paid_id`),
+             
+            CONSTRAINT `fk_diarmpcompaid_adj_user` FOREIGN KEY (`User`) REFERENCES `users` (`user_id`),
+            CONSTRAINT `fk_diacompaidrmp_id` FOREIGN KEY (`com_paid_id`) REFERENCES `dia_rmp_comm_calculation_paid` (`id`)
+            )
+            ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>6.1.4</version>
+        <author>Md Khairul Islam</author>
+        <date>17th July 2016</date>
+        <description>
+            Group and condition wise barcode print
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS  `dia_barcode_group` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `group1_conid` INT(11) DEFAULT NULL,
+            `group2_conid` INT(11) DEFAULT NULL,
+            `group3_conid` INT(11) DEFAULT NULL,
+            `group4_conid` INT(11) DEFAULT NULL,
+            `group5_conid` INT(11) DEFAULT NULL,
+            `group6_conid` INT(11) DEFAULT NULL,
+            `group7_conid` INT(11) DEFAULT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+   
+    
+    
+</sqldiff>

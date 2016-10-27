@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+<class name="IpdPatientIntake" table="ipd_patient_intake" batch-size="500">
+
+		<id name="id" type="int" column="id"
+			unsaved-value="0">
+				<generator class="native"/>
+		</id>
+                <many-to-one name="patient" column="patient_id" class="org.openmrs.Patient"/>
+                <many-to-one name="ipdPatientAdmissionLog" column="ipd_patientadmissionlog_id" class="org.openmrs.module.hospitalcore.model.IpdPatientAdmissionLog"/>
+		<property name="oral" column="oral" />
+		<property name="iv" column="iv" />          
+                
+                <property name="ngTube" column="ng_tube" />
+                <property name="spc" column="spc" />
+                <property name="catheter" column="catheter" />
+                <property name="stool" column="stool" />
+                <property name="vomiting" column="vomiting" />
+                <property name="drain1" column="drain_1" />
+                <property name="drain2" column="drain_2" />
+                <property name="drain3" column="drain_3" />
+                <property name="drain4" column="drain_4" />
+                <property name="drain5" column="drain_5" />
+                <property name="drain6" column="drain_6" />
+                <property name="createdOn" type="java.util.Date" column="created_on" length="19" />
+</class>              
+
+</hibernate-mapping>

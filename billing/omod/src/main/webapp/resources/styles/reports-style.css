@@ -1,0 +1,328 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 31, 2016, 10:52:48 AM
+    Author     : Khairul
+*/
+
+.form-rep {
+    margin-left:20%;
+    margin-top:5%;
+    display: block;
+    width: 60%;
+    min-height:500px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+}
+.form-rep:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+}
+.form-rep::-moz-placeholder {
+    color: #999;
+    opacity: 1
+}
+.form-rep:-ms-input-placeholder {
+    color: #999
+}
+.form-rep::-webkit-input-placeholder {
+    color: #999
+}
+
+.boxHeader1 {
+    width:100%;
+    border-radius:5px 5px 0 0;
+    height:30px;
+    padding:4px;
+    text-align:center;
+}
+
+.boxHeader1 {
+    background-color: #eee;
+}
+
+
+.box1 {
+    border: 1px solid #eee;
+    width: 100%;
+    padding: 5px 2px 5px 2px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box1>*, .boxRed>*, .boxExited>* {
+    font-size: .9em;
+}
+
+.form-rep-view {
+    margin-top:1%;
+    display: block;
+    width: 100%;
+    min-height:600px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+}
+.form-rep-view:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+}
+.form-rep-view::-moz-placeholder {
+    color: #999;
+    opacity: 1
+}
+.form-rep-view:-ms-input-placeholder {
+    color: #999
+}
+.form-rep-view::-webkit-input-placeholder {
+    color: #999
+}
+
+.form-rep-view input[type="text"]  { 
+    appearance: none;
+    outline: 0;
+    border: 1px solid #04B431;
+    background-color: #A4A4A4;
+    width: 200px;
+    height:30px;
+    border-radius: 3px;
+    padding: 2px 10px;
+    margin: 10px auto 10px auto;
+    text-align: left;
+    font-size: 16px;
+    color: #fff;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 200;
+}
+.form-rep-view input[type="text"]:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    color:#04B431;
+}
+.form-rep-view input[type="text"]:focus {
+    background-color: white;
+    width: 220px;
+    color: #000;
+}
+
+.form-rep-view input[type="value"]  { 
+    appearance: none;
+    outline: 0;
+    border: 1px solid #04B431;
+    background-color: #A4A4A4;
+    width: 100px;
+    height:25px;
+    border-radius: 3px;
+    padding: 0px 5px;
+    margin: 0px auto 0px auto;
+    text-align: right;
+    font-size: 16px;
+    color: #fff;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 200;
+}
+.form-rep-view input[type="value"]:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    color:#04B431;
+}
+.form-rep-view input[type="value"]:focus {
+    background-color: white;
+    width: 100px;
+    color: #000;
+}
+.sub-div{
+    width:76%;
+    min-height:550px;
+    margin-top:2%;
+    margin-left:1%;
+    float:left;
+    padding:0px 0px  0px  0px;
+}
+
+.bu-normal{
+    padding: 6px 15px 6px 18px;
+    background: #D8D8D8;
+    border: none;
+    color: #08088A;
+    border-radius:4px;
+    box-shadow: 1px 1px 1px #4C6E91;
+    -webkit-box-shadow: 1px 1px 1px #4C6E91;
+    -moz-box-shadow: 1px 1px 1px #4C6E91;
+    text-shadow: 3px 1px 5px #ffffff;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;	
+}
+
+.bu-normal:hover{
+    background: #fff;
+    color:green; 
+    box-shadow: 0px 2px 2px 2px #4C6;
+    font-weight:bold;
+}
+
+.btn1{
+    display: inline-block;
+    padding: 6px 15px;
+    margin-bottom: 0;
+    height:50px;
+    width:300px;
+    margin-left:30px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #eee;
+    vertical-align: middle;
+    box-shadow: 1px 1px 1px #4C6E91;
+    -webkit-box-shadow: 1px 1px 1px #4C6E91;
+    -moz-box-shadow: 1px 1px 1px #4C6E91;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+} 
+.btn1:hover {
+    color: green;
+    font-family:arial;
+    font-weight:bold;
+    box-shadow: 1px 5px 8px 2px #4C6E91;
+}
+.btn.active,
+.btn:active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+}
+.btn1.disabled,
+.btn1[disabled],
+fieldset[disabled] .btn1 {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65
+}   
+
+.form-doc-rep {
+    margin-top:1%;
+    display: block;
+    width: 100%;
+    min-height:600px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+}
+.form-doc-rep:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+}
+.form-doc-rep::-moz-placeholder {
+    color: #999;
+    opacity: 1
+}
+.form-doc-rep:-ms-input-placeholder {
+    color: #999
+}
+.form-doc-rep::-webkit-input-placeholder {
+    color: #999
+}
+
+.form-doc-rep input[type="text"]  { 
+    appearance: none;
+    outline: 0;
+    border: 1px solid #04B431;
+    background-color: #A4A4A4;
+    width: 120px;
+    height:30px;
+    border-radius: 3px;
+    padding: 2px 10px;
+    margin: 10px auto 10px auto;
+    text-align: left;
+    font-size: 16px;
+    color: #fff;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 200;
+}
+.form-doc-rep input[type="text"]:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    color:#04B431;
+}
+.form-doc-rep input[type="text"]:focus {
+    background-color: white;
+    width: 220px;
+    color: #000;
+}
+
+.form-doc-rep input[type="value"]  { 
+    appearance: none;
+    outline: 0;
+    border: 1px solid #04B431;
+    background-color: #A4A4A4;
+    width: 100px;
+    height:25px;
+    border-radius: 3px;
+    padding: 0px 5px;
+    margin: 0px auto 0px auto;
+    text-align: right;
+    font-size: 16px;
+    color: #fff;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 200;
+}
+.form-doc-rep input[type="value"]:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    color:#04B431;
+}
+.form-doc-rep input[type="value"]:focus {
+    background-color: white;
+    width: 100px;
+    color: #000;
+}

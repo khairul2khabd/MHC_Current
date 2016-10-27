@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+    <class name="DiaCommissionCal" table="dia_commission_calculation" batch-size="500">
+
+        <id name="id" type="int" column="id"
+            unsaved-value="0"> 
+            <generator class="native" />
+        </id>
+                              
+        <many-to-one name="diaPatientServiceBill" column="bill_id"
+                     class="org.openmrs.module.hospitalcore.model.DiaPatientServiceBill" lazy="false"
+                     foreign-key="fk_diapatientservicebill" />
+        
+        <many-to-one name="patient" column="patient_id" class="org.openmrs.Patient"
+                     lazy="false" foreign-key="fk_diacommissioncal_patient" />  
+                
+        <property name="servicePrice" column="service_price"/>
+        <property name="lessAmount" column="less_amount"/>
+        <property name="commission" column="com_percentage"/>
+        <property name="createdDate" column="created_date"  />
+        <property name="creator" column="creator"/>
+        <property name="serviceId" column="service_id"/>
+        <property name="serviceName" column="service_name"/>
+        <property name="refId" column="ref_id"/>
+        <property name="status" column="status" />
+        <property name="refRmpId" column="ref_rmp_id" />
+        
+        <many-to-one name="diaComPaid" column="com_paid_id" 
+                     class="org.openmrs.module.hospitalcore.model.DiaCommissionCalPaid"
+                     lazy="false" foreign-key="fk_diacommissioncal_paidid_idx" />
+        
+        <many-to-one name="diaRmpComPaid" column="rmp_com_paid_id" 
+                     class="org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaid"
+                     lazy="false" foreign-key="fk_diarmpcommissioncal_paidid_idx" />
+		 
+                			
+    </class>
+</hibernate-mapping>

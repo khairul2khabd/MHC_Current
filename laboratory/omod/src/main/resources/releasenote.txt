@@ -1,0 +1,87 @@
+0.5.12
+-
+
+0.5.11
+- #512               Update registration page and print out page for NIKDU Hospital, Bangladesh i.e BD_SPECIALIZED or(BD_HOSPITAL)
+- #511               Update registration page and print out page for MCHTI Hospital, Bangladesh
+- #510               Update registration page and print out page for Govenment Employee Hospital, Bangladesh
+
+0.5.10
+Support #391: [Laboratory]Same format in the 'Print Worklist and 'Export Worklist'
+New Requirement #277: [LABORATORY] WorkList of Patients in Alphabetical Order
+New Requirement #307: [LABORATORY] Generate Consolidated Work List
+New Requirement #316: [LABORATORY] Advanced Search in Patient Report
+New Requirement #319: [LABORATORY] Make Consolidated Work List an Option in the investigation drop down list
+New Requirement #320: [LABORATORY] Show Results as an Option
+New Requirement #361: [Laboratory] Export to Excel option in print worklist
+
+0.5.9
+- Fixed high priority jenkins bugs
+- Resolved issues
+	Bug #95: queue in laboratory
+	Bug #231: [0.5.9-SNAPSHOT] [SOLAN] Unable to view value in the Edit result
+	Bug #232: [0.5.9-SNAPSHOT] [SOLAN] Error with patient report
+	Bug #296: Mohali- patient report
+	Support #75: Queue
+	Support #76: Rescedule
+
+0.5.6
+- Updated Patient Report printout.
+- Fixed bug not show tests correctly.
+- Fixed bug not allow users to enter time for test results.
+
+0.5.5
+- Fixed bug not showing parameter result on Edit Result page.
+- Fixed bug not showing patient information on Patient Report page.
+
+0.5.4
+- Changed the separator between low normal and hi normal of tests.
+
+0.5.3
+- Added patient search for SOLAN.
+
+0.5.2
+- Added validation tests when rescheduling/reordering
+
+0.5.1
+- Rewritten saving laboratory tests so Dashboard can get the result
+
+0.5
+- Integrated new patient search plugin
+
+0.4.1
+- Fixed bug autocomplete not working on Manage Department page.
+- Adjusted format of generated sample id.
+
+0.4
+- Fixed bug when showing parameters for entering results.
+- Added validation into parameters when entering results.
+
+0.3.2
+- Fixed bug when clicking on Reset button on Queue, it says "Reset" instead of reseting the search form.
+
+0.3.1
+- Changed to show sample id in Worklist, Edit Result, Print Worklist.
+- Fixed bug allowing users to search for test from all investigations in worklist.
+
+0.3
+- Added feature allows user to manually enter the sample id of tests. 
+
+0.2.1
+- Moved Confidential Test tab to the end of navbar.
+- Fixed bug displaying 'enter result' link on Worklist page.
+- Added feature to highlight a parameter when entering results.
+- Changed to hide other test result rows except the current one in Worklist and Edit Result. 
+
+0.2
+- Added feature Confidential Test
+
+0.1.1
+- Fixed conflicts on OpenMRS 1.8
+
+0.1
+- Created essential tables
+- Updated Queue
+- Updated Worklist
+- Updated Edit Result
+- Update Manage Functional status

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+    <class name="DiaInvestigationSpecimen" table="dia_investigation_specimen" batch-size="500">
+        <id name="id" type="int" column="id"
+                    unsaved-value="0">
+            <generator class="native" />
+        </id>
+        
+        <property name="haeBlood" column="hae_blood" />
+        <property name="haeUrine" column="hae_urine" />
+        <property name="bioBlood" column="bio_blood" />
+        <property name="bioUrine" column="bio_urine" />
+        <property name="immuBlood" column="immu_blood" />
+        <property name="immuUrine" column="immu_urine" />
+        <property name="one" column="one" />
+        <property name="two" column="two" />
+        <property name="three" column="three" />
+        <property name="four" column="four" />
+        <property name="five" column="five" />
+         
+ 
+    </class>
+</hibernate-mapping>
+
+ 

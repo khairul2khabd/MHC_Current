@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqldiff PUBLIC "-//OpenMRS//DTD OpenMRS SQL Diff Config 1.0//EN" "http://resources.openmrs.org/doctype/sqldiff-1.0.dtd">
+
+<sqldiff version="1.0">
+    <help>
+        USE:
+        The diffs are ordered by datamodel version number.
+        The script can be run in a top down fashion and is
+        expected to not failor overwrite old data
+		
+        EXPECT:
+        - "use business-database-name;" was called prior to
+        calling this script
+    </help>
+	
+    <diff>
+        <version>0.1</version>
+        <author>Chuyen Nguyen</author>
+        <date>Feb 16rd 2011</date>
+        <description>
+            Add opd patient queue tables
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS opd_patient_queue (id integer not null auto_increment, user integer, patient_id integer, referral_concept_id integer, opd_concept_id integer, age integer, created_on datetime, opd_concept_name varchar(255), patient_name varchar(255), referral_concept_name varchar(255), sex varchar(255), status varchar(255), primary key (id));
+            CREATE TABLE IF NOT EXISTS opd_patient_queue_log (id integer not null auto_increment, user integer, patient_id integer, referral_concept_id integer, opd_concept_id integer, age integer, created_on datetime, opd_concept_name varchar(255), patient_name varchar(255), referral_concept_name varchar(255), sex varchar(255), status varchar(255), primary key (id));
+        </sql>
+    </diff>	
+	
+    <diff>
+        <version>0.7</version>
+        <author>Viet Nguyen</author>
+        <date>Feb 24rd 2011</date>
+        <description>
+            Add column patient indentifier for opd_patient_queue table
+        </description>
+        <sql>
+            ALTER TABLE opd_patient_queue
+            ADD COLUMN `patient_identifier`  varchar(50)  default NULL;
+			
+            ALTER TABLE opd_patient_queue_log
+            ADD COLUMN `patient_identifier`  varchar(50)  default NULL;
+        </sql>
+    </diff>
+		
+    <diff>
+        <version>0.8</version>
+        <author>Viet Nguyen</author>
+        <date>Feb 26rd 2011</date>
+        <description>
+            Add column birth_date for opd_patient_queue table
+        </description>
+        <sql>
+            ALTER TABLE opd_patient_queue
+            ADD COLUMN `birth_date`  datetime  default NULL,
+            DROP COLUMN `age`;
+			
+            ALTER TABLE opd_patient_queue_log
+            ADD COLUMN `birth_date`  datetime  default NULL,
+            DROP COLUMN `age`;
+        </sql>
+    </diff>
+	
+    <diff>
+        <version>0.9</version>
+        <author>Chuyen Nguyen</author>
+        <date>Mar 17rd 2011</date>
+        <description>
+            Add ipd patient queue tables
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS ipd_patient_admission 
+            ( id integer not null auto_increment, 
+            patient_id integer, 
+            admission_ward_id integer, 
+            opd_log_id integer, 
+            opd_admitted_user_id integer,
+            admission_date datetime, 
+            patient_name varchar(255), 
+            patient_identifier varchar(255), 
+            birth_date datetime, 
+            gender varchar(255), 
+            status varchar(255),
+            encounter_id integer,
+            primary key (id));
+                    
+            CREATE TABLE IF NOT EXISTS ipd_patient_admission_log 
+            (id integer not null auto_increment, patient_id integer, admission_ward_id integer, opd_log_id integer, opd_admitted_user_id integer, admission_date datetime, patient_name varchar(255), birth_date datetime, patient_identifier varchar(255), gender varchar(255), status varchar(255), primary key (id));
+            CREATE TABLE IF NOT EXISTS ipd_patient_admitted
+            (id integer not null auto_increment, patient_id integer, admitted_ward_id integer, patient_admission_log_id integer, patient_amitted_log_id_transfer_from integer, user_id integer, ipd_admitted_user_id integer, admission_date datetime, patient_name varchar(255), birth_date datetime, gender varchar(255), monthly_income decimal(19,2), patient_identifier varchar(255), basic_pay varchar(255), caste varchar(255), status varchar(255), patient_address varchar(255), bed varchar(255), father_name varchar(255), admission_outcome varchar(255), primary key (id));
+            CREATE TABLE IF NOT EXISTS ipd_patient_admitted_log 
+            (id integer not null auto_increment, patient_id integer, admitted_ward_id integer, patient_admission_log_id integer, patient_amitted_log_id_transfer_from integer, user_id integer, ipd_admitted_user_id integer, admission_date datetime, patient_name varchar(255), birth_date datetime, gender varchar(255), monthly_income decimal(19,2), patient_identifier varchar(255), basic_pay varchar(255), caste varchar(255), status varchar(255), patient_address varchar(255), bed varchar(255), father_name varchar(255), admission_outcome varchar(255), primary key (id));
+        </sql>
+    </diff>	
+    <diff>
+        <version>1.0</version>
+        <author>Chuyen Nguyen</author>
+        <date>Mar 25rd 2011</date>
+        <description>
+            Add Obs group and ipd encounter columns to ipd_patient_admission_log table
+        </description>
+        <sql>
+            ALTER TABLE ipd_patient_admission_log ADD opd_obs_group_id integer;
+            ALTER TABLE ipd_patient_admission_log ADD ipd_encounter_id integer;
+        </sql>
+    </diff>	
+	
+    <diff>
+        <version>1.1</version>
+        <author>Chuyen Nguyen</author>
+        <date>April 13rd 2011</date>
+        <description>
+            Add department , department ward, deparment diagnosis procedure
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS department (id integer not null auto_increment, name varchar(255),retired bit(1) default NULL, created_on datetime, created_by varchar(255), primary key (id));
+            CREATE TABLE IF NOT EXISTS department_concept (id integer not null auto_increment, department_id integer, concept_id integer, type_concept integer, created_on datetime, created_by varchar(255), primary key (id));
+            CREATE TABLE IF NOT EXISTS department_ward (department_id integer not null, ward_id integer not null, primary key (department_id, ward_id));
+        </sql>
+    </diff>
+	
+    <diff>
+        <version>1.3</version>
+        <author>Chuyen Nguyen</author>
+        <date>April 26rd 2011</date>
+        <description>
+            Change column admission_date to transfer_discharge_date in ipd_patient_admitted_log
+        </description>
+        <sql>
+            ALTER TABLE ipd_patient_admitted_log  CHANGE admission_date transfer_discharge_date datetime;
+        </sql>
+    </diff>		
+    <diff>
+        <version>1.4</version>
+        <author>Truong Ha</author>
+        <date>May 09th 2011</date>
+        <description>
+            Create table radiology_department and radiology_department_investigation
+        </description>
+        <sql>			
+            CREATE TABLE IF NOT EXISTS `radiology_department` (			  
+            `department_id` int(11) NOT NULL auto_increment,
+            `name` varchar(30) NOT NULL default '',
+            `description` varchar(255) NOT NULL default '',
+            `role` varchar(50) NOT NULL default '',
+            PRIMARY KEY  (`department_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;		
+			
+            CREATE TABLE IF NOT EXISTS `radiology_department_investigations` (
+            `department_id` int(11) NOT NULL default '0',
+            `concept_id` int(11) NOT NULL default '0',
+            PRIMARY KEY  (`department_id`,`concept_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>	
+    <diff>
+        <version>1.5</version>
+        <author>Truong Ha</author>
+        <date>May 09th 2011</date>
+        <description>
+            Add encounter forgeinkey to opd queue log
+        </description>
+        <sql>			
+            ALTER TABLE opd_patient_queue_log ADD encounter_id integer default 0;
+        </sql>
+    </diff>	
+    <diff>
+        <version>1.6</version>
+        <author>Truong Ha</author>
+        <date>Sep 29th 2011</date>
+        <description>
+            Add table core form
+        </description>
+        <sql>			
+            CREATE TABLE IF NOT EXISTS `core_form` (
+            `core_form_id` int(11) NOT NULL AUTO_INCREMENT,
+            `name` varchar(120) DEFAULT NULL,
+            `description` varchar(300) NOT NULL DEFAULT '',
+            `content` varchar(20480) NOT NULL DEFAULT '',			  
+            `created_on` datetime DEFAULT NULL,
+            `created_by` int(11) DEFAULT NULL,
+            PRIMARY KEY (`core_form_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>	
+    <diff>
+        <version>1.7</version>
+        <author>Truong Ha</author>
+        <date>Oct 27th 2011</date>
+        <description>
+            Add column after_submit
+        </description>
+        <sql>			
+            ALTER TABLE core_form ADD after_submit varchar(300) DEFAULT NULL;
+        </sql>
+    </diff>	
+    <diff>
+        <version>1.8</version>
+        <author>Truong Ha</author>
+        <date>Nov 11th 2011</date>
+        <description>
+            Add table patient search
+        </description>
+        <sql>			
+            CREATE TABLE IF NOT EXISTS `patient_search` (
+            `patient_id` int(11) NOT NULL,
+            `identifier` varchar(30) DEFAULT NULL,
+            `fullname` varchar(200) DEFAULT NULL,
+            `given_name` varchar(60) DEFAULT NULL,
+            `middle_name` varchar(60) DEFAULT NULL,
+            `family_name` varchar(60) DEFAULT NULL,
+            `gender` varchar(10) DEFAULT NULL,
+            `birthdate` datetime DEFAULT NULL,
+            `age` int(11) DEFAULT NULL,
+            `person_name_id` int(11) DEFAULT NULL,
+            PRIMARY KEY (`patient_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>	
+    <!-- ghanshyam 1-june-2013 New Requirement #1633 User must be able to send investigation orders from dashboard to billing -->
+    <diff>
+        <version>1.9</version>
+        <author>ghanshyam</author>
+        <date>June 1 2013</date>
+        <description>
+            Create table opd_order
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `opd_test_order` (
+            `opd_order_id` int(11) NOT NULL AUTO_INCREMENT,
+            `patient_id` int(11) NOT NULL,
+            `encounter_id` int(11) NOT NULL,
+            `concept_id` int(11) NOT NULL,
+            `type_concept` int(11) NOT NULL,
+            `value_coded` int(11) DEFAULT NULL,
+            `created_by` int(11) NOT NULL,
+            `created_on` datetime NOT NULL,
+            `billing_status` smallint(1) NOT NULL DEFAULT '0',
+            `cancel_status` smallint(1) NOT NULL DEFAULT '0',
+             PRIMARY KEY (`opd_order_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+
+    <!-- ghanshyam 10-june-2013 New Requirement #1847 Capture Vital statistics for admitted patient in ipd -->
+    <diff>
+        <version>2.0</version>
+        <author>ghanshyam</author>
+        <date>June 10 2013</date>
+        <description>
+            Create table ipd_vital_statistics
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `ipd_vital_statistics` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `patient_id` int(11) NOT NULL,
+            `ipd_patientadmissionlog_id` int(11) NOT NULL,
+            `blood_pressure` varchar(11) DEFAULT NULL,
+            `pulse_rate` varchar(11) DEFAULT NULL,
+            `temperature` varchar(11) DEFAULT NULL,
+            `weight` varchar(11) DEFAULT NULL,
+            `diet_advised` varchar(50) DEFAULT NULL,
+            `note` varchar(200) DEFAULT NULL,
+            `created_by` int(11) NOT NULL,
+            `created_on` datetime NOT NULL,
+            
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <!--For Nikdu Requirements -->
+    <diff>
+        <version>3.3</version>
+        <author>Md. Khairul Islam</author>
+        <date>April o4 2015</date>
+        <description>
+            Add column respiration_rate, urine_taken, stool_taken, for ipd_vital_statistics table
+        </description>
+        <sql>
+            ALTER TABLE ipd_vital_statistics
+           ADD COLUMN `respiration_rate` varchar(11) DEFAULT NULL,
+           ADD COLUMN `urine_taken` varchar(15) DEFAULT NULL,
+           ADD COLUMN `stool_taken` varchar(15) DEFAULT NULL;		
+        </sql>
+    </diff>
+    
+    
+    <!--      ghanshyam 12-june-2013 New Requirement #1635 User should be able to send pharmacy orders to issue drugs to a patient from dashboard -->
+    <diff>
+        <version>2.1</version>
+        <author>ghanshyam</author>
+        <date>June 12 2013</date>
+        <description>
+            Create table opd_drug_order
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `opd_drug_order` (
+            `opd_drug_order_id` int(11) NOT NULL AUTO_INCREMENT,
+            `patient_id` int(11) NOT NULL,
+            `encounter_id` int(11) NOT NULL,
+            `inventory_drug_id` int(11) NOT NULL,
+            `formulation_id` int(11) DEFAULT NULL,
+            `frequency_concept_id` int(11) DEFAULT NULL,
+            `no_of_days` int(11) DEFAULT NULL,
+            `comments` varchar(200) DEFAULT NULL,
+            `created_by` int(11) NOT NULL,
+            `created_on` datetime NOT NULL,
+            `order_status` smallint(1) NOT NULL DEFAULT '0',
+            `cancel_status` smallint(1) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`opd_drug_order_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+
+    <diff>
+        <version>2.2</version>
+        <author>harsh</author>
+        <date>June 4 2013</date>
+        <description>
+            Create table ward_bed_strength
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `ward_bed_strength` (
+            `ward_bed_strength_id` int(11) NOT NULL AUTO_INCREMENT,
+            `concept_id` int(11) NOT NULL,
+            `bed_strength` int(11) DEFAULT NULL,
+            `created_by` int(11) NOT NULL,
+            `created_on` datetime NOT NULL,
+            PRIMARY KEY (`ward_bed_strength_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+	
+    <diff>
+        <version>2.3</version>
+        <author>Kesavulu loka</author>
+        <date>june 24th 2013</date>
+        <description>
+            Add column otherInstructions for ipd_patient_admitted_log table
+        </description>
+        <sql>
+            ALTER TABLE ipd_patient_admitted_log
+            ADD COLUMN `other_instructions`  varchar(250)  default NULL;		
+        </sql>
+    </diff>
+	
+    <!-- ghanshyam 11-july-2013 Support #1966 Patient does not disappear from queue even after billing is complete -->
+    <diff>
+        <version>2.4</version>
+        <author>ghanshyam</author>
+        <date>july 11th 2013</date>
+        <description>
+            Add column billable_service_id for opd_test_order table
+        </description>
+        <sql>
+            ALTER TABLE opd_test_order
+            ADD COLUMN `billable_service_id`  int(11) DEFAULT NULL;
+        </sql>
+    </diff>
+	
+    <!-- ghanshyam 11-july-2013 feedback # 1724 Introducing bed availability -->
+    <diff>
+        <version>2.5</version>
+        <author>ghanshyam</author>
+        <date>july 11th 2013</date>
+        <description>
+            Add column comments for ipd_patient_admitted table
+        </description>
+        <sql>
+            ALTER TABLE ipd_patient_admitted
+            ADD COLUMN `comments`  varchar(100)  default NULL;
+        </sql>
+    </diff>
+	
+    <diff>
+        <version>2.6</version>
+        <author>ghanshyam</author>
+        <date>july 11th 2013</date>
+        <description>
+            Add column comments for ipd_patient_admitted_log table
+        </description>
+        <sql>
+            ALTER TABLE ipd_patient_admitted_log
+            ADD COLUMN `comments`  varchar(100)  default NULL;
+        </sql>
+    </diff>
+	<!--
+    <diff>
+        <version>2.9</version>
+        <author>khairul</author>
+        <date>March 21 2015</date>
+        <description>
+            New entity
+        </description>    
+        
+       
+        <sql>                      
+            CREATE TABLE IF NOT EXISTS `opd_drug` (
+            `order_id` INT(11) NOT NULL,
+            `patient_id` INT(11) DEFAULT NULL,
+            `encounter_id` INT(11) DEFAULT NULL,
+            `drug_id` INT(11) DEFAULT NULL,
+            `drug_name` VARCHAR(45) DEFAULT NULL,
+            `formulation_id` INT(11) DEFAULT NULL,
+            `frequency_id` INT(11) DEFAULT NULL,
+            `no_of_days` INT(11) DEFAULT NULL,
+            `comments` VARCHAR(45) DEFAULT NULL,
+            `created_on` DATETIME DEFAULT NULL,
+            `created_by` VARCHAR(45) DEFAULT NULL,
+            PRIMARY KEY (`order_id`)
+            ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+            
+            
+        </sql>
+    </diff> -->
+         
+   
+    
+    <diff>
+        
+        <version>4.1</version>
+        <author>yasmin akter</author>
+        <date>April 02 2015</date>
+        <description>
+            For IPD 
+        </description>
+         <sql>
+        CREATE TABLE IF NOT EXISTS `ipd_patient_intake` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `oral` VARCHAR(45) DEFAULT NULL,            
+            `iv` VARCHAR(45) DEFAULT NULL,
+            `ng_tube` VARCHAR(45) DEFAULT NULL,
+            `spc` VARCHAR(45) DEFAULT NULL,
+            `catheter` VARCHAR(45) DEFAULT NULL,
+            `stool` VARCHAR(45) DEFAULT NULL,
+            `vomiting` VARCHAR(45) DEFAULT NULL,
+            `drain_1` VARCHAR(45) DEFAULT NULL,
+            `drain_2` VARCHAR(45) DEFAULT NULL,
+            `drain_3` VARCHAR(45) DEFAULT NULL,
+            `drain_4` VARCHAR(45) DEFAULT NULL,
+            `drain_5` VARCHAR(45) DEFAULT NULL,
+            `drain_6` VARCHAR(45) DEFAULT NULL,
+            `patient_id` INT(11) DEFAULT NULL,
+            `ipd_patientadmissionlog_id` INT(11) DEFAULT NULL,
+            `created_on` DATETIME DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+        </diff>
+        
+        <diff>
+        <version>4.2</version>
+        <author>Md. Khairul Islam</author>
+        <date>April 21 2015</date>
+        <description>
+            For drug Order Opd
+        </description>    
+        
+        <sql>                      
+            CREATE TABLE IF NOT EXISTS `drug_order_opd` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `order_id` INT(11) DEFAULT NULL,
+            `patient_id` INT(11) DEFAULT NULL,
+            `drug_name` VARCHAR(45) DEFAULT NULL,
+            `drug_id` INT(11) DEFAULT NULL,
+            `formulation` VARCHAR(55) DEFAULT NULL,
+            `frequency` VARCHAR(55) DEFAULT NULL,
+            `no_of_days` INT(11) DEFAULT NULL,
+            `creator` INT(11) DEFAULT NULL,
+            `created_on` DATETIME DEFAULT NULL,
+            `encounter_id` INT(11) DEFAULT NULL,
+
+            PRIMARY KEY (`id`)
+            ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    
+     <diff>
+        <version>5.1</version>
+        <author>Md. Khairul Islam</author>
+        <date>April 15 2015</date>
+        <description>
+            For Opd Drug Order
+        </description>    
+        
+        <sql>                      
+            CREATE TABLE IF NOT EXISTS `opddrugorder_new` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `order_id` INT(11) DEFAULT NULL,
+            `patient_id` INT(11) DEFAULT NULL,
+            `drug_name` VARCHAR(45) DEFAULT NULL,
+            `drug_id` INT(11) DEFAULT NULL,
+            `formulation` VARCHAR(55) DEFAULT NULL,
+            `frequency` VARCHAR(55) DEFAULT NULL,
+            `no_of_days` INT(11) DEFAULT NULL,
+            `creator` INT(11) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `encounter_id` INT(11) DEFAULT NULL,
+
+            PRIMARY KEY (`id`)
+            ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    
+        
+</sqldiff>

@@ -1,0 +1,76 @@
+ul.tree,ul.tree * {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 10px 5px 0px;
+}
+
+ul.tree img.arrow {
+    padding: 2px 0 0 0;
+    border: 0;
+    width: 20px;
+}
+
+ul.tree li {
+    padding:  10px 2px 0 10px;
+
+}
+
+ul.tree li ul {
+    padding: 0 0 0 20px;
+    margin: 0;
+}
+
+ul.tree label {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 3px 0;
+}
+
+ul.tree label.hover {
+    color: red;
+}
+
+p {
+    margin: 5px 15px;
+}
+
+ul {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+/*This is for collapsed */
+ul.tree li .arrow {
+    width: 34px;
+    height: 34px;
+    padding:  0px 10px 0px 50px;
+    margin: 0;
+    cursor: pointer;
+    float: left;
+    background: transparent no-repeat 0 -2px;
+}
+
+ul.tree li .collapsed {
+    background-image: url(collapsed.png);
+}
+
+ul.tree li .expanded {
+    background-image: url(expanded.png);
+}
+/*This is for checkbox */
+ul.tree li .checkbox {
+    width: 33px;
+    height: 33px;
+    padding:  0px 10px 0px 50px;
+    margin: 0;
+    cursor: pointer;
+    float: left;
+    background: url(check0.png) no-repeat 0 1px;
+}
+
+ul.tree li .checked {
+    background-image: url(check2.png);
+}
+
+ul.tree li .half_checked {
+    background-image: url(check1.png);
+}

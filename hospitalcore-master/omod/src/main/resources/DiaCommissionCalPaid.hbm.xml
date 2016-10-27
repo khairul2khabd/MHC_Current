@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+    <class name="DiaCommissionCalPaid" table="dia_commission_calculation_paid" batch-size="500">
+
+        <id name="id" type="int" column="id"
+            unsaved-value="0"> 
+            <generator class="native" />
+        </id>
+                              
+        <property name="serviceAmount" column="service_amount"/>
+        <property name="netAmount" column="net_amount"/>
+        <property name="lessAmount" column="less_amount"/>
+        
+        <property name="docCommission" column="doc_amount"/>
+        <property name="createdDate" column="created_date"/>
+        <many-to-one name="creator" column="creator" class="org.openmrs.User" foreign-key="fk_user_id" />
+
+        <property name="docId" column="doc_id"  />
+        <property name="note" column="note"  /> 
+        
+        <property name="paidAmount" column="paid_amount"/>
+        <property name="dueAmount" column="due_amount"/>
+           			
+    </class>
+</hibernate-mapping>

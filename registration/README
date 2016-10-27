@@ -1,0 +1,3 @@
+### Registration Module for OpenMRS 1.8. ###
+### Jointly Customized by GIZ Bangladesh and HISP India under the terms of GPL v3 ###
+### Source code is the property of Director General of Health Service, Ministry of Helath and Family Welfare, Bangladesh; Supported and financed by GIZ Bangladesh. ###

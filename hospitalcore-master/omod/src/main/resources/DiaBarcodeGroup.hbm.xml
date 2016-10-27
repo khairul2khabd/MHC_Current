@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+    <class name="DiaBarcodeGroup" table="dia_barcode_group" batch-size="500">
+
+        <id name="id" type="int" column="id"
+                    unsaved-value="0">
+            <generator class="native" />
+        </id>
+        
+        <property name="group1" column="group1_conid" />
+        <property name="group2" column="group2_conid" />
+        <property name="group3" column="group3_conid" />
+        <property name="group4" column="group4_conid" />
+        <property name="group5" column="group5_conid" />
+        <property name="group6" column="group6_conid" />
+        <property name="group7" column="group7_conid" />
+         
+                 
+    </class>
+</hibernate-mapping>

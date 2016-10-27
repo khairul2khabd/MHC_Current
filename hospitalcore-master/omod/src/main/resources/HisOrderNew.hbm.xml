@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+	<class name="HisOrder" table="his_order" batch-size="500">
+
+		<id name="id" type="int" column="id"
+			unsaved-value="0">
+			<generator class="native" />
+		</id>
+		
+                
+		<property name="accessionNumber" column="accession_number" not-null="true" />
+                <property name="modality" column="modality" />
+                <property name="institutionName" column="institution_name" />
+                <property name="refPhysicianName" column="ref_physician_name" />
+                <property name="patientName" column="patient_name" />
+                <property name="patientIdentifier" column="patient_identifier" />
+                <property name="birthDate" column="patient_birth_date" />
+                <property name="patient_sex" column="patient_sex" />
+                <property name="patientWeight" column="patient_weight"/>
+                
+                <property name="requestingPhysician" column="requesting_physician" />
+                <property name="reqProcDesc" column="req_proc_desc" />
+                <property name="admissionId" column="admission_id" />
+                <property name="schStationAeTitle" column="sch_station_ae_title" />
+                
+                <property name="schStationName" column="sch_station_name" />
+                <property name="schProcStepStartDate" column="sch_proc_step_start_date" />
+                <property name="schProcStepStartTime" column="sch_proc_step_start_time" />
+                <property name="schPrefPhysicianName" column="sch_perf_physician_name" />
+                <property name="schProcStepDesc" column="sch_proc_step_desc" />
+                <property name="schProcStepId" column="sch_proc_step_id" />
+                <property name="schProcStepLocation" column="sch_proc_step_location" />
+                <property name="reqProcId" column="req_proc_id" />
+                <property name="reasonForTheReqProc" column="reason_for_the_req_proc" />
+                <property name="reqProcPriority" column="req_proc_priority" />
+                <property name="orderStatus" column="order_status" />
+                <property name="errorDesc" column="error_desc" />
+                <property name="ipdField1" column="ipd_field1" />
+                <property name="ipdField2" column="ipd_field2" />
+                <property name="ipdField3" column="ipd_field3" />
+                <property name="ipdField4" column="ipd_field4" />
+                <property name="ipdField5" column="ipd_field5" />
+                <property name="ipdField6" column="ipd_field6" />
+                <property name="ipdField7" column="ipd_field7" />
+                <property name="ipdField8" column="ipd_field8" />
+                <property name="createdDate" column="created_date" />
+                <property name="patientId" column="patient_id" />
+                
+	</class>
+</hibernate-mapping>

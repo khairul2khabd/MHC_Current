@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+	<class name="OrderPacs" table="order_pacs" batch-size="500">
+
+		<id name="id" type="int" column="id"
+			unsaved-value="0">
+			<generator class="native" />
+		</id>
+		
+                
+		<property name="orderId" column="order_id" not-null="true" />
+                <property name="patientId" column="patient_id" />
+                <property name="patientIdentifier" column="patient_identifier" />
+                <property name="fullname" column="fullname" />
+                <property name="givenName" column="given_name" />
+                <property name="birthdate" column="birthdate" />
+                <property name="age" column="age" />
+                <property name="gender" column="gender" />
+                <many-to-one name="concept" column="concept_id" class="org.openmrs.Concept"/>
+                <property name="createdDate" column="created_date" />
+                <many-to-one name="creator" column="creator" class="org.openmrs.User"/>
+                <many-to-one name="encounter" column="encounter_id" class="org.openmrs.Encounter"/>
+                <property name="status" column="status"	length="1" not-null="true" />
+	</class>
+</hibernate-mapping>

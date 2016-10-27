@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+    <class name="DiaRmpCommCalculationPaidAdj" table="dia_rmp_comm_calculation_paid_adj" batch-size="500">
+
+        <id name="id" type="int" column="rmp_com_adj_id"
+            unsaved-value="0"> 
+            <generator class="native" />
+        </id>
+                              
+        <many-to-one name="diaRmpComPaid" column="com_paid_id"
+                     class="org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaid" lazy="false"
+                     foreign-key="fk_diacompaidrmp_id" />
+              
+        <property name="payableAmount" column="payable_amount"/>
+        <property name="paidAmount" column="paid_amount"/>
+        <property name="dueAmount" column="due_amount"/>
+        <many-to-one name="user" column="User" class="org.openmrs.User"
+                     foreign-key="fk_diarmpcompaid_adj_user" />
+        <property name="createdDate" column="created_date"/>
+           			
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+	<class name="DiaConceptNumericRe" table="dia_concept_numeric_re"
+		batch-size="500">
+
+		<id name="id" type="int" column="id"
+			unsaved-value="0">
+			<generator class="native" />
+		</id>
+                <property name="conceptId" column="concept_id" />
+                
+                <many-to-one name="diaConceptNumeric" column="numeric_id"
+			class="org.openmrs.module.hospitalcore.model.DiaConceptNumeric" lazy="false"
+			foreign-key="fk_diaconceptnumeric_numeric_id" />
+                
+               
+                <property name="normalRange" column="normal_range" />
+               
+                 
+                
+	</class>
+</hibernate-mapping>

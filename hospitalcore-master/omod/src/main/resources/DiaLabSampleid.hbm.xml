@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+    <class name="DiaLabSampleid" table="dia_lab_sampleid"
+           batch-size="500">
+        <id name="id" type="int" column="id"
+            unsaved-value="0">
+            <generator class="native" />
+        </id>
+        <many-to-one name="patient" column="patient_id" class="org.openmrs.Patient"
+                     lazy="false" foreign-key="fk_dialab_patient" />
+        <property name="sampleId" column="sampleid" />                      
+        <many-to-one name="diaPatientServiceBill" column="bill_id"
+                     class="org.openmrs.module.hospitalcore.model.DiaPatientServiceBill" lazy="false"
+                     foreign-key="fk_dialab_bill_id" />
+		
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqldiff PUBLIC "-//OpenMRS//DTD OpenMRS SQL Diff Config 1.0//EN" "http://resources.openmrs.org/doctype/sqldiff-1.0.dtd">
+
+<sqldiff version="1.0">
+	<help>
+		USE:
+		The diffs are ordered by datamodel version number.
+		The script
+		can be run in a top down fashion and is
+		expected to not failor
+		overwrite old data
+
+		EXPECT:
+		- "use business-database-name;" was called
+		prior to
+		calling this script
+	</help>
+	<diff>
+		<version>0.1</version>
+		<author>Truong Ha</author>
+		<date>Sep 14th 2011</date>
+		<description>
+			Create table registration fee
+		</description>
+		<sql>
+			CREATE TABLE IF NOT EXISTS `registration_fee` (
+			`registration_fee_id` int(11) NOT NULL AUTO_INCREMENT,
+			`fee` decimal(19,2) NOT NULL,
+			`patient_id` int(11) NOT NULL,
+			`created_by` int(11) NOT NULL,
+			`created_on` datetime NOT NULL,
+			PRIMARY KEY (`registration_fee_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		</sql>
+	</diff>
+
+
+
+	<diff>
+		<version>0.2</version>
+		<author>kesavulu</author>
+		<date>June 5th 2012</date>
+		<description>
+			Alter table person attribute
+		</description>
+		<sql>
+			ALTER TABLE person_attribute MODIFY COLUMN value varchar(255);
+		</sql>
+	</diff>
+        
+        <diff>
+        <version>0.3</version>
+        <author>Md Khairul Islam</author>
+        <date>Sep 13th 2015</date>
+        <description>
+            This is for Diagnostic center Ref. Doctor info details.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_doctor_details` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `doctor_name` varchar(50) NOT NULL,
+            `creator` INT(11) NOT NULL DEFAULT '0',
+            `created_on` datetime NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+        
+    <diff>
+        <version>0.4</version>
+        <author>Md Khairul Islam</author>
+        <date>Sep 14th 2015</date>
+        <description>
+            When patient create with refered doctor store this info.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_ref_doctor` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `doc_id` INT(11) NOT NULL,
+            `doc_name` varchar(55) DEFAULT NULL,
+            `patient_id` INT(11) NOT NULL,
+            `patient_name` varchar(20) DEFAULT NULL,
+            `encounter_id` INT(11) NOT NULL,
+            `creator` INT(11) NOT NULL DEFAULT '0',
+            `created_date` datetime NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>0.5</version>
+        <author>Md Khairul Islam</author>
+        <date>Oct 18th 2015</date>
+        <description>
+            Marketed by Person Name
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_marketed_by` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `name` varchar(55) DEFAULT NULL,
+            `creator` INT(11) NOT NULL DEFAULT '0',
+            `created_date` datetime NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>0.6</version>
+        <author>Md Khairul Islam</author>
+        <date>Sep 14th 2015</date>
+        <description>
+            Marketed by person information store here.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_ref_marketed` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `mar_person_id` INT(11) NOT NULL,
+            `mar_person_name` varchar(55) DEFAULT NULL,
+            `patient_id` INT(11) NOT NULL,
+            `patient_name` varchar(20) DEFAULT NULL,
+            `encounter_id` INT(11) NOT NULL,
+            `creator` INT(11) NOT NULL DEFAULT '0',
+            `created_date` datetime NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>0.7</version>
+        <author>Md Khairul Islam</author>
+        <date>Oct 19th 2015</date>
+        <description>
+            Billing Queue for New design.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_billing_queue` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `ref_doc_id` INT(11) DEFAULT NULL,
+            `ref_mar_id` INT (11) DEFAULT NULL,
+            `patient_id` INT(11) NOT NULL,
+            `patient_name` varchar(20) DEFAULT NULL,
+            `encounter_id` INT(11) NOT NULL,
+            `status` varchar(20) DEFAULT NULL,
+            `creator` INT(11) NOT NULL DEFAULT '0',
+            `created_date` datetime NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>0.8</version>
+        <author>Md Khairul Islam</author>
+        <date>Oct 19th 2015</date>
+        <description>
+            dia_billing_queue add more column.
+        </description>
+        <sql>
+            ALTER TABLE `dia_billing_queue` 
+            ADD COLUMN `identifier`  varchar(50)  default NULL,
+            ADD COLUMN `age`  int(11)  default NULL,
+            ADD COLUMN `gender`  varchar(6)  default NULL,
+            ADD COLUMN `fullname`  varchar(80)  default NULL;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>0.9</version>
+        <author>Md Khairul Islam</author>
+        <date>Dec 1st 2015</date>
+        <description>
+            Diagnostic center patientId maintained. Add New patientId.
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_patient` (
+            `new_patient_id` int(11) NOT NULL AUTO_INCREMENT,
+            `old_patient_id` INT(11) DEFAULT NULL,
+            `creator` INT(11) NOT NULL DEFAULT '0',
+            `created_date` datetime NOT NULL,
+            PRIMARY KEY (`new_patient_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>1.0.0</version>
+        <author>Md Khairul Islam</author>
+        <date>May 2nd 2016</date>
+        <description>
+            RMP Name
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_rmp_by` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `name` varchar(55) DEFAULT NULL,
+            `creator` INT(11) NOT NULL DEFAULT '0',
+            `created_date` datetime NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>1.0.1</version>
+        <author>Md Khairul Islam</author>
+        <date>May 2nd 2016</date>
+        <description>
+            dia_billing_queue add more column.
+        </description>
+        <sql>
+            ALTER TABLE `dia_billing_queue` 
+            ADD COLUMN `ref_rmp_id` INT(11) DEFAULT NULL        
+        </sql>
+    </diff>
+
+
+</sqldiff>
+
+
