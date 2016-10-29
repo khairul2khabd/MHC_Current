@@ -154,6 +154,11 @@ public interface MedisunService extends OpenmrsService {
     public List<DiaRmpCommCalculationPaid> getRmpComCalPaidByIdDate(int rmpId, int rmpId2,Date sDate,Date eDate)throws APIException;
     
     public List<DiaBarcodeGroup> listDiaBarcodeGroup()throws APIException;
-        
+    
+    public PatientSearch getPatientByPatientIdentifier(String patientId)throws APIException;
+    
+    public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId)throws APIException;
+    
+    
 }
 

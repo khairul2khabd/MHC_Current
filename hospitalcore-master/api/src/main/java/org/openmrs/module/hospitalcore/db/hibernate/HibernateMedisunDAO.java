@@ -10,6 +10,7 @@ package org.openmrs.module.hospitalcore.db.hibernate;
  * @author khairul
  */
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
@@ -18,9 +19,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
@@ -533,7 +536,7 @@ public class HibernateMedisunDAO implements MedisunDAO {
     public List<User> getAllUser() throws DAOException {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
 
-       // criteria.add(Restrictions.eq("roles.role", "DOCTOR"));
+        // criteria.add(Restrictions.eq("roles.role", "DOCTOR"));
         return criteria.list();
     }
 
@@ -572,71 +575,21 @@ public class HibernateMedisunDAO implements MedisunDAO {
     }
 
     public List<DiaBarcodeGroup> listDiaBarcodeGroup() throws DAOException {
-        Criteria criteria=sessionFactory.getCurrentSession().createCriteria(DiaBarcodeGroup.class);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaBarcodeGroup.class);
         return criteria.list();
     }
 
+    public PatientSearch getPatientByPatientIdentifier(String patientId) throws DAOException {
+        Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientSearch.class);
+        criteria.add(Restrictions.eq("identifier",patientId));
+        return (PatientSearch) criteria.uniqueResult();
+    }
+
+    public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId) throws DAOException {
+        Criteria criteria=sessionFactory.getCurrentSession().createCriteria(DiaPatientServiceBill.class);
+        criteria.add(Restrictions.eq("patient.id",patientId));
+        return (DiaPatientServiceBill) criteria.uniqueResult();
+    }
+ 
+
 }
-
-/*
- sessionFactory.getCurrentSession().saveOrUpdate(diaBillItem);
- return diaBillItem;
-
- sessionFactory.getCurrentSession().delete(diaBillingQueue);
-
- hql = "from  DiaCommissionCalPaid d "
- //  + "INNER JOIN DiaPatientServiceBillItem di ON d.billId = di.diaPatientServiceBill.billId "
- + " where d.docId='"
- + docId
- + "' AND d.createdDate BETWEEN '"
- + startDate
- + "' AND '"
- + endDate
- + "'";  
-
- SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
- String startDate = sdf.format(date) + " 00:00:00";
- String endDate = sdf.format(date) + " 23:59:59";
- String hql = "from OpdDrugOrder o where o.patient='"
- + patientId
- + "' AND o.createdOn BETWEEN '"
- + startDate
- + "' AND '"
- + endDate
- + "' AND o.orderStatus=0 AND o.cancelStatus=0 GROUP BY encounter";
- Session session = sessionFactory.getCurrentSession();
- Query q = session.createQuery(hql);
- List<OpdDrugOrder> list = q.list();
- return list;
-
- public List<DiaPatientServiceBill> getCommission(int docId, String sDate, String eDate, String path, String radio) throws DAOException {
- SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
- String startDate = sdf.format(sDate) + "00:00:00";
- String endDate = sdf.format(eDate) + "23:59:59";
- String hql = null;
- // hql = "SELECT d.billId, d.patientID  from  DiaPatientServiceBill d "
- hql = "from  DiaPatientServiceBill d "
- //  + "INNER JOIN DiaPatientServiceBillItem di ON d.billId = di.diaPatientServiceBill.billId "
- + " where d.refDocId='"
- + docId
- + "' AND d.createdDate BETWEEN '"
- + startDate
- + "' AND '"
- + endDate
- + "' AND d.printed=1'";
- if (StringUtils.isNotBlank(path)) {
- hql += " AND d.billingStatus = '" + path + "' ";
- }
- if (StringUtils.isNotBlank(radio)) {
- hql += " AND d.billingStatus = '" + radio + "' ";
- }
-
- Session session = sessionFactory.getCurrentSession();
- Query q = session.createQuery(hql);
- List<DiaPatientServiceBill> list = q.list();
- return list;
-
- }
-
-
- */

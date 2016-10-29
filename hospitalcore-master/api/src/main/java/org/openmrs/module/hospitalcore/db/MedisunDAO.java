@@ -127,25 +127,29 @@ public interface MedisunDAO {
     public List<DiaLabSampleid> getSampleIdByBillId(int billId) throws DAOException;
 
     public List<DiaCommissionCal> getDiaComCalRmp(int rmpId, Date sDate, Date eDate) throws DAOException;
-    
+
     public List<DiaRmpName> searchRmpName(String text) throws DAOException;
-    
+
     public DiaRmpName getDiaRmpById(int rmpId) throws DAOException;
-    
-    public DiaRmpCommCalculationPaid saveRmpComPaid(DiaRmpCommCalculationPaid diaRmp)throws DAOException;
-    
-    public DiaRmpCommCalculationPaid getDiaRmpCalPaidById(int Id)throws DAOException;
-    
-    public DiaCommissionCalPaid getDiaComCalPaidById(int id)throws DAOException;
-    
+
+    public DiaRmpCommCalculationPaid saveRmpComPaid(DiaRmpCommCalculationPaid diaRmp) throws DAOException;
+
+    public DiaRmpCommCalculationPaid getDiaRmpCalPaidById(int Id) throws DAOException;
+
+    public DiaCommissionCalPaid getDiaComCalPaidById(int id) throws DAOException;
+
     public List<User> getAllUser() throws DAOException;
+
+    public DiaCommissionCalPaidAdj saveDiaComPaidAdj(DiaCommissionCalPaidAdj diaAdj) throws DAOException;
+
+    public DiaRmpCommCalculationPaidAdj saveDiaRmpAdj(DiaRmpCommCalculationPaidAdj diaRmpAdj) throws DAOException;
+
+    public List<DiaRmpCommCalculationPaid> getRmpComCalPaidByIdDate(int rmpId, int rmpId2, Date sDate, Date eDate) throws DAOException;
+
+    public List<DiaBarcodeGroup> listDiaBarcodeGroup() throws DAOException;
+
+    public PatientSearch getPatientByPatientIdentifier(String patientId) throws DAOException;
     
-    public DiaCommissionCalPaidAdj saveDiaComPaidAdj(DiaCommissionCalPaidAdj diaAdj)throws DAOException;
-    
-    public DiaRmpCommCalculationPaidAdj saveDiaRmpAdj(DiaRmpCommCalculationPaidAdj diaRmpAdj)throws DAOException;
-    
-    public List<DiaRmpCommCalculationPaid> getRmpComCalPaidByIdDate(int rmpId, int rmpId2,Date sDate,Date eDate)throws DAOException;
-    
-     public List<DiaBarcodeGroup> listDiaBarcodeGroup()throws DAOException;
- 
+    public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId)throws DAOException;
+     
 }

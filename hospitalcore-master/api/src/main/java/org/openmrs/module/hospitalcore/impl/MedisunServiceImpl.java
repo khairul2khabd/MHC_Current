@@ -416,5 +416,12 @@ public class MedisunServiceImpl extends BaseOpenmrsService implements MedisunSer
         return dao.listDiaBarcodeGroup();
     }
 
+    public PatientSearch getPatientByPatientIdentifier(String patientId) throws APIException {
+        return dao.getPatientByPatientIdentifier(patientId);
+    }
+
+    public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId) throws APIException {
+        return dao.getDiaPatienSerBillByPatientId(patientId);
+    }
     
 }
