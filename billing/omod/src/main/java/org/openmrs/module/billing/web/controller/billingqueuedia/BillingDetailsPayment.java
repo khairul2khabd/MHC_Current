@@ -127,16 +127,37 @@ public class BillingDetailsPayment {
     }
     //Due Bill Collect 
     @RequestMapping(value = "/module/billing/searchBill.htm", method = RequestMethod.GET)
-    public String searchBill(@RequestParam("billId") String billId, Model model) {
+    public String searchBill(@RequestParam(value="billId",required = false) String billId,
+            @RequestParam(value="patientId", required = false) String patientId,
+            Model model) {
         MedisunService ms = Context.getService(MedisunService.class);
         int bId = 0;
-        try {
+       
+        if(!billId.isEmpty()){
+           try {
             bId = Integer.parseInt(billId);
+           // pId = Integer.parseInt(billId);
         } catch (NumberFormatException e) {
             model.addAttribute("Found", "Cannot find bill");
             return "redirect:/module/billing/directbillingqueue.form";
+        } 
         }
-        DiaPatientServiceBill dpsb = ms.getDiaPatientServiceBillId(bId);
+        
+        DiaPatientServiceBill dpsb=new DiaPatientServiceBill();
+         
+        if(bId > 0){
+              dpsb = ms.getDiaPatientServiceBillId(bId);
+             
+        }
+        if(!patientId.isEmpty()){
+            PatientSearch ps = ms.getPatientByPatientIdentifier(patientId);   /// from view
+            PatientSearch ps1 = ms.getPatientSerachByID(ps.getPatientId());  // Convert String to Integer
+            dpsb = ms.getDiaPatienSerBillByPatientId(ps1.getPatientId()); /// Finally Get DiaPatientServiceBill Info
+            
+            System.out.println("**********pppp"+patientId);
+            System.out.println("**********pppp"+ps.getIdentifier());
+        }
+        
         if (null != dpsb) {
             return "redirect:/module/billing/dueBill.htm?patientId=" + dpsb.getPatient().getId()
                     + "&billId=" + dpsb.getBillId() + "&refDocId=" + dpsb.getRefDocId();

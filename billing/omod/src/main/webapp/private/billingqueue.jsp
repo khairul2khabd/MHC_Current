@@ -95,18 +95,35 @@
         tb_show("Search Bill", url);
         ///url = "showAllDiagnosis.htm?patientId="+patientId+"&opdId="+opdId+"&queueId="+queueId+"&referralId="+referralId+"&keepThis=false&TB_iframe=true&height=600&width=1000";
     }
+    function validate() {
+        var billId = $("#billId").val();
+        var patientId = $("#patientId").val();
+
+        if (billId.length > 0 && patientId.length > 0) {
+            alert("Please Enter any One, Bill Id or Patient Id !!!!");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 </script> 
 
 
-<form class="kha-due" id="billSearch" action="searchBill.htm" method="GET">
+<form class="kha-due" id="billSearch" action="searchBill.htm" method="GET" onsubmit="javascript:return validate();">
     <h1>Billing Queue </h1>
     <div class="boxHeader">   <strong>Due Collect / Reprint Invoice</strong></div>
     <div class="box">
         <span style="font-size:16px; font-weight: bold;"> Bill ID : </span> 
-        <input type="text" placeholder="Due amount Collect by Id" id="billId" name="billId" style="width:250px;"/>
+        <input type="text" placeholder="Bill Id" id="billId" name="billId" style="width:150px;"/> &emsp;
+
+        <span style="font-size:16px; font-weight: bold;"> Patient ID : </span> 
+        <input type="text" placeholder="Patient Id" id="patientId" name="patientId" style="width:150px;"/>
+
         <input type="submit" class="bu" id="find" value="Find" onClick="find();" /> 
+
         <span style="position:fixed; left:1300px;">
-        <input type="button" class="bs" id="find" value="&#9906;  Search Test Price" onclick="window.open('billSearch.form', '_blank');")/>
+            <input type="button" class="bs" id="find" value="&#9906;  Search Test Price" onclick="window.open('billSearch.form', '_blank');")/>
         </span>
     </div>
 </form>

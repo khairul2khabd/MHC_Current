@@ -6,7 +6,7 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="../includes/js_css.jsp"%>
-<br> dddd
+<br>
 <form method="get" action="directbillingqueue.form" id="billPrint">
     <input type="hidden" id="patientId" name="patientId" value="${patient.id}" />
     <input type="hidden" id="billId" name="billId" value="${billId}" />
