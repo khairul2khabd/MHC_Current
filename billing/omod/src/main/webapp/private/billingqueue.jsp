@@ -103,6 +103,10 @@
             alert("Please Enter any One, Bill Id or Patient Id !!!!");
             return false;
         }
+        else if (billId.length < 1 && patientId.length < 1) {
+            alert("You Did not fillup any one!!!!");
+            return false;
+        }
         else {
             return true;
         }

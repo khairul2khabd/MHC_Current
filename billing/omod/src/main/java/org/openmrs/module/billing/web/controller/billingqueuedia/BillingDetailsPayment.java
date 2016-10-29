@@ -47,22 +47,22 @@ import org.openmrs.module.hospitalcore.model.PatientSearch;
 public class BillingDetailsPayment {
 
     @RequestMapping(value = "/module/billing/billdetails.form", method = RequestMethod.GET)
-    public String billAddEdit(@RequestParam(value="patientId", required = false) Integer patientId,
+    public String billAddEdit(@RequestParam(value = "patientId", required = false) Integer patientId,
             @RequestParam(value = "refDocId", required = false) Integer refDocId,
             @RequestParam(value = "refMarId", required = false) Integer refMarId,
             @RequestParam(value = "orderId", required = false) Integer orderId,
             @RequestParam(value = "encounterId", required = false) Integer enocounterId,
             @RequestParam(value = "date", required = false) String dStr, Model model) {
-        
+
         MedisunService ms = Context.getService(MedisunService.class);
         List<BillableService> diaBillOrderList = ms.getDiaBillingOrderandPatientId(orderId, patientId);
         model.addAttribute("billOrderList", diaBillOrderList);
-        
-        List<DiaBillingOrder> dbo=ms.getDiaBillOrderByPatientIdOrderId(patientId, orderId);
+
+        List<DiaBillingOrder> dbo = ms.getDiaBillOrderByPatientIdOrderId(patientId, orderId);
         model.addAttribute("dbo", dbo);
         ConceptService cs = Context.getConceptService();
-      //  Concept c=cs.getConcept(2215);
-      //  model.addAttribute("c", c);
+        //  Concept c=cs.getConcept(2215);
+        //  model.addAttribute("c", c);
 //        List<String> cn = new ArrayList();
 //           
 //        for (int i = 0; i < dbo.size(); i++) {
@@ -76,92 +76,97 @@ public class BillingDetailsPayment {
         model.addAttribute("patientId", patientId);
         model.addAttribute("orderId", orderId);
         model.addAttribute("encounterId", enocounterId);
-        
+
         return "module/billing/private/addedit";
     }
-    
+
     @RequestMapping(value = "/module/billing/removeSer.htm", method = RequestMethod.GET)
     public String serviceReomve( //@RequestParam("patientId") Integer patientId,
-            
+
             @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "patientId", required = false) Integer patientId,
             @RequestParam(value = "orderId", required = false) Integer orderId,
             @RequestParam(value = "date", required = false) String dStr, Model model) {
-        
+
         MedisunService ms = Context.getService(MedisunService.class);
-        
-        DiaBillingOrder d=ms.getDiaBillOrderById(id);
+
+        DiaBillingOrder d = ms.getDiaBillOrderById(id);
         ms.removeDiaBillOrder(d);
-        model.addAttribute("patientId",patientId);
-        model.addAttribute("orderId",orderId);
-        model.addAttribute("encounterId",d.getEncounterId());
-        return "redirect:/module/billing/billdetails.form";               
+        model.addAttribute("patientId", patientId);
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("encounterId", d.getEncounterId());
+        return "redirect:/module/billing/billdetails.form";
     }
+
     @RequestMapping(value = "/module/billing/serviceUpdate.htm", method = RequestMethod.POST)
     public String serviceUpdate( //@RequestParam("patientId") Integer patientId,
-            
+
             //@RequestParam(value = "id", required = false) Integer id,
             ServiceResultCommandNew command,
             @RequestParam(value = "patientId", required = false) Integer patientId,
             @RequestParam(value = "orderId", required = false) Integer orderId,
-            @RequestParam(value = "encounterId", required = false) Integer encounterId,      
+            @RequestParam(value = "encounterId", required = false) Integer encounterId,
             @RequestParam(value = "date", required = false) String dStr, Model model) {
-        
+
         MedisunService ms = Context.getService(MedisunService.class);
-        ConceptService cs=Context.getService(ConceptService.class);
-        
-         for (Integer pId : command.getSelectedTestDetails()) {
-                DiaBillingOrder dbo = new DiaBillingOrder();
-                dbo.setPatientId(patientId);
-                dbo.setOrderId(orderId);
-                dbo.setCreator(Context.getAuthenticatedUser().getId());
-                dbo.setCreatedDate(new Date());
-                dbo.setConceptId(pId);
-                dbo.setEncounterId(encounterId);
-                Concept c=cs.getConcept(pId);
-                String a = c.getName().getName();
-                dbo.setServiceName(a);
-                ms.saveDiaBillingOrder(dbo);
-            }
-        return "module/billing/thickbox/success";           
+        ConceptService cs = Context.getService(ConceptService.class);
+
+        for (Integer pId : command.getSelectedTestDetails()) {
+            DiaBillingOrder dbo = new DiaBillingOrder();
+            dbo.setPatientId(patientId);
+            dbo.setOrderId(orderId);
+            dbo.setCreator(Context.getAuthenticatedUser().getId());
+            dbo.setCreatedDate(new Date());
+            dbo.setConceptId(pId);
+            dbo.setEncounterId(encounterId);
+            Concept c = cs.getConcept(pId);
+            String a = c.getName().getName();
+            dbo.setServiceName(a);
+            ms.saveDiaBillingOrder(dbo);
+        }
+        return "module/billing/thickbox/success";
     }
+
     //Due Bill Collect 
     @RequestMapping(value = "/module/billing/searchBill.htm", method = RequestMethod.GET)
-    public String searchBill(@RequestParam(value="billId",required = false) String billId,
-            @RequestParam(value="patientId", required = false) String patientId,
+    public String searchBill(@RequestParam(value = "billId", required = false) String billId,
+            @RequestParam(value = "patientId", required = false) String patientId,
             Model model) {
         MedisunService ms = Context.getService(MedisunService.class);
         int bId = 0;
-       
-        if(!billId.isEmpty()){
-           try {
-            bId = Integer.parseInt(billId);
-           // pId = Integer.parseInt(billId);
-        } catch (NumberFormatException e) {
-            model.addAttribute("Found", "Cannot find bill");
-            return "redirect:/module/billing/directbillingqueue.form";
-        } 
+
+        if (!billId.isEmpty()) {
+            try {
+                bId = Integer.parseInt(billId);
+                // pId = Integer.parseInt(billId);
+            } catch (NumberFormatException e) {
+                model.addAttribute("Found", "Cannot find bill");
+                return "redirect:/module/billing/directbillingqueue.form";
+            }
         }
-        
-        DiaPatientServiceBill dpsb=new DiaPatientServiceBill();
+
+        DiaPatientServiceBill dpsb = null;
+        if (bId > 0) {
+            dpsb = ms.getDiaPatientServiceBillId(bId);
+        }
          
-        if(bId > 0){
-              dpsb = ms.getDiaPatientServiceBillId(bId);
-             
-        }
-        if(!patientId.isEmpty()){
-            PatientSearch ps = ms.getPatientByPatientIdentifier(patientId);   /// from view
-            PatientSearch ps1 = ms.getPatientSerachByID(ps.getPatientId());  // Convert String to Integer
-            dpsb = ms.getDiaPatienSerBillByPatientId(ps1.getPatientId()); /// Finally Get DiaPatientServiceBill Info
+
+        if (!patientId.isEmpty()) {
+           PatientSearch ps = ms.getPatientByPatientIdentifier(patientId);   /// from view
+           
+            if (ps != null) {
+                dpsb = ms.getDiaPatienSerBillByPatientId(ps.getPatientId()); /// Finally Get DiaPatientServiceBill Info  
+                System.out.println("******FFFFFFFF");
+                 
+            }
+                System.out.println("******pppppppppppp"+dpsb);
             
-            System.out.println("**********pppp"+patientId);
-            System.out.println("**********pppp"+ps.getIdentifier());
         }
-        
+
         if (null != dpsb) {
             return "redirect:/module/billing/dueBill.htm?patientId=" + dpsb.getPatient().getId()
                     + "&billId=" + dpsb.getBillId() + "&refDocId=" + dpsb.getRefDocId();
-        } else {
+        }  else {
             model.addAttribute("Found", "Cannot find bill");
             return "redirect:/module/billing/directbillingqueue.form";
         }
@@ -189,7 +194,7 @@ public class BillingDetailsPayment {
         DiaPatientServiceBill dpsb = ms.getDiaPatientServiceBillId(billId);
         model.addAttribute("dpsb", dpsb);
         model.addAttribute("image", dpsb.getImage());
-        
+
         PersonAttribute phone = patient.getAttribute("Phone Number");
         if (phone != null) {
             model.addAttribute("phone", phone.getValue());
@@ -280,17 +285,16 @@ public class BillingDetailsPayment {
             String servicename = request.getParameter(i.toString() + "service");
             service = billingService.getServiceByConceptName(servicename);
 
-           // BigDecimal ind = NumberUtils.createBigDecimal(indCount.toString());
+            // BigDecimal ind = NumberUtils.createBigDecimal(indCount.toString());
             //BigDecimal da = discountAmount.divide(ind, 2, RoundingMode.CEILING);
-
             if (dpsb.getBillingStatus() == "PAID") {
 
                 BigDecimal oneHundred = new BigDecimal(100);
                 BigDecimal le = null;
                 if (discountAmount.signum() > 0) {
-                    
-                    BigDecimal disPer=((discountAmount).divide(totalBill,4,RoundingMode.CEILING).multiply(oneHundred));
-                    
+
+                    BigDecimal disPer = ((discountAmount).divide(totalBill, 4, RoundingMode.CEILING).multiply(oneHundred));
+
                     BigDecimal less = (unitPrice.multiply(disPer)).divide(oneHundred, 0, RoundingMode.HALF_EVEN);
                     le = less;
                 } else {
