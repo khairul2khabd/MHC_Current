@@ -193,8 +193,7 @@ public class BillingDetailsPayment {
 
         DiaPatientServiceBill dpsb = ms.getDiaPatientServiceBillId(billId);
         model.addAttribute("dpsb", dpsb);
-        model.addAttribute("image", dpsb.getImage());
-
+  
         PersonAttribute phone = patient.getAttribute("Phone Number");
         if (phone != null) {
             model.addAttribute("phone", phone.getValue());
