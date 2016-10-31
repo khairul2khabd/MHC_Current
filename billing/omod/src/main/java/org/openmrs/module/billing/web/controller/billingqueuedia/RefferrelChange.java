@@ -102,13 +102,13 @@ public class RefferrelChange {
 //            dca.setRefRmp(rmpIdName);
 //            ms.saveDiaComAll(dca);
 //
-//            List<DiaCommissionCal> dc = ms.listDiaComCalByBillId(billId);
-//            for (int i = 0; i < dc.size(); i++) {
-//                DiaCommissionCal dd = (DiaCommissionCal) dc.get(i);
-//                dd.setRefId(docIdName);
-//                dd.setRefRmpId(rmpIdName);
-//                ms.saveDiaComCal(dd);
-//            }
+            List<DiaCommissionCal> dc = ms.listDiaComCalByBillId(billId);
+            for (int i = 0; i < dc.size(); i++) {
+                DiaCommissionCal dd = (DiaCommissionCal) dc.get(i);
+                dd.setRefId(docIdName);
+                dd.setRefRmpId(rmpIdName);
+                ms.saveDiaComCal(dd);
+            }
             model.addAttribute("msg", "Successfully Update !!!!");
         } else {
             DiaPatientServiceBill d = ms.getDiaPatientServiceBillId(billId);
