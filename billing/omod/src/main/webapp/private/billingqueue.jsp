@@ -125,7 +125,7 @@
         <input type="text" placeholder="Bill Id" id="billId" name="billId" style="width:150px;"/> &emsp;
 
         <span style="font-size:16px; font-weight: bold;"> Patient ID : </span> 
-        <input type="text" placeholder="Patient Id" id="patientId" name="patientId" value="MHC-" style="width:150px;"/>
+        <input type="text" placeholder="Patient Id" id="patientId" name="patientId" style="width:150px;"/>
 
         <input type="submit" class="bu" id="find" value="Find" onClick="find();" /> &emsp; ||
 

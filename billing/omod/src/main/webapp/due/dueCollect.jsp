@@ -26,7 +26,22 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
         //jQuery('#BillAmount').val("23445"); 
         jQuery('#dDate').datepicker({yearRange: 'c-30:c+30', dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true});
 
+        $('#secLess').val("0");
+        var dd = $("#secLess").val();
+        var totTube = $('#totalTube').val();
+        var billAmount = $('#totalBill').val();
+        var baWithoutTube = billAmount - totTube;
+        var discount = $('#dis').val();
+        var totaldiscount = parseFloat(discount) + parseFloat(dd);
+        var percentage = ((totaldiscount / baWithoutTube) * 100);
+        jQuery("#per").val(percentage);
 
+    <c:if test="${dpsb.voided eq 'true'}">
+        $("#secLess").addClass("void");
+        $('#totalBill').addClass("void");
+        $('input[type=text]').addClass("void");
+        $('input[type=text]').attr("disabled", "disabled");
+    </c:if>
     });
 </script>
 
@@ -49,15 +64,56 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
         $('#netamount').val(billAmount - discountamount);
 //$('#payableamount').val(billAmount-discountamount);	
     }
-    function dueamountcal(incon)
-    {
-        var netamount = $('#netamount').val();
+    function dueamountcal(incon) {
         var paidamount = incon.value;
+        var netamount = $('#netamount').val();
+        var na = $('#na').val();
         var payableamount = $('#payableamount').val();
-        $('#payableamount').val(netamount - paidamount);
-        $('#dueamount').val(netamount - paidamount);
+        //  $('#payableamount').val(netamount - paidamount);
+        // $('#dueamount').val(netamount - paidamount);
+        $('#payableamount').val(na - paidamount);
+        $('#dueamount').val(na - paidamount);
         $('#total').val(paidamount);
+        var due = document.getElementById("dueamount").value;
+        if (due < 0)
+        {
+            alert("Paid Amount Grether than Payable Amount!!! ");
+            $("#paidamount").focus();
+        }
+        var s = $('#secLess').val();
+        if (s == "") {
+            $('#secLess').val("0");
+        }
+        var dd = $("#secLess").val();
+        var totTube = $('#totalTube').val();
+        var billAmount = $('#totalBill').val();
+        var baWithoutTube = billAmount - totTube;
+        var discount = $('#dis').val();
+        var totaldiscount = parseFloat(discount) + parseFloat(dd);
+        var percentage = ((totaldiscount / baWithoutTube) * 100);
+        jQuery("#per").val(percentage);
         jQuery("#totalValue2").html(toWords(jQuery("#total").val()));
+    }
+    function secondless(incon) {
+        var dd = incon.value;
+        var secLess = incon.value;
+        var due = $('#netamount').val();
+        $('#na').val(due - secLess);
+        var na = document.getElementById("na").value;
+        $('#paidamount').val("");
+        if (na < 0)
+        {
+            alert("Paid Amount Grether than Net Amount!!! ");
+            $("#secLess").focus();
+        }
+        var totTube = $('#totalTube').val();
+        var billAmount = $('#totalBill').val();
+        var baWithoutTube = billAmount - totTube;
+        var discount = $('#dis').val();
+        var totaldiscount = parseFloat(discount) + parseFloat(dd);
+        var percentage = ((totaldiscount / baWithoutTube) * 100);
+        jQuery("#per").val(percentage);
+        var ccc = parseInt(b) + parseInt($('#totalTube').val());
     }
     function showMe(it, box) {
         var vis = (box.checked) ? "block" : "none";
@@ -106,11 +162,16 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                     }
                 }
             }
-
         }
         document.getElementById('savebill').disabled = true;
     }
 </script>
+<style>
+    .void {
+        text-decoration: line-through;
+        color:red;
+    }
+</style>
 
 <input type="hidden" id="pageId" value="billOrderDetailsPage" />
 
@@ -121,6 +182,11 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
     <input type="hidden" id="refDocId" name="refDocId"  value="${dpsb.refDocId}" />
     <input type="hidden" id="rmpId" name="rmpId"  value="${dpsb.refRmpId}" />
     <input type="hidden" id="indCount" name="indCount" value="${diaBillItemListSize}" />
+
+    <c:if test="${dpsb.voided eq 'true'}">
+        <span style="color:red; font-size:20px; font-weight:bold; padding-left:150px;">This Bill is Voided! </span> 
+        <span style="color:red; font-size:20px; font-weight:bold; padding-left:20%;">Void Reason : ${dpsb.voidedDesc} </span> 
+    </c:if>
 
     <table style="width:80%; margin:10px 0pt 15px 150px;">
         <tr> 
@@ -145,13 +211,14 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                 <c:if test="${dpsb.billingStatus == 'PAID'}">
                     <span style="font-weight:bold; font-size:20px; color:green;"> PAID </span> 
                 </c:if>
-
                 <c:if test="${dpsb.billingStatus == 'DUE'}">
                     <span style="font-weight:bold; font-size:20px; color:red;"> DUE </span> 
                 </c:if>
+                <c:if test="${dpsb.billingStatus == 'VOID'}"> 
+                    <span style="font-weight:bold; font-size:20px; color:red;"> VOID </span> 
+                </c:if>
             </td>
             <td><b>Bill Id:</b> <span style="font-weight:bold; font-size:20px; color:blue;"> ${dpsb.billId} </span> </td>
-
         </tr>  
     </table>
     <br>
@@ -165,6 +232,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             </tr>
         </thead>
         <tbody>
+            <c:set var="vartube" value="${0}"/>
             <c:forEach var="sol" items="${diaBillItemList}" varStatus="index">
                 <c:choose>
                     <c:when test="${index.count mod 2 == 0}">
@@ -174,22 +242,44 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                         <c:set var="klass" value="even" />
                     </c:otherwise>
                 </c:choose>
-                <tr class="${klass}" id="">
-                    <td align="center">${index.count}</td>
-                    <td align="left">
-                        <input type="text" style="width:780px; border:none; font-size:14px;" id="${index.count}service" name="${index.count}service"
-                               value="${sol.name}" readOnly="true">
-                    </td>
-                    <td>
-                        <input type="text" class="normaltext"  id=" servicequantity"  name=" servicequantity" 
-                               size="10" style="width:80px;"   onkeyup="updatePrice(${index.count});" value="${sol.quantity}" class="serquncalc" readOnly="true" />
-                    </td>
+                <c:if test="${sol.service.commission ne '0'}" >
+                    <tr class="${klass}" id="">
+                        <td align="center">${index.count}</td>
+                        <td align="left">
+                            <input type="text" style="width:780px; border:none; font-size:14px;" id="${index.count}service" name="${index.count}service"
+                                   value="${sol.name}" readOnly="true">
+                        </td>
+                        <td>
+                            <input type="text" class="normaltext"  id=" servicequantity"  name=" servicequantity" 
+                                   size="10" style="width:80px;"   onkeyup="updatePrice(${index.count});" value="${sol.quantity}" class="serquncalc" readOnly="true" />
+                        </td>
 
-                    <td align="right">
-                        <input type="text" id="${index.count}unitprice" name="${index.count}unitprice" class="normaltext" style="width:150px;"
-                               size="7" value="${sol.amount}" class="unitPri" readOnly="true">
-                    </td>
-                </tr>
+                        <td align="right">
+                            <input type="text" id="${index.count}unitprice" name="${index.count}unitprice" class="normaltext" style="width:150px;"
+                                   size="7" value="${sol.amount}" class="unitPri" readOnly="true">
+                        </td>
+                    </tr>
+                </c:if>
+                <c:if test="${sol.service.commission eq '0'}" >
+                    <c:set var="tubeprice" value="${sol.amount}"/>
+                    <tr class="${klass}" id="">
+                        <td align="center">${index.count}</td>
+                        <td align="left">
+                            <input type="text" style="width:780px; border:none; font-size:14px;" id="${index.count}service" name="${index.count}service"
+                                   value="${sol.name}" readOnly="true">
+                        </td>
+                        <td>
+                            <input type="text" class="normaltext"  id=" servicequantity"  name=" servicequantity" 
+                                   size="10" style="width:80px;"   onkeyup="updatePrice(${index.count});" value="${sol.quantity}" class="serquncalc" readOnly="true" />
+                        </td>
+
+                        <td align="right">
+                            <input type="text" id="${index.count}unitprice" name="${index.count}unitprice" class="normaltext" style="width:150px;"
+                                   size="7" value="${sol.amount}" class="unitPri" readOnly="true">
+                        </td>
+                    </tr>
+                    <c:set var="vartube" value="${vartube + tubeprice}"/>
+                </c:if>
             </c:forEach>
             <tr>
                 <td colspan="3" align="right" 	style="border-right: solid 4px #ccc;"><span style="font-size:20px; font-weight:bold; ">Total Bill</span> </td>
@@ -203,7 +293,6 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
     <br></br>
     <div>
         <div align="left" class="rcorners2" >
-
             <table border="1" width="90%;"   >
                 <tr>
                     <td colspan="10" align="right"><b> Bill Amount : &nbsp;</b></td>
@@ -214,6 +303,8 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                     <td colspan="10" align="right"><b> Discount Amount : &nbsp;</b></td>
                     <td align="center">  <input type="text" id="disAmounut" name="disAmounut" size="7" value="${dpsb.discountAmount}" readOnly="true" 
                                                 style="width:100px; background:#D1E0E0; text-align:center; font-size:18px; font-weight:bold; " /></td>
+                <input type="hidden" id="totalTube" name="totalTube" size="7"  value="${vartube}"  />
+                <input type="hidden" type="text" id="per" name="per" size="7"    />
                 </tr>
                 <tr>
                     <td colspan="10" align="right"><span style="font-size:18px; font-weight:bold; color:green;"> Due Amount (Tk) :</span> &nbsp;</td>
@@ -222,14 +313,37 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                                               size="7"  readOnly="true" ></td>
                 </tr>
                 <tr>
+                    <td colspan="10" align="right"><span style="font-size:18px; font-weight:bold; color:green;"> Net Amount (Tk) :</span> &nbsp;</td>
+                    <td align="center"><input type="text" id="na" name="na"  value="${dpsb.dueAmount}"
+                                              style="width:100px; font-size:18px; background:#D1E0E0; font-weight:bold; color:green; text-align:center;" 
+                                              size="7"  readOnly="true" ></td>
+                </tr>
+
+                <openmrs:hasPrivilege privilege="Second Less">
+                    <style>
+                        .a{display: ;}
+                    </style>
+                </openmrs:hasPrivilege>
+                <openmrs:hasPrivilege privilege="Second Less No">
+                    <style>
+                        .a{display:none;}
+                    </style>
+                </openmrs:hasPrivilege>
+                <tr class="a">
+                    <td colspan="10" align="right"><span style="font-size:18px; font-weight:bold; color:#990000;">Second Less (Tk) :</span> &nbsp;</td>
+                    <td align="center">
+                        <input type="text" id="secLess" name="secLess"  placeholder="Sec Less" onkeypress="return isNumberKey(event)" 
+                               style="width:150px; height:40px; color:#990000; font-weight:bold; font-size:20px; text-align:center;"   
+                               size="7"  onkeyup="secondless(this)" class="secLess" ></td>
+                </tr>
+                <tr>
                     <td colspan="10" align="right"><span style="font-size:18px; font-weight:bold; color:blue;">Due Paid (Tk) :</span> &nbsp;</td>
                     <td align="center">
                         <input type="text" id="paidamount" name="paidamount"  placeholder="Cash Paid" onkeypress="return isNumberKey(event)" 
                                style="width:150px; height:40px; color:blue; font-weight:bold; font-size:18px; text-align:center;"   
                                size="7"  onkeyup="dueamountcal(this)" class="casPaid" ></td>
                 </tr>
-
-                <tr>
+                <tr style="display:none">
                     <td colspan="10" align="right"><span style="font-size:16px; font-weight:bold; color:#7D0000;"> Payable Amount (Tk) : </span> &nbsp;</td>
                     <td align="center"><input type="text" id="payableamount" name="payableamount" 
                                               style="width:100px; color:#7D0000; background:#D1E0E0; font-size:16px; font-weight:bold; text-align:center;" class="pay"
@@ -239,7 +353,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                     <td colspan="10" align="right"><span style="font-size:18px; font-weight:bold; color:red;"> Due Amount (Tk) :</span> &nbsp;  </td>
                     <td colspan="10" align="center"><input type="text" id="dueamount" name="dueamount" 
                                                            style="color:red; font-size:18px; font-weight:bold; text-align:center; background:#D1E0E0;"
-                                                          size="7" value="0.00" readOnly="true">                        
+                                                           size="7" value="0.00" readOnly="true">                        
                     </td>
                 </tr>
             </table>
@@ -256,6 +370,10 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                             <input type="button" class="bu" value="Back"  onClick="back();" /> &nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="button" class="bu" value="Print"  onClick="printDivDup();" /> &nbsp;&nbsp;&nbsp;&nbsp;
                         </c:if>
+                        <c:if test="${dpsb.billingStatus == 'VOID'}">
+                            <input type="button" class="bu" value="Back"  onClick="back();" /> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="button" class="bu" value="Print"  onClick="printDivDup();" /> &nbsp;&nbsp;&nbsp;&nbsp;
+                        </c:if>
                     </td>
                 </tr>
             </table>
@@ -267,17 +385,21 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             <table  class="k">
                 <tr>
                     <th><b>Sl.No</b></th>
-                    <th><b> Bill Collect Id </b></th>
+                    <th><b>Coll. Id </b></th>
                     <th><b>Date</b> </th>
                     <th><b> Paid </b> </th>
+                    <th><b> Discount </b> </th>
+                    <th><b> User </b> </th>
                 </tr>
                 <c:forEach var="bList" items="${diaBillICollectList}" varStatus="index">
                     <tr>
                         <td>${index.count}</td>
                         <td style=" background-color: #FFF;" > ${bList.billCollectId} </td>
                         <td><openmrs:formatDate date="${bList.createdDate}" /></td>
-
                         <td align="right">${bList.paidAmount} </td>
+                        <td align="right">${bList.discountAmount} </td>
+                        <td align="right">${bList.user} </td>
+
                     </tr>
                 </c:forEach>
             </table>
@@ -290,15 +412,33 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             var due = $('#dueamount').val();
             if (due < 0 || paidamount == "" || paidamount < 1)
             {
-                alert("Cash Amount Empty or Cash Amount has to Getherthen Net Amount!!!");
-                //$('.casPaid').val("0");
-                //$('#payableamount').val("0");
-                //$('#dueamount').val("0");
-                return false;
+                if (paidamount == "") {
+                    jQuery("#billDetailsForm")
+                            .mask("<img src='" + openmrsContextPath + "/moduleResources/billing/spinner.gif" + "'/>&nbsp;");
+                    alert("Paid Amount Blank is not Valid!!!");
+                    $('.casPaid').focus();
+                    jQuery("#billDetailsForm").unmask();
+                    return false;
+                }
+                if (confirm('Are you sure you want to continue without money?')) {
+
+                    $('.casPaid').val("0");
+                    jQuery("#billDetailsForm").submit();
+                }
+                else {
+                    jQuery("#billDetailsForm").unmask();
+                    return false;
+                }
             }
             else {
-                jQuery("#billDetailsForm").submit();
-                //  alert("Printing ...");
+                if (confirm('Are you sure you?')) {
+
+                    jQuery("#billDetailsForm").submit();
+                    //  alert("Printing ...");
+                }
+                else {
+                    jQuery("#billDetailsForm").unmask();
+                }
             }
         }
         function back() {
@@ -457,7 +597,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             <tr>
                 <td style=" background-color: #FFF;"   align="right">  Payable : &nbsp; </td>
                 <td   style="width:60px;"> <input type="text" id="BillAmount" name="BillAmount" 
-                                           style="width:100px; border:none; text-align:right;" value="${dpsb.dueAmount}" readOnly="true"  /></td>
+                                                  style="width:100px; border:none; text-align:right;" value="${dpsb.dueAmount}" readOnly="true"  /></td>
             </tr>
             <tr>
                 <td style=" background-color: #FFF;"   align="right">  Discount : &nbsp; </td>
