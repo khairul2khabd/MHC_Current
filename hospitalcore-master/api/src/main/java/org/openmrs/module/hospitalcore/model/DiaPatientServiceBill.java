@@ -40,15 +40,7 @@ public class DiaPatientServiceBill {
     private Integer refMarId;
     private BigDecimal discountAmount;
     private Integer refRmpId;
-    private byte[] image;
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+     
 
     public Integer getRefRmpId() {
         return refRmpId;
@@ -183,7 +175,7 @@ public class DiaPatientServiceBill {
         this.receipt = receipt;
     }
 
-    public Boolean isVoided() {
+    public Boolean getVoided() {
         return voided;
     }
 
