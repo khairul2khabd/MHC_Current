@@ -456,3 +456,82 @@ table.k tbody tr.odd td {
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 3px;
 }
+
+/* For Respossive */
+
+.kha-boot { 
+    margin-left:auto;
+    margin-right:auto;
+    width: 100%;
+    height:100%;
+    background: #D2E9FF;
+    padding: 10px 20px 20px 20px;
+    font: 14px Arial, Tahoma, Helvetica, sans-serif;
+    color: #000000;
+}
+.kha-boot input[type=text]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.kha-boot input[type=text]:hover{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid blue;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.kha-boot input[type="text"]:focus {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid red;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+
+.kha-boot h1 {
+    font: 20px "Tahoma", Arial, Helvetica, sans-serif;
+    padding: 4px 8px 8px 18px;
+    display: block;
+    background: #66a3ff;
+    color:white;
+    text-align: center;
+    border-bottom: 1px solid #B8DDFF;
+    margin: -10px -20px 15px;
+    font-family:arial; 
+    font-size:16px;
+
+
+}
+.kha-boot .bu{
+    padding: 6px 15px 6px 18px;
+    background: #3EB1DD;
+    border: none;
+    color: #08088A;
+    border-radius:4px;
+    box-shadow: 1px 1px 1px #4C6E91;
+    -webkit-box-shadow: 1px 1px 1px #4C6E91;
+    -moz-box-shadow: 1px 1px 1px #4C6E91;
+    text-shadow: 3px 1px 5px #ffffff;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+
+}
+.kha-boot .bu:hover{
+    background: white;
+    color:green;
+    text-shadow: 3px 1px 5px 4px #F7FE2E;
+    box-shadow: 0px 5px 5px 5px #4C6;
+    font-weight:bold;
+} 

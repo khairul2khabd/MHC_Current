@@ -95,6 +95,10 @@
         tb_show("Search Bill", url);
         ///url = "showAllDiagnosis.htm?patientId="+patientId+"&opdId="+opdId+"&queueId="+queueId+"&referralId="+referralId+"&keepThis=false&TB_iframe=true&height=600&width=1000";
     }
+    function voidrefchange() {
+        var voidbill = jQuery("#voidbill").val();
+        window.location.href = openmrsContextPath + "/module/billing/voidrefchange.htm?voidbill=" + voidbill;
+    }
     function validate() {
         var billId = $("#billId").val();
         var patientId = $("#patientId").val();
@@ -113,23 +117,29 @@
     }
 </script> 
 
-
 <form class="kha-due" id="billSearch" action="searchBill.htm" method="GET" onsubmit="javascript:return validate();">
     <h1>Billing Queue </h1>
     <div class="boxHeader">   <strong>Due Collect / Reprint Invoice</strong></div>
-    <div class="box">
+    <div class="box"  >
         <span style="font-size:16px; font-weight: bold;"> Bill ID : </span> 
         <input type="text" placeholder="Bill Id" id="billId" name="billId" style="width:150px;"/> &emsp;
 
         <span style="font-size:16px; font-weight: bold;"> Patient ID : </span> 
-        <input type="text" placeholder="Patient Id" id="patientId" name="patientId" style="width:150px;"/>
+        <input type="text" placeholder="Patient Id" id="patientId" name="patientId" value="MHC-" style="width:150px;"/>
 
-        <input type="submit" class="bu" id="find" value="Find" onClick="find();" /> 
+        <input type="submit" class="bu" id="find" value="Find" onClick="find();" /> &emsp; ||
 
         <span style="position:fixed; left:1300px;">
             <input type="button" class="bs" id="find" value="&#9906;  Search Test Price" onclick="window.open('billSearch.form', '_blank');")/>
-        </span>
+        </span> &emsp;&emsp;     &emsp;&emsp;&emsp;&emsp; 
+
+        <openmrs:hasPrivilege privilege="Second Less">
+            <span style="font-size:16px; font-weight: bold;"> Bill ID  : </span> 
+            <input type="value" placeholder="Bill Void / Refferrel Change" id="voidbill" name="voidbill" style="width:250px; color:#0B0B61; height:35px;" title="Enter Bill id"/>
+            <input type="button" class="bu" id="voidsearch" value="&#128269;  Search" onClick="voidrefchange();" />
+        </openmrs:hasPrivilege>
     </div>
+
 </form>
 
 <div style="position:fixed;  left:50%; top:60%; display:none;" id="abc" >
@@ -146,7 +156,6 @@
         <input type="text" placeholder="search patient in system" id="searchInSystem" style="width:200px;"/>
         <input type="button" class="bu" value="Get patients" onClick="getPatientInSystem(1);"/>
         <br>
-
 
         <div id="billingqueue" style="padding:4px;"></div>
         <div id="patientqueue" style="padding:4px;"></div>
