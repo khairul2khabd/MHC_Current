@@ -580,16 +580,22 @@ public class HibernateMedisunDAO implements MedisunDAO {
     }
 
     public PatientSearch getPatientByPatientIdentifier(String patientId) throws DAOException {
-        Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientSearch.class);
-        criteria.add(Restrictions.eq("identifier",patientId));
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PatientSearch.class);
+        criteria.add(Restrictions.eq("identifier", patientId));
         return (PatientSearch) criteria.uniqueResult();
     }
 
     public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId) throws DAOException {
-        Criteria criteria=sessionFactory.getCurrentSession().createCriteria(DiaPatientServiceBill.class);
-        criteria.add(Restrictions.eq("patient.id",patientId));
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaPatientServiceBill.class);
+        criteria.add(Restrictions.eq("patient.id", patientId));
         return (DiaPatientServiceBill) criteria.uniqueResult();
     }
- 
+
+    public List<DiaCommissionCal> listDiaComCalByBillId(Integer billId) throws DAOException {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaCommissionCal.class);
+        criteria.add(Restrictions.eq("diaPatientServiceBill.billId", billId));
+        List<DiaCommissionCal> list = criteria.list();
+        return list;
+    }
 
 }

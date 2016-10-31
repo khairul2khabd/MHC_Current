@@ -151,5 +151,7 @@ public interface MedisunDAO {
     public PatientSearch getPatientByPatientIdentifier(String patientId) throws DAOException;
     
     public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId)throws DAOException;
+    
+    public List<DiaCommissionCal> listDiaComCalByBillId(Integer billId) throws DAOException;
      
 }

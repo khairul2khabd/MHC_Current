@@ -423,5 +423,9 @@ public class MedisunServiceImpl extends BaseOpenmrsService implements MedisunSer
     public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId) throws APIException {
         return dao.getDiaPatienSerBillByPatientId(patientId);
     }
+
+    public List<DiaCommissionCal> listDiaComCalByBillId(Integer billId) throws APIException {
+        return dao.listDiaComCalByBillId(billId);
+    }
     
 }

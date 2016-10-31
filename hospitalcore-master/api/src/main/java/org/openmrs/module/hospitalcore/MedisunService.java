@@ -159,6 +159,8 @@ public interface MedisunService extends OpenmrsService {
     
     public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId)throws APIException;
     
+    public List<DiaCommissionCal> listDiaComCalByBillId(Integer billId) throws APIException;
+    
     
 }
 
