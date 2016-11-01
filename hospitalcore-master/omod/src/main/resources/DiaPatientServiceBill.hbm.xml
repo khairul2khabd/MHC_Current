@@ -41,8 +41,7 @@
         <property name="refDocId" column="refDocId" />
         <property name="refMarId" column="refMarId" /> 
         <property name="discountAmount" column="discount_amount" /> 
-        <property name="refRmpId" column="refRmpId" />
-        <property name="image" column="image" />      
+        <property name="refRmpId" column="refRmpId" />    
 		
     </class>
 </hibernate-mapping>
