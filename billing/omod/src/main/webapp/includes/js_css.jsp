@@ -93,3 +93,6 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/paginati
 
 <script type="text/javascript"
 src="${pageContext.request.contextPath}/moduleResources/billing/scripts/page-actions_1.js"></script>
+
+<script type="text/javascript"
+src="${pageContext.request.contextPath}/moduleResources/billing/scripts/barcode/JsBarcode.all.js"></script>
