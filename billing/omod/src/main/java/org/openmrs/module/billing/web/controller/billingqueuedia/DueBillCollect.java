@@ -146,7 +146,7 @@ public class DueBillCollect {
         ms.saveDiaPatientServiceBillCollect(dBillColl);
 
         model.addAttribute("dBillCollect", dBillColl);
-        
+
         BigDecimal totCom = BigDecimal.ZERO;
         BigDecimal servicePrice = BigDecimal.ZERO;
 
@@ -165,18 +165,8 @@ public class DueBillCollect {
 
                 BigDecimal oneHundred = new BigDecimal(100);
                 BigDecimal le = null;
-
-//                if (discountAmount.signum() > 0) {
-//
-//                    BigDecimal disPer = ((discountAmount).divide(totalBill, 4, RoundingMode.CEILING).multiply(oneHundred));
-//
-//                    BigDecimal less = (unitPrice.multiply(disPer)).divide(oneHundred, 0, RoundingMode.HALF_EVEN);
-//                    le = less;
-//                } else {
-//                    le = new BigDecimal(0);
-//                }
-                if (((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "5678")))
-                        && ((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "6615")))) {
+                System.out.println("*******" + service.getCategory().getId());
+                if ((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "5678"))) {
                     if (!StringUtils.isBlank(discount)) {
                         BigDecimal dis;
                         dis = new BigDecimal(discount);
@@ -188,29 +178,30 @@ public class DueBillCollect {
                 }
 
                 //if (!StringUtils.equalsIgnoreCase(service.getCommission(), "0")) {
-                if (((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "5678")))
-                        && ((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "6615")))) {
+                if ((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "5678"))) {
                     BigDecimal percentage = NumberUtils.createBigDecimal(service.getCommission());
                     BigDecimal com = (unitPrice.multiply(percentage)).divide(oneHundred);
                     totCom = totCom.add(com);
 
                     servicePrice = servicePrice.add(unitPrice);
                 }
+                if ((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "5678"))) {
 
-                DiaCommissionCal diaComCal = new DiaCommissionCal();
-                diaComCal.setDiaPatientServiceBill(dpsb);
-                diaComCal.setPatient(patient);
-                diaComCal.setServiceName(service.getName());
-                diaComCal.setServiceId(service.getServiceId());
-                diaComCal.setServicePrice(unitPrice);
-                //diaComCal.setLessAmount(discountAmount);
-                diaComCal.setLessAmount(le);
-                diaComCal.setCommission(service.getCommission());
-                diaComCal.setCreatedDate(new Date());
-                diaComCal.setCreator(user.getId());
-                diaComCal.setRefId(refDocId);  ////
-                diaComCal.setRefRmpId(rmpId);
-                ms.saveDiaComCal(diaComCal);
+                    DiaCommissionCal diaComCal = new DiaCommissionCal();
+                    diaComCal.setDiaPatientServiceBill(dpsb);
+                    diaComCal.setPatient(patient);
+                    diaComCal.setServiceName(service.getName());
+                    diaComCal.setServiceId(service.getServiceId());
+                    diaComCal.setServicePrice(unitPrice);
+                    //diaComCal.setLessAmount(discountAmount);
+                    diaComCal.setLessAmount(le);
+                    diaComCal.setCommission(service.getCommission());
+                    diaComCal.setCreatedDate(new Date());
+                    diaComCal.setCreator(user.getId());
+                    diaComCal.setRefId(refDocId);  ////
+                    diaComCal.setRefRmpId(rmpId);
+                    ms.saveDiaComCal(diaComCal);
+                }
             }
 
         }

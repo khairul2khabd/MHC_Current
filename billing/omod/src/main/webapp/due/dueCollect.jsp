@@ -601,7 +601,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             </tr>
             <tr>
                 <td style=" background-color: #FFF;"   align="right">  Discount : &nbsp; </td>
-                <td    style="width:60px;"> <input type="text" id=" " name=" " style="width:100px; border:none; text-align:right;" value="${dpsb.discountAmount}" readOnly="true"  /></td>
+                <td    style="width:60px;"> <input type="text" id="dis" name="dis" style="width:100px; border:none; text-align:right;" value="${dpsb.discountAmount}" readOnly="true"  /></td>
             </tr>
             <tr>
                 <td style=" background-color: #FFF;"   align="right"> Total Paid : &nbsp; </td>
