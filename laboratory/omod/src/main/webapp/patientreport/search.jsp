@@ -326,7 +326,7 @@
                                 </td>
                             </tr>
                         </c:if>
-                        <c:if test="${investigation eq '5158' || investigation eq '5254'}">
+                        <c:if test="${investigation eq '5158' || investigation eq '5254' || investigation eq '5225'}">
                             <tr>
                                 <td colspan="4" align="center">
                                     <span style="margin-top:100px; font-size:16px; font-weight: bold; text-align:center;"><i> Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer </i></span>

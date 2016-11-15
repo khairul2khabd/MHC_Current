@@ -54,7 +54,7 @@ public class SearchPatientReportController {
         MedisunService ms = Context.getService(MedisunService.class);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
-
+//Property 'dergee' not found on type org.openmrs.module.hospitalcore.model.DocDetail
         if (doc != 0) {
             LabDoctorSeal ldseal = ls.getLabDocSealById(doc);
             model.addAttribute("docInfo", ldseal);
@@ -298,7 +298,13 @@ public class SearchPatientReportController {
             System.out.println("Error when parsing order date!");
             return null;
         }
-        return "/module/laboratory/patientreport/search";
+      //  return "/module/laboratory/patientreport/search";
+        if( (investigation.equals("2415")) || (investigation.equals("3117")) ) {
+            return "/module/laboratory/patientreport/search_us"; // Biochemistry
+        } 
+        else {
+             return "/module/laboratory/patientreport/search";
+        }
     }
 
     private List<TestResultModel> renderTests(List<LabTest> tests,
