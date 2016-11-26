@@ -20,14 +20,14 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <script type="text/javascript">
 
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
         fillData();
     });
 
     // set input value
     function setInputValue(name, value) {
 
-        $("input[name=" + name + "]").each(function (index) {
+        $("input[name=" + name + "]").each(function(index) {
             input = $(this);
             if (input.attr("type") == "radio") {
                 if (input.attr("value") == value) {
@@ -39,9 +39,9 @@
             }
         });
 
-        $("select[name=" + name + "]").each(function (index) {
+        $("select[name=" + name + "]").each(function(index) {
             select = $(this);
-            $("option", select).each(function (index) {
+            $("option", select).each(function(index) {
                 option = $(this);
                 if (option.attr("value") == value) {
                     option.attr("selected", "selected");
@@ -78,7 +78,6 @@
 <div style='width:80%;'>
     <input type='hidden' name='encounterId' value='${encounterId}'/>
 
-
     <c:forEach var='parameter' items='${parameters}' varStatus='parameterIndex'>
         <div class='parameter' style="width:40%; line-height:150%;">
             <table style="width: 100%">
@@ -92,9 +91,7 @@
                         <c:if test="${parameter.type eq 'select'}">
                             <select class='${parameter.validator}' id="refSelect" name='${parameter.id}'  style='width: 200px;'>
 
-
                                 <c:forEach var='value' items='${parameter.optionValues}'>
-
                                     <option value='${value}'>${value}</option>
 
                                     <c:if test="${parameter.id eq  'Quantity' && value eq '20 ml'}">
@@ -201,6 +198,19 @@
                                     </c:if>
                                     <c:if test="${parameter.id eq  'Spermatozoa' && value eq 'Nil'}">
                                         <option value='${value}' selected>Nil</option>
+                                    </c:if>
+                                    <c:if test="${parameter.id eq  'Amor. Phos Phosphate' && value eq 'Nil'}">
+                                        <option value='${value}' selected>Nil</option>
+                                    </c:if>
+                                    <c:if test="${parameter.id eq  'Bacteria' && value eq 'Nil'}">
+                                        <option value='${value}' selected>Nil</option>
+                                    </c:if>
+
+                                    <c:if test="${parameter.id eq  'Cyst of Protozoa/Giardia/E.H./E. Coli' && value eq 'Nil'}">
+                                        <option value='${value}' selected>Nil</option>
+                                    </c:if>
+                                    <c:if test="${parameter.id eq  'Ova of AL/ TT/AD' && value eq 'Not Found'}">
+                                        <option value='${value}' selected>Not Found</option>
                                     </c:if>
                                 </c:forEach>
                             </select>

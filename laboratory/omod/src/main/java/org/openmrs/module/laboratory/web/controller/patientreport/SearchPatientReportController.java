@@ -224,7 +224,8 @@ public class SearchPatientReportController {
                         || (test.getConcept().getId() == 5267) || (test.getConcept().getId() == 5308)
                         || (test.getConcept().getId() == 5814) || (test.getConcept().getId() == 5366)
                         || (test.getConcept().getId() == 5221) || (test.getConcept().getId() == 2561)
-                        || (test.getConcept().getId() == 2261) || (test.getConcept().getId() == 2262)) {
+                        || (test.getConcept().getId() == 2261) || (test.getConcept().getId() == 2262)
+                        || (test.getConcept().getId() == 6043) || (test.getConcept().getId() == 6044)) {
 
                     Encounter encounter = test.getEncounter();
                     for (Obs obs : encounter.getAllObs()) {
@@ -298,12 +299,16 @@ public class SearchPatientReportController {
             System.out.println("Error when parsing order date!");
             return null;
         }
-      //  return "/module/laboratory/patientreport/search";
-        if( (investigation.equals("2415")) || (investigation.equals("3117")) ) {
+        //  return "/module/laboratory/patientreport/search";
+        if ((investigation.equals("2415")) || (investigation.equals("3117"))) {
             return "/module/laboratory/patientreport/search_us"; // Biochemistry
         } 
+        else if (investigation.equals("5709")) {
+            System.out.println("*************false **" + investigation);
+            return "/module/laboratory/patientreport/search_single"; // Ascitic Fluid for Biochemical test and single
+        } 
         else {
-             return "/module/laboratory/patientreport/search";
+            return "/module/laboratory/patientreport/search";
         }
     }
 
@@ -354,7 +359,8 @@ public class SearchPatientReportController {
                     && (test.getConcept().getId() != 5267) && (test.getConcept().getId() != 5308)
                     && (test.getConcept().getId() != 5814) && (test.getConcept().getId() != 5366)
                     && (test.getConcept().getId() != 5221) && (test.getConcept().getId() != 2561)
-                    && (test.getConcept().getId() != 2261) && (test.getConcept().getId() != 2262)) {
+                    && (test.getConcept().getId() != 2261) && (test.getConcept().getId() != 2262)
+                    && (test.getConcept().getId() != 6043) && (test.getConcept().getId() != 6044)) {
 
                 Encounter encounter = test.getEncounter();
                 for (Obs obs : encounter.getAllObs()) {

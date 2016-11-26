@@ -5016,8 +5016,8 @@
         </tr> 
     </c:if>
 </c:forEach>
+        
 <!-- Serology Sequence -->
-
 
 <!-- ABO BLOOD GROUP & RH FACTOR -->
 <c:forEach items="${te}" var="te"> 

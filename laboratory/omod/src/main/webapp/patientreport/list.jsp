@@ -226,6 +226,8 @@
                     <option value="5213">URINE MICROALBUMIN</option>
                     <option value="5254">ANTI CCP-AB</option>
                     <option value="2413">SEMEN ANALYSIS</option>
+                    <option value="5353">ASCITIC FLUID ALL</option>
+                    <option value="5709">DENGUE IgG/IgM/ALL</option>
                 </select>
             </td> 
             <td>
