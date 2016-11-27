@@ -15,6 +15,11 @@ import java.util.Date;
 public class DocDetails {
     public int id;
     public String doctorName;
+    public String designation;
+    public String address;
+    public String phone;
+    public String degree;
+    public String marketed_by;
     public int creator;
     public Date createdDate;
 
@@ -34,6 +39,46 @@ public class DocDetails {
         this.doctorName = doctorName;
     }
 
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
+
+    public String getMarketed_by() {
+        return marketed_by;
+    }
+
+    public void setMarketed_by(String marketed_by) {
+        this.marketed_by = marketed_by;
+    }
+
     public int getCreator() {
         return creator;
     }
@@ -49,5 +94,7 @@ public class DocDetails {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+    
     
 }
