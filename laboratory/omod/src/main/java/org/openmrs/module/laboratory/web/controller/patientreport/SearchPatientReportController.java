@@ -184,7 +184,7 @@ public class SearchPatientReportController {
                 //  model.addAttribute("refBy",docInfo.getDoctorName() );
                 if ((test.getEncounter().getId() != null) && (test.getConcept().getConceptClass().getName().equalsIgnoreCase("LabSet"))
                         //&& (test.getConcept().getId() != 2577) && (test.getConcept().getId() != 5158)
-                        || (test.getConcept().getId() == 5148) || (test.getConcept().getId() == 5216)
+                        || (test.getConcept().getId() == 5148)  
                         || (test.getConcept().getId() == 3092) || (test.getConcept().getId() == 5158)
                         || (test.getConcept().getId() == 5225) || (test.getConcept().getId() == 5226)
                         || (test.getConcept().getId() == 5186) || (test.getConcept().getId() == 5185)
@@ -318,7 +318,7 @@ public class SearchPatientReportController {
         for (LabTest test : tests) {
             if ((test.getEncounter().getId() != null)
                     && (!test.getConcept().getConceptClass().getName().equalsIgnoreCase("LabSet"))
-                    && (test.getConcept().getId() != 5148) && (test.getConcept().getId() != 5216)
+                    && (test.getConcept().getId() != 5148)  
                     && (test.getConcept().getId() != 3092) && (test.getConcept().getId() != 5158)
                     && (test.getConcept().getId() != 5225) && (test.getConcept().getId() != 5226)
                     && (test.getConcept().getId() != 5186) && (test.getConcept().getId() != 5185)
