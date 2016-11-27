@@ -215,6 +215,38 @@
             ADD COLUMN `ref_rmp_id` INT(11) DEFAULT NULL        
         </sql>
     </diff>
+    <diff>
+        <version>1.0.2</version>
+        <author>Md Khairul Islam</author>
+        <date>26 Nov 2016</date>
+        <description>
+            dia_doctor_details add more column.
+        </description>
+        <sql>
+            ALTER TABLE `dia_doctor_details` 
+            ADD COLUMN `designation` VARCHAR(200) DEFAULT NULL,
+            ADD COLUMN `address` VARCHAR(200) DEFAULT NULL, 
+            ADD COLUMN `phone` VARCHAR(200) DEFAULT NULL, 
+            ADD COLUMN `degree` VARCHAR(200) DEFAULT NULL, 
+            ADD COLUMN `marketed_by` VARCHAR(200) DEFAULT NULL           
+        </sql>
+    </diff>
+    <diff>
+        <version>1.0.3</version>
+        <author>Md Khairul Islam</author>
+        <date>26 Nov 2016</date>
+        <description>
+            dia_rmp_by add more column.
+        </description>
+        <sql>
+            ALTER TABLE `dia_rmp_by` 
+            ADD COLUMN `designation` VARCHAR(200) DEFAULT NULL,
+            ADD COLUMN `address` VARCHAR(200) DEFAULT NULL, 
+            ADD COLUMN `phone` VARCHAR(200) DEFAULT NULL, 
+            ADD COLUMN `degree` VARCHAR(200) DEFAULT NULL, 
+            ADD COLUMN `marketed_by` VARCHAR(200) DEFAULT NULL           
+        </sql>
+    </diff>
 
 
 </sqldiff>

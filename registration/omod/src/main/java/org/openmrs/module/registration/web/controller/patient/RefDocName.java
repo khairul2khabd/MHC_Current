@@ -43,7 +43,14 @@ public class RefDocName {
     }
 
     @RequestMapping(value = "/refDoc.htm", method = RequestMethod.POST)
-    public String submitForm(@RequestParam("docName") String docName, Model model) {
+    public String submitForm(@RequestParam("docName") String docName,
+            @RequestParam(value="docDeg",required = false) String docDeg,
+            @RequestParam(value="designation",required = false) String designation,
+            @RequestParam(value="phone",required = false) String phone,
+            @RequestParam(value="address",required = false) String address,
+            @RequestParam(value="marketed",required = false) String marketed,
+             
+            Model model) {
 
         RegistrationService rs = Context.getService(RegistrationService.class);
         User creator = Context.getAuthenticatedUser();
@@ -51,6 +58,11 @@ public class RefDocName {
         doc.setCreatedDate(new Date());
         doc.setCreator(creator.getId());
         doc.setDoctorName(docName);
+        doc.setDegree(docDeg);
+        doc.setDesignation(designation);
+        doc.setPhone(phone);
+        doc.setAddress(address);
+        doc.setMarketed_by(marketed);
         rs.saveDocDetails(doc);
 
         return "/module/registration/mhc/refDocName";
@@ -96,7 +108,17 @@ public class RefDocName {
         RegistrationService rs = Context.getService(RegistrationService.class);
         DocDetails docInfo = rs.getDocInById(docId);
         String name = request.getParameter("docName");
+        String docDeg = request.getParameter("docDeg");
+        String designation = request.getParameter("designation");
+        String address = request.getParameter("address");
+        String marketed = request.getParameter("marketed");
+        
+        
         docInfo.setDoctorName(name);
+        docInfo.setDegree(docDeg);
+        docInfo.setAddress(address);
+        docInfo.setDesignation(designation);
+        docInfo.setMarketed_by(marketed);
         rs.saveById(docInfo);
         return "/module/registration/thickbox/success";
     }

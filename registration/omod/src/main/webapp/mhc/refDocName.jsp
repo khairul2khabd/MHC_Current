@@ -43,11 +43,34 @@
             <tr style="background:#CCCCCC;">
                 <td ><b>&nbsp; Doctor Name :</b></td>
                 <td ><input type="text" id="docName" name="docName" placeholder="Please Enter Doctor Name" autofocus/></td>
-                <td><input class="button" type="submit" value="Add"   class="button"/></td>
+            </tr>
+            <tr style="background:#fff;">
+                <td ><b>&nbsp; Doctor Degree :</b></td>
+                <td ><input type="text" id="docDeg" name="docDeg" placeholder="Please Enter Doctor Name" autofocus/></td>
+            </tr>
+            <tr style="background:#CCCCCC;">
+                <td ><b>&nbsp; Designation :</b></td>
+                <td ><input type="text" id="designation" name="designation" placeholder="Please Enter Doctor Name" autofocus/></td>
+            </tr>
+            <tr style="background:#fff;">
+                <td ><b>&nbsp; Phone :</b></td>
+                <td ><input type="text" id="phone" name="phone" placeholder="Please Enter Doctor Name" autofocus/></td>
+            </tr>
+            <tr style="background:#CCCCCC;">
+                <td ><b>&nbsp; Address :</b></td>
+                <td ><input type="text" id="address" name="address" placeholder="Please Enter Doctor Name" autofocus/></td>
+            </tr>
+            <tr style="background:#fff;">
+                <td ><b>&nbsp; Marketed by :</b></td>
+                <td ><input type="text" id="marketed" name="marketed" placeholder="Please Enter Doctor Name" autofocus/></td>
+            </tr>
+            <tr style="background:transparent; ">
+                <td> </td>
+                <td   style="float:right;"><input class="button" type="submit" value="Add"   class="button"/></td>
             </tr>
         </table>
         <br>
-        
+
         <table cellpadding="5" cellspacing="0" width="100%" id="queueList">
             <tr align="center" >
                 <th>Doctor ID</th>
@@ -56,8 +79,8 @@
             <c:if test="${not empty docDetails}">
                 <c:forEach items="${docDetails}" var="doc" varStatus="varStatus">
                     <tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } ' >
-                         
-						<td>${doc.id}</td>
+
+                        <td>${doc.id}</td>
                         <td>${doc.doctorName}</td>
                         <td>        
                             <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"  value="Edit" onclick="myFunction('${doc.id}')"/> 
@@ -136,9 +159,9 @@
     } 
     .button:hover{
         background: #fff;
-		color:#47D147;
+        color:#47D147;
         text-shadow: 3px 1px 5px 4px #F7FE2E;
-		box-shadow: 5px 3px 5px 3px #888;
+        box-shadow: 5px 3px 5px 3px #888;
         font-weight:bold;
     }
     .abc input[type="text"], .kha-uds input[type="email"] {
