@@ -22,10 +22,12 @@
             <c:when test="${investigation eq '5709'}">
                 <div class="div1">   <h2>SEROLOGY REPORT</h2></div><br>
             </c:when>
-
-            <c:when test="${investigation eq '2413'}">
-                <div class="div1"> <h2>SEMEN ANALYSIS </h2></div><br>
-            </c:when> 
+            <c:when test="${investigation eq '5255'}">
+                <div class="div1"> <h2>IMMUNOLOGY REPORT </h2></div><br>
+            </c:when>
+            <c:when test="${investigation eq '6010'}">
+                <div class="div1"> <h2>STOOL EXAMINATION REPORT</h2></div><br>
+            </c:when>
             <c:otherwise>
                 <!--  <h2>ALL TESTS BY GROUP</h2> -->
             </c:otherwise>                
@@ -59,9 +61,9 @@
             <c:forEach var="test" items="${investigation}">
                 <c:choose>
 
-                    <c:when test="${investigation eq '4679'}">
+                    <c:when test="${investigation eq '5255'}">
                         <!--  <h2>DEPARTMENT OF HAEMATOLOGY</h2> -->
-                    <span style="margin-top:100px;font-size:17px;"><i>(Relevent estimations were carried out by Mythic-22 Automated 5 Part Haematology Analyzer & checked manually)</i></span>
+                    <span style="margin-top:100px;font-size:17px;"><i>(Estimations are carried out by Maglumi-800 Random Access Multibatch Chemiluminescence immunoassay (CLIA) Analyzer)</i></span>
                 </c:when> 
                 <c:otherwise>
                     <!--  <h2>ALL TESTS BY GROUP</h2> -->
@@ -160,14 +162,15 @@
     <center>
         <c:forEach var="test" items="${investigation}">
             <c:choose>
-
                 <c:when test="${investigation eq '2543'}">
                     <div class="div1">   <h2>SEROLOGY REPORT</h2></div><br>
                 </c:when>
-
-                <c:when test="${investigation eq '2413'}">
-                    <div class="div1"> <h2>SEMEN ANALYSIS </h2></div><br>
-                </c:when> 
+                <c:when test="${investigation eq '5255'}">
+                    <div class="div1"> <h2>IMMUNOLOGY REPORT </h2></div><br>
+                </c:when>
+                <c:when test="${investigation eq '6010'}">
+                    <div class="div1"> <h2>STOOL EXAMINATION REPORT</h2></div><br>
+                </c:when>
                 <c:otherwise>
                     <!--  <h2>ALL TESTS BY GROUP</h2> -->
                 </c:otherwise>                
@@ -189,7 +192,14 @@
                         <tr>
                             <td colspan="4"><%@ include file="../patientreport/reportformat/patientInfo.jsp"%> <br></td>
                         </tr>
-
+                        <c:if test="${investigation eq '5255' }">
+                            <tr>
+                                <td colspan="4" align="center">
+                                    <span style="margin-top:100px; font-size:17px; font-weight: bold; text-align:center;"><i> 
+                                            Estimations are carried out by Maglumi-800 Random Access Multibatch Chemiluminescence immunoassay (CLIA) Analyzer </i></span>
+                                </td>
+                            </tr>
+                        </c:if>
                         <tr>
                             <th class="right" style="padding:5px 5px 5px 5px; border-right:1px solid #fff; width:40%; ">   &nbsp;   Test </th>
                             <th class="right" style="border-left:1px solid #fff; border-right:1px solid #fff; padding-left:5px;"> Result </th>
@@ -197,14 +207,13 @@
                             <th class="right" style="padding-left:10px; width:30%; font-size: 13px; border-left:1px solid #fff;"> Reference Range </th>
                         </tr>
                     </thead>
+
                 </c:otherwise>                
             </c:choose>
         </c:forEach>
 
         <tbody>
             <c:forEach var="test" items="${investigation}">
-
-
 
                 <%@ include file="../patientreport/reportformat/single.jsp"%>
 
