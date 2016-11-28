@@ -50,11 +50,14 @@
                         </c:when>
                         <c:when test="${investigation eq '2543' || investigation eq '2577' || investigation eq '5158'
                                         || investigation eq '5225' || investigation eq '5692' || investigation eq '2734'
-                                || investigation eq '5255' }">
-                            Blood  
+                                        || investigation eq '5255' }">
+                                Blood  
                         </c:when>
-                        <c:when test="${investigation eq '4252' || investigation eq '5213' }">
+                        <c:when test="${investigation eq '4252' }">
                             24 Hours Urine
+                        </c:when>
+                        <c:when test="${investigation eq '5213' }">
+                            Spot Urine
                         </c:when>
                         <c:when test="${investigation eq '3945' || investigation eq '5216' || investigation eq '3092'}"> 
                             <!-- <h2>DEPARTMENT OF IMMUNOLOGY</h2> -->
