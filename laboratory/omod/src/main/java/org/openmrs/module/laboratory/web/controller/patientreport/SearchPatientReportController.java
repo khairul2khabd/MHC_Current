@@ -184,7 +184,7 @@ public class SearchPatientReportController {
                 //  model.addAttribute("refBy",docInfo.getDoctorName() );
                 if ((test.getEncounter().getId() != null) && (test.getConcept().getConceptClass().getName().equalsIgnoreCase("LabSet"))
                         //&& (test.getConcept().getId() != 2577) && (test.getConcept().getId() != 5158)
-                        || (test.getConcept().getId() == 5148)  
+                        || (test.getConcept().getId() == 5148)
                         || (test.getConcept().getId() == 3092) || (test.getConcept().getId() == 5158)
                         || (test.getConcept().getId() == 5225) || (test.getConcept().getId() == 5226)
                         || (test.getConcept().getId() == 5186) || (test.getConcept().getId() == 5185)
@@ -225,7 +225,8 @@ public class SearchPatientReportController {
                         || (test.getConcept().getId() == 5814) || (test.getConcept().getId() == 5366)
                         || (test.getConcept().getId() == 5221) || (test.getConcept().getId() == 2561)
                         || (test.getConcept().getId() == 2261) || (test.getConcept().getId() == 2262)
-                        || (test.getConcept().getId() == 6043) || (test.getConcept().getId() == 6044)) {
+                        || (test.getConcept().getId() == 6043) || (test.getConcept().getId() == 6044)
+                        || (test.getConcept().getId() == 6010)) {
 
                     Encounter encounter = test.getEncounter();
                     for (Obs obs : encounter.getAllObs()) {
@@ -302,12 +303,10 @@ public class SearchPatientReportController {
         //  return "/module/laboratory/patientreport/search";
         if ((investigation.equals("2415")) || (investigation.equals("3117"))) {
             return "/module/laboratory/patientreport/search_us"; // Biochemistry
-        } 
-        else if (investigation.equals("5709")) {
+        } else if ((investigation.equals("5709")) || (investigation.equals("5255")) || (investigation.equals("6010"))) {
             System.out.println("*************false **" + investigation);
             return "/module/laboratory/patientreport/search_single"; // Ascitic Fluid for Biochemical test and single
-        } 
-        else {
+        } else {
             return "/module/laboratory/patientreport/search";
         }
     }
@@ -318,7 +317,7 @@ public class SearchPatientReportController {
         for (LabTest test : tests) {
             if ((test.getEncounter().getId() != null)
                     && (!test.getConcept().getConceptClass().getName().equalsIgnoreCase("LabSet"))
-                    && (test.getConcept().getId() != 5148)  
+                    && (test.getConcept().getId() != 5148)
                     && (test.getConcept().getId() != 3092) && (test.getConcept().getId() != 5158)
                     && (test.getConcept().getId() != 5225) && (test.getConcept().getId() != 5226)
                     && (test.getConcept().getId() != 5186) && (test.getConcept().getId() != 5185)
@@ -360,7 +359,8 @@ public class SearchPatientReportController {
                     && (test.getConcept().getId() != 5814) && (test.getConcept().getId() != 5366)
                     && (test.getConcept().getId() != 5221) && (test.getConcept().getId() != 2561)
                     && (test.getConcept().getId() != 2261) && (test.getConcept().getId() != 2262)
-                    && (test.getConcept().getId() != 6043) && (test.getConcept().getId() != 6044)) {
+                    && (test.getConcept().getId() != 6043) && (test.getConcept().getId() != 6044)
+                    && (test.getConcept().getId() != 6010)) {
 
                 Encounter encounter = test.getEncounter();
                 for (Obs obs : encounter.getAllObs()) {
@@ -433,8 +433,8 @@ public class SearchPatientReportController {
     private List<TestResultModel> formatTestResult(
             List<TestResultModel> testResultModels) {
         Collections.sort(testResultModels);
-        TestResultModel tr = new TestResultModel();
-        List<String> tt = new ArrayList<String>();
+//        TestResultModel tr = new TestResultModel();
+//        List<String> tt = new ArrayList<String>();
 
         List<TestResultModel> trms = new ArrayList<TestResultModel>();
         String investigation = null;
