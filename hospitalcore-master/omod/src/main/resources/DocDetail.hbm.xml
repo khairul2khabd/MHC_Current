@@ -12,7 +12,13 @@
 				<generator class="native"/>
 		</id>
 		<property name="doctorName" column="doctor_name" />
+                <property name="designation" column="designation" />
+                <property name="address" column="address" />
+                <property name="phone" column="phone" />
+                <property name="degree" column="degree" />
+                <property name="marketed_by" column="marketed_by" />               
 		<property name="creator" column="creator" /> 
 		<property name="createdDate" column="created_on" />
 	</class>
 </hibernate-mapping>
+ 
