@@ -55,3 +55,14 @@
 
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/registration/scripts/jquery/css/jquery.multiselect.css" />
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/registration/scripts/jquery/css/jquery.autocomplete.css" />
+<!--
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/registration/bootstrap/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/registration/bootstrap/font-awesome.css" />
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/registration/bootstrap/font-awesome.min.css" />
+ 
+<script type="text/javascript" src="${pageContext.request.contextPath}/moduleResources/registration/bootstrap/bootstrap.min-3.3.7.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/moduleResources/registration/bootstrap/jquery-ui-1.11.1.js"></script>-->
+
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/registration/pagination/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/moduleResources/registration/pagination/jquerysctipttop.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/moduleResources/registration/pagination/jquery.simplePagination.js"></script>

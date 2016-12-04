@@ -5,7 +5,7 @@
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>registration</artifactId>
 	<!-- <version>2.2.19</version> -->
-        <version>1.0.2(MHC)</version>
+        <version>1.0.3(MHC)</version>
 	<packaging>pom</packaging>
 	<name>Registration</name>
 	<description>Registration module</description>

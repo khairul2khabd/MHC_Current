@@ -10,7 +10,7 @@
 <c:when test="${not empty docById}">
 <c:forEach items="${docById}" var="doc" varStatus="loop">
   <item>
-    <text>${doc.doctorName}</text>
+      <text>${doc.doctorName} <br> ${doc.degree} <br> ${doc.address} </text>
     <value>${doc.id}</value>
   </item>
 </c:forEach>  

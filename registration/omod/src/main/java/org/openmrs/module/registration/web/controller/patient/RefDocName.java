@@ -112,6 +112,7 @@ public class RefDocName {
         String designation = request.getParameter("designation");
         String address = request.getParameter("address");
         String marketed = request.getParameter("marketed");
+        String phone = request.getParameter("phone");
         
         
         docInfo.setDoctorName(name);
@@ -119,6 +120,7 @@ public class RefDocName {
         docInfo.setAddress(address);
         docInfo.setDesignation(designation);
         docInfo.setMarketed_by(marketed);
+        docInfo.setPhone(phone);
         rs.saveById(docInfo);
         return "/module/registration/thickbox/success";
     }
