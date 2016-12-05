@@ -67,11 +67,17 @@
                 </tr> 
             </c:if>	
             <tr> 
-                <td><span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}  </span> </td>
+                <td><span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}, ${docInfo.degree}  </span> </td>
                 <td>Bill Id: <span style="font-weight:bold; font-size:18px; color:red;"> ${billId} </span> 
                     <img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> 
                 </td>
             </tr>
+<!--            <tr> 
+                <td><span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}  </span> </td>
+                <td>Bill Id: <span style="font-weight:bold; font-size:18px; color:red;"> ${billId} </span> 
+                    <img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> 
+                </td>
+            </tr>-->
         </table>
         <table width="60%"  class="kha" style="margin-left: 60px;">
             <tr >

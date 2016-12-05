@@ -177,7 +177,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             </td>
             <td align="center">  &nbsp;
             </td>
-            <td> <span style="font-size:16px; font-weight:bold;"> Referred CH : </span> <br>
+            <td> <span style="font-size:16px; font-weight:bold;"> Referred RMP : </span> <br>
                 <input placeholder="Click/Enter Here....." type="text" value="${rmpInfo.id}${rmpInfo.name}" id="rmpIdName"  name="rmpIdName" ondblclick="this.value = '';" />
                 <select id="selectedRmpId" size="4" style="display:none;" name="selectedRmpId" ><option value="${rmpInfo.id}">${rmpInfo.id}</option></select>
             </td>
