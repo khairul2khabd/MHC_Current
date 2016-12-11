@@ -30,6 +30,7 @@ import org.openmrs.module.hospitalcore.MedisunService;
 import org.openmrs.module.hospitalcore.model.BillableService;
 import org.openmrs.module.hospitalcore.model.DiaBillingQueue;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCal;
+import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 import org.openmrs.module.hospitalcore.model.DiaLabSampleid;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBill;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBillCollect;
@@ -196,6 +197,10 @@ public class BillingService {
             ms.saveDiaPatientServiceBillCollect(dBillColl);
         }
 
+        String sername = null;
+        BigDecimal totCom = BigDecimal.ZERO;
+        BigDecimal servicePrice = BigDecimal.ZERO;
+
         for (Integer i = 1; i <= indCount; i++) {
 
             String servicename = request.getParameter("service");
@@ -205,6 +210,12 @@ public class BillingService {
             Integer qty = NumberUtils.createInteger(request.getParameter(i.toString() + "servicequantity")); // Quantity
             servicename = request.getParameter(i.toString() + "service");
             service = billingService.getServiceByConceptName(servicename);
+            
+            if (((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "5678")))) {
+                sername = servicename + "," + sername;  // for commison
+                
+                servicePrice = servicePrice.add(unitPrice);
+            }
 
             DiaPatientServiceBillItem dBillItem = new DiaPatientServiceBillItem();
             dBillItem.setService(service);
@@ -261,7 +272,27 @@ public class BillingService {
             dls.setDiaPatientServiceBill(dpsb);
             dls.setSampleId(generateBarcode());
             ms.saveDiaLabSam(dls);
+            
+        }
+        
+        if (sername != null && dpsb.getBillingStatus() == "PAID") {
+                sername = sername.replace(",null", "");
 
+                DiaCommissionCalAll diaAll = new DiaCommissionCalAll();
+                diaAll.setDiaPatientServiceBill(dpsb);
+                diaAll.setPatient(patient);
+                diaAll.setServiceName(sername);
+                diaAll.setServicePrice(servicePrice);
+                diaAll.setLessAmount(discountAmount);
+                diaAll.setComAmount(totCom);
+                diaAll.setCreatedDate(new Date());
+                diaAll.setCreator(Context.getAuthenticatedUser().getId());
+                diaAll.setRefId(refDocId);
+                diaAll.setRefRmp(refRmpId);
+                diaAll.setRefMar(refMarId);
+                ms.saveDiaComAll(diaAll);
+            }
+        
             //// Generate Patient Id Barcode4j
             Code128Bean cod = new Code128Bean();
             final int reso = 128;
@@ -317,8 +348,7 @@ public class BillingService {
             }
 
             ///// End 
-        }
-
+        
         model.addAttribute("discountAount", dBillColl.getDiscountAmount());
 
         return "redirect:/module/billing/billprint.htm?patientId=" + patientId;

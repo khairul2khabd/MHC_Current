@@ -938,7 +938,39 @@
             ) ENGINE=INNODB DEFAULT CHARSET=utf8;
         </sql>
     </diff>
+    
+    <diff>
+        <version>6.1.5</version>
+        <author>Md Khairul Islam</author>
+        <date>08th Dec 2016</date>
+        <description>
+            Diacommssion all
+        </description>
+        <sql>            
+            CREATE TABLE IF NOT EXISTS `dia_commission_calculation_all` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `bill_id` INT(11) DEFAULT NULL,
+            `patient_id` INT(11) DEFAULT NULL,
+            `service_name` VARCHAR(600) DEFAULT NULL,
+            `service_price` DECIMAL(19,2) DEFAULT NULL,
+            `less_amount` DECIMAL(19,2) DEFAULT NULL,
+            `com_amount` VARCHAR(10) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `creator` INT(11) DEFAULT NULL,
+            `ref_id` INT(11) DEFAULT NULL,
+            `status` BIT(1) DEFAULT NULL,
+            `ref_rmp` INT(11) DEFAULT NULL,
+            `ref_mar` INT(11) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `fk_diapatientservicebill_bill_id` (`bill_id`),
+            KEY `fk_diacommissioncal_patient_id` (`patient_id`),
+            CONSTRAINT `fk_diacommissioncal_patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
+            CONSTRAINT `fk_diapatientservicebill_bill_id` FOREIGN KEY (`bill_id`) REFERENCES `dia_billing_patient_service_bill` (`bill_id`)
+            ) ENGINE=INNODB DEFAULT CHARSET=utf8
+        </sql>
+    </diff>
    
+    
     
     
 </sqldiff>

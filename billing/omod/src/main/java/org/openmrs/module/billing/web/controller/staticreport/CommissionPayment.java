@@ -8,7 +8,11 @@ package org.openmrs.module.billing.web.controller.staticreport;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.math.NumberUtils;
@@ -16,6 +20,7 @@ import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.MedisunService;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCal;
+import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaid;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBill;
@@ -65,10 +70,13 @@ public class CommissionPayment {
         List<DiaCommissionCal> diaComCal = ms.getDiaComCal(docId, date, date1);
         model.addAttribute("diaComCal", diaComCal);
         model.addAttribute("diaComCalSize", diaComCal.size());
-        
-        List<DiaCommissionCalPaid> diaComPaid=ms.getDiaComCalPaidByIdandDate(docId, date, date1);
-        model.addAttribute("diaComPaid",diaComPaid);
-        
+
+        List<DiaCommissionCalPaid> diaComPaid = ms.getDiaComCalPaidByIdandDate(docId, date, date1);
+        model.addAttribute("diaComPaid", diaComPaid);
+
+        List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(docId, date, date1);
+        model.addAttribute("listDiaComAll", listDiaComAll);
+
         model.addAttribute("startDate", date);
         model.addAttribute("endDate", date1);
 
@@ -96,7 +104,7 @@ public class CommissionPayment {
 
         MedisunService ms = Context.getService(MedisunService.class);
         User user = Context.getAuthenticatedUser();
- 
+
         BigDecimal serviceAmount = NumberUtils.createBigDecimal(request.getParameter("totalBill"));
         BigDecimal netAmount = NumberUtils.createBigDecimal(request.getParameter("dcomm"));
         BigDecimal lessAount = NumberUtils.createBigDecimal(request.getParameter("lamount"));
@@ -116,8 +124,8 @@ public class CommissionPayment {
         dpaid.setDueAmount(due);
         dpaid.setNote(note);
         ms.saveDiaComCalPaid(dpaid);
-        
-        DiaCommissionCalPaidAdj diaAdj=new DiaCommissionCalPaidAdj();
+
+        DiaCommissionCalPaidAdj diaAdj = new DiaCommissionCalPaidAdj();
         diaAdj.setDiaComPaid(dpaid);
         diaAdj.setPayableAmount(docComm);
         diaAdj.setPaidAmount(paid);
@@ -125,7 +133,16 @@ public class CommissionPayment {
         diaAdj.setUser(user);
         diaAdj.setCreatedDate(new Date());
         ms.saveDiaComPaidAdj(diaAdj);
+
         
+        List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(docId, startDate, endDate);
+        for (int i = 0; i < listDiaComAll.size(); i++) {            
+            DiaCommissionCalAll dAll = (DiaCommissionCalAll) listDiaComAll.get(i);
+            dAll.setStatus(Boolean.TRUE);
+            dAll.setCreatedDate(new Date());
+            ms.saveDiaComAll(dAll);
+        }
+
         List<DiaCommissionCal> diaComCal = ms.getDiaComCal(comID, startDate, endDate);
 
         // List<DiaCommissionCal> diaList = ms.getDiaComCalByBillId(comID); //  Get By Ref Id then save it
@@ -133,7 +150,8 @@ public class CommissionPayment {
             DiaCommissionCal d = (DiaCommissionCal) diaComCal.get(i);
             d.setStatus(Boolean.TRUE);
             d.setDiaComPaid(dpaid);
-            ms.saveDiaComCal(d);
+            d.setCreatedDate(new Date());
+            ms.saveDiaComCal(d);            
         }
 
         return "module/billing/reports/comView";

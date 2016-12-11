@@ -20,6 +20,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.MedisunService;
 import org.openmrs.module.hospitalcore.model.BillableService;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCal;
+import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBill;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBillCollect;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBillItem;
@@ -149,6 +150,7 @@ public class DueBillCollect {
 
         BigDecimal totCom = BigDecimal.ZERO;
         BigDecimal servicePrice = BigDecimal.ZERO;
+        String sername = null;
 
         /// Due collect amount, get commission calculation save in Dia Commission Cal
         for (Integer i = 1; i <= indCount; i++) {
@@ -158,6 +160,11 @@ public class DueBillCollect {
 
             String servicename = request.getParameter(i.toString() + "service");
             service = billingService.getServiceByConceptName(servicename);
+
+            if (((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "5678")))) {
+                sername = servicename + "," + sername;  // for commison
+                servicePrice = servicePrice.add(unitPrice);
+            }
 
             // BigDecimal ind = NumberUtils.createBigDecimal(indCount.toString());
             //BigDecimal da = discountAmount.divide(ind, 2, RoundingMode.CEILING);
@@ -204,6 +211,24 @@ public class DueBillCollect {
                 }
             }
 
+        }
+
+        /// For diacommissionall
+        if (sername != null && dpsb.getBillingStatus() == "PAID") {
+            sername = sername.replace(",null", "");
+
+            DiaCommissionCalAll diaAll = new DiaCommissionCalAll();
+            diaAll.setDiaPatientServiceBill(dpsb);
+            diaAll.setPatient(patient);
+            diaAll.setServiceName(sername);
+            diaAll.setServicePrice(servicePrice);
+            diaAll.setLessAmount(discountAmount);
+            diaAll.setComAmount(totCom);
+            diaAll.setCreatedDate(new Date());
+            diaAll.setCreator(Context.getAuthenticatedUser().getId());
+            diaAll.setRefId(refDocId);
+            diaAll.setRefRmp(rmpId);
+            ms.saveDiaComAll(diaAll);
         }
 
         return "redirect:/module/billing/dueprint.htm?patientId=" + patientId;

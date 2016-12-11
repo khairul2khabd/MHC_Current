@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.MedisunService;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCal;
+import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 //import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBill;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBillCollect;
@@ -97,11 +98,13 @@ public class RefferrelChange {
             d.setRefRmpId(rmpIdName);
             ms.saveDiaPatientServiceBill(d);
 
-//            DiaCommissionCalAll dca = ms.getDiaAllByBillId(billId);
-//            dca.setRefId(docIdName);
-//            dca.setRefRmp(rmpIdName);
-//            ms.saveDiaComAll(dca);
-//
+            if (d.getBillingStatus() == "PAID") {
+                DiaCommissionCalAll dca = ms.getDiaAllByBillId(billId);
+                dca.setRefId(docIdName);
+                dca.setRefRmp(rmpIdName);
+                ms.saveDiaComAll(dca);
+            }
+
             List<DiaCommissionCal> dc = ms.listDiaComCalByBillId(billId);
             for (int i = 0; i < dc.size(); i++) {
                 DiaCommissionCal dd = (DiaCommissionCal) dc.get(i);

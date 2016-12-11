@@ -59,7 +59,6 @@
             $("#paid").focus();
             return false;
         }
-        jQuery("#commissionCalForm").mask("<img src='" + openmrsContextPath + "/moduleResources/billing/spinner.gif" + "'/>&nbsp;");
 
         var comId = jQuery("#comId").val();
         var indCount = jQuery("#indCount").val();
@@ -98,30 +97,30 @@
         });
     }
 
-    // function validate() {
-    // var dName = document.getElementById("docIdName").value;
-    // var sDate = document.getElementById("sDate").value;
-    // var eDate = document.getElementById("eDate").value;
+    function validate() {
+        var dName = document.getElementById("docIdName").value;
+        var sDate = document.getElementById("sDate").value;
+        var eDate = document.getElementById("eDate").value;
 
-    // if (dName == null || dName == "")
-    // {
-    // alert("Please Enter Doctor Name / ID!!");
-    // $("#docIdName").focus();
-    // return false;
-    // }
-    // else if (sDate == null || sDate == "")
-    // {
-    // alert("Please Enter Start Date!!");
-    // $("#sDate").focus();
-    // return false;
-    // }
-    // else if (eDate == null || eDate == "")
-    // {
-    // alert("Please Enter End Date !!");
-    // $("#eDate").focus();
-    // return false;
-    // }
-    // }
+        if (dName == null || dName == "")
+        {
+            alert("Please Enter Doctor Name / ID!!");
+            $("#docIdName").focus();
+            return false;
+        }
+        else if (sDate == null || sDate == "")
+        {
+            alert("Please Enter Start Date!!");
+            $("#sDate").focus();
+            return false;
+        }
+        else if (eDate == null || eDate == "")
+        {
+            alert("Please Enter End Date !!");
+            $("#eDate").focus();
+            return false;
+        }
+    }
 
     function printDiv3() {
         var printer = window.open('left=0', 'top=0', 'width=300,height=300');
@@ -138,93 +137,24 @@
     function back() {
         window.location = "reportsView.form";
     }
-
-    function viewCommissionPaid() {
-        var docIdName = jQuery("#docIdName").val();
-        var sDate = jQuery("#sDate").val();
-        var eDate = jQuery("#eDate").val();
-        var status = jQuery("#status").val();
-        alert(status);
-        jQuery.ajax({
-            type: "GET",
-            url: getContextPath() + "/module/billing/comPaidView.htm",
-            data: ({
-                docIdName: docIdName,
-                sDate: sDate,
-                eDate: eDate
-            }),
-            success: function(data) {
-                jQuery("#paidData").html(data);
-            },
-        });
-    }
-
-    function viewCommission() {
-        if (SESSION.checkSession()) {
-            var dName = document.getElementById("docIdName").value;
-            var sDate = document.getElementById("sDate").value;
-            var eDate = document.getElementById("eDate").value;
-            var status = document.getElementById("status").value;
-
-            if (dName == null || dName == "")
-            {
-                alert("Please Enter Doctor Name / ID!!");
-                $("#docIdName").focus();
-                return false;
-            }
-            else if (sDate == null || sDate == "")
-            {
-                alert("Please Enter Start Date!!");
-                $("#sDate").focus();
-                return false;
-            }
-            else if (eDate == null || eDate == "")
-            {
-                alert("Please Enter End Date !!");
-                $("#eDate").focus();
-                return false;
-            }
-            else {
-                if (status == "0") {
-                    jQuery("#commissionCalForm").submit();
-                }
-                else if (status == "1") {
-                    viewCommissionPaid();
-                }
-            }
-
-        }
-    }
 </script>
 <input type="hidden" id="pageId" value="commissionCalPage" />
-<form class="form-rep-view" method="get" action="comResult.htm" id="commissionCalForm" onsubmit="return validate()" > 
-
-
+<form class="form-rep-view" method="get" action="comResult.htm" id="commissionCalForm" onsubmit="return validate()" >
     <div class="boxHeader1">   <strong>Doctor Commission Calculation</strong></div>
     <div class="box1">
         <input type="hidden" id="indCount" name="indCount" value="${diaComCalSize}" />
         <span style="font-size:14px; font-weight: bold;"> Doctor Id / Name : </span> 
         <input type="text" placeholder="Please Enter Doctor Id / Name " 
-               ondblclick="this.value = '';" id="docIdName" name="docIdName" style="width:250px;"/> &nbsp;&nbsp;
+               ondblclick="this.value = '';" id="docIdName" name="docIdName" style="width:250px;"/> &nbsp;&nbsp;&nbsp;
 
         <select id="selectedDocId" size="4" style="display:none;" name="selectedDocId" ><option value="0">Please Select</option></select>
         <span style="font-size:14px; font-weight: bold;"> Start Date : </span> 
-        <input type="text" placeholder="Please Enter Start Date " id="sDate" name="sDate" style="width:250px;"/> &nbsp;&nbsp;
+        <input type="text" placeholder="Please Enter Start Date " id="sDate" name="sDate" style="width:250px;"/> &nbsp;&nbsp;&nbsp;
         <span style="font-size:14px; font-weight: bold;"> End Date : </span>  
-        <input type="text" placeholder="Please Enter End Date " id="eDate" name="eDate" style="width:250px;"/> &nbsp;&nbsp;
-
-        <select id="status" name="status" class="styled-select blue semi-square" style="width:140px; height:32px;" >
-            <option value="0"  > Due  </option>
-            <option value="1"  >  Paid </option>
-        </select>
-
-<!--        <input type="submit"  value="Get View" class="bu-normal"  /> -->
-        <input type="button" onclick="viewCommission();" value="Get View" class="bu-normal"  /> 
+        <input type="text" placeholder="Please Enter End Date " id="eDate" name="eDate" style="width:250px;"/> &nbsp;&nbsp;&nbsp;
+        <input type="submit" value="Get View" class="bu-normal"  /> 
         <div id="billingqueue" style="padding:4px;"></div>
     </div>
-
-    <div id="paidData" style="padding:4px;"></div>
-    <div id="viewData" style="padding:4px;"></div>
 
     <div class="box1" >
         <c:if test="${not empty docInfo.id}">
@@ -266,7 +196,6 @@
                                 <c:set var="lessAm"><fmt:parseNumber  type="number"    value="${patient.lessAmount}" /> </c:set>
                                 <c:set var="serPri"><fmt:parseNumber  type="number"    value="${patient.servicePrice}" /> </c:set>
                                 <c:set var="lessAmPercentage" value="${ (lessAm /serPri)*100 }"/>
-
                                 <c:if test="${ refAmount >= lessAm }">
                                     <c:set var="payable" value="${refAmount - lessAm }"/>
                                 </c:if>
@@ -355,86 +284,26 @@
         </center> <br>
         <b> Dr Code : ${docInfo.id}  &emsp;&emsp;&emsp; ${docInfo.doctorName}, ${docInfo.degree} </b> <br>
         <c:if test="${not empty docInfo.address}" > <b> Address : </b> ${docInfo.address} </c:if> </br> &nbsp;
+		
+		<c:set var="serPriceTotal1" value="${0.00}"/> 
+            <c:set var="totalLess1" value="${0.00}"/> 
+            <c:set var="totalReferral1" value="${0.00}"/>
+            <c:set var="refPayable1" value="${0.00}"/>
+			
+            <table style=" font-size:12px;  border-collapse: collapse; border :1pt solid #999; width: 100%;  font-family:arial;"  >  						
+                <tr>
+                    <th width="5%" class="a left"><b>Date</b></th>
+                    <th width="7%" class="a left"><b>Patient Id</b></th>
+                    <th class="a"><b>Patient Name</b></th>
+                    <th width="40%" class="a right"><b>Investigation</b></th>
+                    <th width="7%" class="a right"><b>Service Price (Tk)</b></th>							
+                    <th width="7%" class="a right"><b>Less Amount (Tk)</b></th>
+                    <th width="7%" class="a right"><b>Referral Amount (Tk)</b></th>
+                    <th width="3%" class="a right"><b>Discount (%)</b></th>
+                    <th width="7%" class="a right"><b>Total Referral (Tk)</b></th>
+                </tr>
 
-        <c:set var="serPriceTotal1" value="${0.00}"/> 
-        <c:set var="totalLess1" value="${0.00}"/> 
-        <c:set var="totalReferral1" value="${0.00}"/>
-        <c:set var="refPayable1" value="${0.00}"/>
-
-        <table style=" font-size:12px;  border-collapse: collapse; border :1pt solid #999; width: 100%;  font-family:arial;"  >  						
-            <tr>
-                <th width="5%" class="a left"><b>Date</b></th>
-                <th width="7%" class="a left"><b>Patient Id</b></th>
-                <th class="a"><b>Patient Name</b></th>
-                <th width="40%" class="a right"><b>Investigation</b></th>
-                <th width="7%" class="a right"><b>Service Price (Tk)</b></th>							
-                <th width="7%" class="a right"><b>Less Amount (Tk)</b></th>
-                <th width="7%" class="a right"><b>Referral Amount (Tk)</b></th>
-                <th width="3%" class="a right"><b>Discount (%)</b></th>
-                <th width="7%" class="a right"><b>Total Referral (Tk)</b></th>
-            </tr>
-
-            <tbody>
-
-                <c:forEach items="${listDiaComAll}" var="d"  varStatus="index">
-                    <c:set var="toser" value="${0.00}"/>
-                    <c:set var="ref" value="${0.00}"/>
-                    <c:set var="totalRef" value="${0.00}"/>
-                    <c:set var="allSerName" value="${'null'}"/>
-                    <c:set var="totalLessByPatient" value="${0.00}"/>
-
-                    <c:forEach items="${diaComCal}" var="patient"  varStatus="index">
-
-                        <c:if test="${patient.diaPatientServiceBill.billId eq d.diaPatientServiceBill.billId}">
-
-                            <c:set var="com" value="${patient.commission}"/>
-                            <c:set var="ser" value="${patient.servicePrice}"/>
-                            <c:set var="refAmount" value="${ (ser * com)/100 }"/>
-                            <c:set var="ref" value="${ref + refAmount }"/> 
-                            <c:set var="toser" value="${toser + patient.servicePrice }"/> 
-                            <c:set var="lessAm"><fmt:parseNumber  type="number"    value="${patient.lessAmount}" /> </c:set>
-                            <c:set var="serPri"><fmt:parseNumber  type="number"    value="${patient.servicePrice}" /> </c:set>
-                            <c:set var="lessAmPercentage" value="${ (lessAm /serPri)*100 }"/>
-
-                            <c:if test="${ refAmount >= lessAm }">
-                                <c:set var="payable" value="${refAmount - lessAm }"/>
-                                <c:set var="totalRef" value="${totalRef + payable }"/> 
-                            </c:if>
-                            <c:if test="${ refAmount < lessAm }">
-                                <c:set var="payable" value="${0.00}"/>
-                            </c:if>
-
-                            <c:set var="allSerName" value="${patient.serviceName}, ${allSerName}"/>							
-                            <c:set var="allSerName" value="${fn:replace(allSerName, ', null', '')}" />
-                            <c:set var="totalLessByPatient" value="${totalLessByPatient + lessAm }"/> 
-                            <c:set var="t"><fmt:parseNumber  type="number"    value="${totalLessByPatient}" /> </c:set> <!-- Total less by patient convert number format -->
-                            <c:set var="tt"><fmt:parseNumber  type="number"    value="${toser}" /> </c:set> <!-- Total service by patient convert number format -->
-                        </c:if>
-
-                    </c:forEach>
-
-                    <c:set var="lessper" value="${(t/tt)*100 }"/>    <!-- Less Percentage -->
-
-                    <tr>
-                        <td class="a left"><openmrs:formatDate date="${d.createdDate}" /> </td>
-                        <td class="a left"><!-- ${d.diaPatientServiceBill.billId} -->
-                            ${d.patient.patientIdentifier.identifier} 
-                        </td>
-                        <td class="a left"> ${d.patient.givenName} ${d.patient.familyName} </td>
-                        <td class="a left"> ${allSerName} </td>
-                        <td align="right" class="a right"> ${toser}  </td>
-                        <td align="right" class="a right"> ${totalLessByPatient} </td>
-                        <td align="right" class="a right"> ${ref} </td>
-                        <td align="center" class="a right">  
-
-                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${lessper}" /> 
-
-                        </td>
-                        <td align="right" class="a right"> ${totalRef}  </td>
-                    </tr>
-
-                </c:forEach>
-
+                <tbody>
                 <c:forEach items="${diaComCal}" var="patient"  varStatus="index">
                     <c:set var="com" value="${patient.commission}"/>
                     <c:set var="ser" value="${patient.servicePrice}"/>
@@ -448,7 +317,27 @@
                     <c:if test="${ refAmount < lessAm }">
                         <c:set var="payable" value="${0.00}"/>
                     </c:if>
+                    <tr> 
+                        <td style="display:none;"><input type="text" value="${patient.refId}"  id="comId" name="comId" /> </td>
+                        <td  class="a left"><openmrs:formatDate date="${patient.createdDate}" /></td>  
+                        <td  class="a left"> ${patient.patient.patientIdentifier.identifier}  </td>
+                        <td  class="a left">${patient.patient.givenName} ${patient.patient.familyName}  </td>
+                        <td  class="a left"> ${patient.serviceName}  </td>
+                        <td  align="right" class="a right">
 
+                            ${patient.servicePrice} 
+                        </td>
+                        <td  align="right" class="a right"> 
+                            ${patient.lessAmount}
+                        </td>
+                        <td  align="right" class="a right">
+                            ${refAmount} 
+                        </td> <!-- Referral amount -->
+                        <td  align="center" class="a right"  >
+                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${lessAmPercentage}" /> 	  
+                        </td>
+                        <td align="right" class="a right"> ${payable}</td>
+                    </tr>
                     <c:set var="serPriceTotal1" value="${serPriceTotal1 + patient.servicePrice}"/>
                     <c:set var="totalLess1" value="${totalLess1 + lessAm }"/> 
                     <c:set var="totalReferral1" value="${totalReferral1 + refAmount}"/>

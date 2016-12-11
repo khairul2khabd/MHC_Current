@@ -16,6 +16,7 @@ import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.MedisunService;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaid;
+import org.openmrs.module.hospitalcore.model.DiaDocDetails;
 import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaid;
 import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaRmpName;
@@ -60,7 +61,7 @@ public class RmpCommissionViewUpdate {
         if (rmpId != null) {
             List<DiaRmpCommCalculationPaid> diaRmpPaid = ms.getRmpComCalPaidByIdDate(rmpId, rmpId, date, date1);
             model.addAttribute("diaRmpPaid", diaRmpPaid);
-            
+
         } else {
             int rmp1 = 0;
             int rmp2 = 10000;
@@ -78,8 +79,8 @@ public class RmpCommissionViewUpdate {
 
         return "module/billing/reports/rmpPaymentView";
     }
-    
-     @RequestMapping(value = "/module/billing/rmpRepById.htm", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/module/billing/rmpRepById.htm", method = RequestMethod.GET)
     public String rmpReportsViewById(@RequestParam("id") Integer id,
             Model model) {
         MedisunService ms = Context.getService(MedisunService.class);
@@ -88,8 +89,8 @@ public class RmpCommissionViewUpdate {
         model.addAttribute("comPaid", diaRmpPaid);
         return "module/billing/reports/rmpViewUpdate";
     }
-    
-     @RequestMapping(value = "/module/billing/rmpPayUpdate.htm", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/module/billing/rmpPayUpdate.htm", method = RequestMethod.POST)
     public String docReportsViewUpdate(@RequestParam("id") Integer id,
             Model model, HttpServletRequest request) {
         MedisunService ms = Context.getService(MedisunService.class);
@@ -99,16 +100,16 @@ public class RmpCommissionViewUpdate {
 
         BigDecimal paid = NumberUtils.createBigDecimal(request.getParameter("adj"));
         BigDecimal paidAmnt = NumberUtils.createBigDecimal(request.getParameter("paAmnt"));
-        
+
         BigDecimal test = new BigDecimal(0);
-        BigDecimal totalPaid=(test.add(paid.add(paidAmnt)));
-        
-        DiaRmpCommCalculationPaid dpaid=ms.getDiaRmpCalPaidById(id);
+        BigDecimal totalPaid = (test.add(paid.add(paidAmnt)));
+
+        DiaRmpCommCalculationPaid dpaid = ms.getDiaRmpCalPaidById(id);
         dpaid.setPaidAmount(totalPaid);
         dpaid.setDueAmount(due);
         ms.saveRmpComPaid(dpaid);
-        
-        DiaRmpCommCalculationPaidAdj dAdj=new DiaRmpCommCalculationPaidAdj();
+
+        DiaRmpCommCalculationPaidAdj dAdj = new DiaRmpCommCalculationPaidAdj();
         dAdj.setDiaRmpComPaid(dpaid);
         dAdj.setPayableAmount(due);
         dAdj.setPaidAmount(paid);
@@ -118,6 +119,16 @@ public class RmpCommissionViewUpdate {
         ms.saveDiaRmpAdj(dAdj);
 
         return "module/billing/thickbox/success";
+    }
+
+    @RequestMapping(value = "/module/billing/doctorsOrRmpPerformance.htm", method = RequestMethod.GET)
+    public String doctorsOrRMPCommission(Model model) {
+        MedisunService medisunService = Context.getService(MedisunService.class);
+        List<DiaRmpName> rmpList = medisunService.getAllRmp();
+        List<DiaDocDetails> doctors = medisunService.getAllDoctors();
+        model.addAttribute("userList", doctors);
+        model.addAttribute("rmpList", rmpList);
+        return "module/billing/reports/doctorOrRmpCommission";
     }
 
 }
