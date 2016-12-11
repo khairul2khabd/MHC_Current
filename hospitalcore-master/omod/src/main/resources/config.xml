@@ -177,8 +177,8 @@
         DiaCommissionCalPaidAdj.hbm.xml
         DiaRmpCommissionCalPaidAdj.hbm.xml
         DiaBarcodeGroup.hbm.xml
-        
-               
+        DiaCommissionCalAll.hbm.xml
+                
     </mappingFiles>
 </module>
 

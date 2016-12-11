@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.hospitalcore.model">
+
+    <class name="DiaCommissionCalAll" table="dia_commission_calculation_all" batch-size="500">
+
+        <id name="id" type="int" column="id"
+            unsaved-value="0"> 
+            <generator class="native" />
+        </id>
+                              
+        <many-to-one name="diaPatientServiceBill" column="bill_id"
+                     class="org.openmrs.module.hospitalcore.model.DiaPatientServiceBill" lazy="false"
+                     foreign-key="fk_diapatientservicebill_bill_id" />
+        
+        <many-to-one name="patient" column="patient_id" class="org.openmrs.Patient"
+                     lazy="false" foreign-key="fk_diacommissioncal_patient_id" />  
+        
+        <property name="serviceName" column="service_name"/>
+        <property name="servicePrice" column="service_price"/>
+        <property name="lessAmount" column="less_amount"/>
+        <property name="comAmount" column="com_amount"/>
+        <property name="createdDate" column="created_date"  />
+        <property name="creator" column="creator"/>
+        <property name="refId" column="ref_id"/>
+        <property name="status" column="status" />
+        <property name="refRmp" column="ref_rmp"/>
+        <property name="refMar" column="ref_mar"/>   
+         
+                			
+    </class>
+</hibernate-mapping>
