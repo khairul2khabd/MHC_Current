@@ -22,6 +22,7 @@ import org.openmrs.module.hospitalcore.model.DiaReceipt;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBill;
 import org.openmrs.module.hospitalcore.model.DiaBillingOrder;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCal;
+import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaid;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaConceptNumeric;
@@ -32,6 +33,7 @@ import org.openmrs.module.hospitalcore.model.DiaPatientServiceBillItem;
 import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaid;
 import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaRmpName;
+import org.openmrs.module.hospitalcore.model.DoctorPerformanceInfo;
 import org.openmrs.module.hospitalcore.model.PatientServiceBill;
 
 /**
@@ -41,7 +43,7 @@ import org.openmrs.module.hospitalcore.model.PatientServiceBill;
 @Transactional(readOnly = false)
 public interface MedisunService extends OpenmrsService {
 
-   // public DiaBillingQueue saveDiaBillingQueue(DiaBillingQueue diaBillingQueue)throws APIException;
+    // public DiaBillingQueue saveDiaBillingQueue(DiaBillingQueue diaBillingQueue)throws APIException;
     public List<PatientSearch> searchListOfPatient(Date date, String searchKey, int page) throws APIException;
 
     public List<DiaBillingQueue> searchListOfPatientDia(Date date, String searchKey, int page) throws APIException;
@@ -52,8 +54,8 @@ public interface MedisunService extends OpenmrsService {
 
     //public DocDetail saveById(DocDetail docDetails) throws APIException;
     //public List<DocDetail> searchDoctorName(String text) throws APIException; // This is final for Search text or id
-   // public List<MarDetails> serchMarName(String text)throws APIException;
-   // public MarDetails saveByIdMar(MarDetails marDetails)throws APIException;
+    // public List<MarDetails> serchMarName(String text)throws APIException;
+    // public MarDetails saveByIdMar(MarDetails marDetails)throws APIException;
     public List<BillableService> searchTestNameOrID(String text) throws APIException;
 
     public DiaReceipt saveDiaReceipt(DiaReceipt diaReceipt) throws APIException;
@@ -94,73 +96,83 @@ public interface MedisunService extends OpenmrsService {
 
     //  public void saveBillEncounterAndOrder(PatientServiceBill bill) throws APIException;
     public void saveBillEncounterAndOrder(DiaPatientServiceBill bill) throws APIException;
-    
-    public List<DiaPatientServiceBill> getCommission(int docId, Date sDate, Date eDate, String path, String radio)throws APIException;
-    
-    public List<DiaPatientServiceBill> getCommissionCal(int docId, Date sDate, Date eDate)throws APIException;
-    
-    public List<DiaDocDetails> searchDoctorName(String text) throws APIException;
-    
-    public PatientSearch mergePatientSerach(PatientSearch ps)throws APIException;
-    
-    public DiaCommissionCal saveDiaComCal(DiaCommissionCal diaComCal)throws APIException;
-    
-    public List<DiaCommissionCal> getDiaComCal(int docId,Date sDate,Date eDate)throws APIException;
-    
-    public DiaCommissionCal getDiaComCalById(Integer id)throws APIException;
-    
-    public DiaCommissionCal reSaveDiaComCal(DiaCommissionCal diaComCal) throws APIException;
-    
-    public List<DiaCommissionCal> getDiaComCalByBillId(Integer billId)throws APIException;
-    
-    public DiaCommissionCalPaid saveDiaComCalPaid(DiaCommissionCalPaid diaComCalPaid)throws APIException;
-    
-    public List<DiaCommissionCalPaid> getDiaComCalPaidByIdandDate(int docId, Date sDate, Date eDate)throws APIException;
-    
-    public List<DiaCommissionCalPaid> getDiaComCalPaid(int docId,Date sDate,Date eDate)throws APIException;
-    
-    public List<DiaCommissionCalPaid> getDiaComCalPaidByIdDate(int docId, int docId2,Date sDate,Date eDate)throws APIException;
-    
-    public List<DiaBillingOrder> getDiaBillOrderByPatientIdOrderId(int patientId, int orderId)throws APIException;
-    
-    public void removeDiaBillOrder(DiaBillingOrder diaBillOrder) throws APIException;
-    
-    public DiaBillingOrder getDiaBillOrderById(Integer id)throws APIException;
-    
-    public DiaLabSampleid saveDiaLabSam(DiaLabSampleid diaLabSam)throws APIException;
-    
-    public List<DiaLabSampleid> getDiaLabSam() throws APIException;
-    
-    public List<DiaLabSampleid> getSampleIdByBillId(int billId)throws APIException;
-    
-    public List<DiaCommissionCal> getDiaComCalRmp(int rmpId,Date sDate,Date eDate)throws APIException;
-    
-    public List<DiaRmpName> searchRmpName(String text) throws APIException;
-    
-    public DiaRmpName getDiaRmpById(int rmpId) throws APIException;
-    
-    public DiaRmpCommCalculationPaid saveRmpComPaid(DiaRmpCommCalculationPaid diaRmp)throws APIException;
-    
-    public DiaRmpCommCalculationPaid getDiaRmpCalPaidById(int Id)throws APIException;
-    
-    public DiaCommissionCalPaid getDiaComCalPaidById(int id)throws APIException;
- 
-    public List<User> getAllUser() throws APIException;
-    
-    public DiaCommissionCalPaidAdj saveDiaComPaidAdj(DiaCommissionCalPaidAdj diaAdj)throws APIException;
-    
-    public DiaRmpCommCalculationPaidAdj saveDiaRmpAdj(DiaRmpCommCalculationPaidAdj diaRmpAdj)throws APIException;
-    
-    public List<DiaRmpCommCalculationPaid> getRmpComCalPaidByIdDate(int rmpId, int rmpId2,Date sDate,Date eDate)throws APIException;
-    
-    public List<DiaBarcodeGroup> listDiaBarcodeGroup()throws APIException;
-    
-    public PatientSearch getPatientByPatientIdentifier(String patientId)throws APIException;
-    
-    public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId)throws APIException;
-    
-    public List<DiaCommissionCal> listDiaComCalByBillId(Integer billId) throws APIException;
-    
-    
-}
 
+    public List<DiaPatientServiceBill> getCommission(int docId, Date sDate, Date eDate, String path, String radio) throws APIException;
+
+    public List<DiaPatientServiceBill> getCommissionCal(int docId, Date sDate, Date eDate) throws APIException;
+
+    public List<DiaDocDetails> searchDoctorName(String text) throws APIException;
+
+    public PatientSearch mergePatientSerach(PatientSearch ps) throws APIException;
+
+    public DiaCommissionCal saveDiaComCal(DiaCommissionCal diaComCal) throws APIException;
+
+    public List<DiaCommissionCal> getDiaComCal(int docId, Date sDate, Date eDate) throws APIException;
+
+    public DiaCommissionCal getDiaComCalById(Integer id) throws APIException;
+
+    public DiaCommissionCal reSaveDiaComCal(DiaCommissionCal diaComCal) throws APIException;
+
+    public List<DiaCommissionCal> getDiaComCalByBillId(Integer billId) throws APIException;
+
+    public DiaCommissionCalPaid saveDiaComCalPaid(DiaCommissionCalPaid diaComCalPaid) throws APIException;
+
+    public List<DiaCommissionCalPaid> getDiaComCalPaidByIdandDate(int docId, Date sDate, Date eDate) throws APIException;
+
+    public List<DiaCommissionCalPaid> getDiaComCalPaid(int docId, Date sDate, Date eDate) throws APIException;
+
+    public List<DiaCommissionCalPaid> getDiaComCalPaidByIdDate(int docId, int docId2, Date sDate, Date eDate) throws APIException;
+
+    public List<DiaBillingOrder> getDiaBillOrderByPatientIdOrderId(int patientId, int orderId) throws APIException;
+
+    public void removeDiaBillOrder(DiaBillingOrder diaBillOrder) throws APIException;
+
+    public DiaBillingOrder getDiaBillOrderById(Integer id) throws APIException;
+
+    public DiaLabSampleid saveDiaLabSam(DiaLabSampleid diaLabSam) throws APIException;
+
+    public List<DiaLabSampleid> getDiaLabSam() throws APIException;
+
+    public List<DiaLabSampleid> getSampleIdByBillId(int billId) throws APIException;
+
+    public List<DiaCommissionCal> getDiaComCalRmp(int rmpId, Date sDate, Date eDate) throws APIException;
+
+    public List<DiaRmpName> searchRmpName(String text) throws APIException;
+
+    public DiaRmpName getDiaRmpById(int rmpId) throws APIException;
+
+    public DiaRmpCommCalculationPaid saveRmpComPaid(DiaRmpCommCalculationPaid diaRmp) throws APIException;
+
+    public DiaRmpCommCalculationPaid getDiaRmpCalPaidById(int Id) throws APIException;
+
+    public DiaCommissionCalPaid getDiaComCalPaidById(int id) throws APIException;
+
+    public List<User> getAllUser() throws APIException;
+
+    public DiaCommissionCalPaidAdj saveDiaComPaidAdj(DiaCommissionCalPaidAdj diaAdj) throws APIException;
+
+    public DiaRmpCommCalculationPaidAdj saveDiaRmpAdj(DiaRmpCommCalculationPaidAdj diaRmpAdj) throws APIException;
+
+    public List<DiaRmpCommCalculationPaid> getRmpComCalPaidByIdDate(int rmpId, int rmpId2, Date sDate, Date eDate) throws APIException;
+
+    public List<DiaBarcodeGroup> listDiaBarcodeGroup() throws APIException;
+
+    public PatientSearch getPatientByPatientIdentifier(String patientId) throws APIException;
+
+    public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId) throws APIException;
+
+    public List<DiaCommissionCal> listDiaComCalByBillId(Integer billId) throws APIException;
+
+    public List<DiaDocDetails> getAllDoctors() throws APIException;
+
+    public List<DoctorPerformanceInfo> getDoctorsPerformanceInfo(String sDate, String eDate, String doctorId, String autoCompleteValue) throws APIException;
+
+    public List<DiaRmpName> getAllRmp() throws APIException;
+    
+    public DiaCommissionCalAll saveDiaComAll(DiaCommissionCalAll diaAll) throws APIException;
+
+    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, Date sDate, Date eDate) throws APIException;
+
+    public DiaCommissionCalAll getDiaAllByBillId(int billId) throws APIException;
+
+}

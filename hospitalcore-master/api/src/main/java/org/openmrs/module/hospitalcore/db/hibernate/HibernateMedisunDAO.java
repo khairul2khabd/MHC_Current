@@ -35,6 +35,7 @@ import org.openmrs.module.hospitalcore.model.DiaBarcodeGroup;
 import org.openmrs.module.hospitalcore.model.DiaBillingOrder;
 import org.openmrs.module.hospitalcore.model.DiaBillingQueue;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCal;
+import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaid;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaConceptNumeric;
@@ -48,6 +49,7 @@ import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaid;
 import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.hospitalcore.model.DocDetail;
+import org.openmrs.module.hospitalcore.model.DoctorPerformanceInfo;
 import org.openmrs.module.hospitalcore.model.MarDetails;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 
@@ -330,7 +332,7 @@ public class HibernateMedisunDAO implements MedisunDAO {
         sessionFactory.getCurrentSession().saveOrUpdate(diaComCal);
         return diaComCal;
     }
-
+ 
     public List<DiaCommissionCal> getDiaComCal(int docId, Date sDate, Date eDate) throws DAOException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String startDate = sdf.format(sDate) + " 00:00:00";
@@ -345,7 +347,7 @@ public class HibernateMedisunDAO implements MedisunDAO {
                 + startDate
                 + "' AND '"
                 + endDate
-                + "' AND d.status=false AND d.refRmpId<1";
+                + "' AND d.status=false AND d.diaPatientServiceBill.voided=false AND d.refRmpId<1";
 
         Session session = sessionFactory.getCurrentSession();
         Query q = session.createQuery(hql);
@@ -596,6 +598,205 @@ public class HibernateMedisunDAO implements MedisunDAO {
         criteria.add(Restrictions.eq("diaPatientServiceBill.billId", billId));
         List<DiaCommissionCal> list = criteria.list();
         return list;
+    }
+
+    public List<DiaDocDetails> getAllDoctors() throws DAOException {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaDocDetails.class);
+        List<DiaDocDetails> list = criteria.list();
+        return list;
+    }
+
+    public List<DoctorPerformanceInfo> getDoctorsPerformanceInfo(String sDate, String eDate, String ids, String autoCompleteValue) throws DAOException {
+        List<DoctorPerformanceInfo> performanceList = null;
+
+        Session session = sessionFactory.getCurrentSession();
+
+        String doctorFormatedIds = getDoctorFormatedString(ids);
+        String rmpFormatedIds = getRmpFormatedString(ids);
+
+        String doctorSql = " SELECT doctorDetails.`doctor_name`,billingService.`bill_id`,patientSearch.`identifier`,patientSearch.`fullname`,billingService.`actual_amount`,billingService.`discount_amount`,commissionCalculation.totalDoctorsPercentageAmount,serviceBillCollect.paidAmount,billingService.`due_amount`,billingService.`created_date`,doctorDetails.`id`\n"
+                + " FROM `dia_billing_patient_service_bill`AS billingService LEFT JOIN (SELECT c.`bill_id`,SUM(c.`com_percentage`) AS totalPercent,SUM(c.`service_price`* c.`com_percentage`/100) AS totalDoctorsPercentageAmount  FROM `dia_commission_calculation` AS c GROUP BY c.`bill_id` ) commissionCalculation\n"
+                + " ON commissionCalculation.`bill_id`=billingService.`bill_id`\n"
+                + " \n"
+                + " INNER JOIN (SELECT co.`bill_id`,SUM(co.`paid_amount`) AS paidAmount FROM `dia_billing_patietn_service_bill_collect` AS co GROUP BY co.`bill_id`) serviceBillCollect\n"
+                + " ON serviceBillCollect.`bill_id`=billingService.`bill_id`\n"
+                + "\n"
+                + " INNER JOIN `patient_search`AS patientSearch ON patientSearch.`patient_id`=billingService.`patient_id`\n"
+                + " INNER JOIN `dia_doctor_details` AS doctorDetails ON billingService.`refDocId` = doctorDetails.`id`\n"
+                + "\n"
+                + " WHERE  billingService.`voided`='0' AND billingService.`created_date` BETWEEN '" + sDate + "' AND '" + eDate + "' " + doctorFormatedIds + "\n"
+                + " ORDER BY doctorDetails.`id`";
+
+        String rmpSql = " SELECT rmp.`name`,billingService.`bill_id`,patientSearch.`identifier`,patientSearch.`fullname`,billingService.`actual_amount`,billingService.`discount_amount`,commissionCalculation.totalDoctorsPercentageAmount,serviceBillCollect.paidAmount,billingService.`due_amount`,billingService.`created_date`,rmp.`id`\n"
+                + " FROM `dia_billing_patient_service_bill`AS billingService LEFT JOIN (SELECT c.`bill_id`,SUM(c.`com_percentage`) AS totalPercent,SUM(c.`service_price`* c.`com_percentage`/100) AS totalDoctorsPercentageAmount  FROM `dia_commission_calculation` AS c GROUP BY c.`bill_id` ) commissionCalculation\n"
+                + " ON commissionCalculation.`bill_id`=billingService.`bill_id`\n"
+                + " \n"
+                + " INNER JOIN (SELECT co.`bill_id`,SUM(co.`paid_amount`) AS paidAmount FROM `dia_billing_patietn_service_bill_collect` AS co GROUP BY co.`bill_id`) serviceBillCollect\n"
+                + " ON serviceBillCollect.`bill_id`=billingService.`bill_id`\n"
+                + "\n"
+                + " INNER JOIN `patient_search`AS patientSearch ON patientSearch.`patient_id`=billingService.`patient_id`\n"
+                + " INNER JOIN `dia_rmp_by` AS rmp ON billingService.`refRmpId` = rmp.`id`\n"
+                + "\n"
+                + " WHERE  billingService.`voided`='0' AND billingService.`created_date` BETWEEN '" + sDate + "' AND '" + eDate + "' " + rmpFormatedIds + "\n"
+                + " ORDER BY rmp.`id`";
+
+        String sql;
+
+        if (autoCompleteValue.equals("doctor")) {
+            sql = doctorSql;
+        } else {
+            sql = rmpSql;
+        }
+
+        SQLQuery query = session.createSQLQuery(sql);
+
+        List<Object[]> resultList = query.list();
+
+        performanceList = new ArrayList();
+
+        for (Object[] obj : resultList) {
+
+            DoctorPerformanceInfo performanceInfo = new DoctorPerformanceInfo();
+
+            performanceInfo.setDoctorOrRmpName(check(obj[0]));
+            performanceInfo.setBillId(Integer.parseInt(check(obj[1])));
+            performanceInfo.setPatientIdentifier(check(obj[2]));
+            performanceInfo.setPatientName(check(obj[3]));
+            performanceInfo.setActualAmount(Double.parseDouble(check(obj[4])));
+            performanceInfo.setDiscount(Double.parseDouble(check(obj[5])));
+            performanceInfo.setDueAmount(Double.parseDouble(check(obj[8])));
+            performanceInfo.setCashPaidAmount(Double.parseDouble(check(obj[7])));
+            performanceInfo.setCreatedDate(check(obj[9]));
+            performanceInfo.setDoctorOrRmpId(Integer.parseInt(check(obj[10])));
+            performanceInfo.setNetAmount(performanceInfo.getActualAmount() - performanceInfo.getDiscount());
+
+            if (performanceInfo.getDueAmount() > 0) {
+                performanceInfo.setCareOfPaidAmount(0.00);
+                performanceInfo.setCashAmount(performanceInfo.getCashPaidAmount());
+            } else {
+                performanceInfo.setCareOfPaidAmount(getDoctorsPercentageAmount(Double.parseDouble(check(obj[6])), Double.parseDouble(check(obj[5]))));
+                performanceInfo.setCashAmount(performanceInfo.getNetAmount() - performanceInfo.getCareOfPaidAmount());
+            }
+            performanceList.add(performanceInfo);
+        }
+        return performanceList;
+    }
+
+    private Double getDoctorsPercentageAmount(double percentageAmount, double discountAmount) {
+
+        if (discountAmount >= percentageAmount) {
+            return 0.0;
+        }
+        double payableAmount = percentageAmount - discountAmount;
+        return payableAmount;
+    }
+
+    private String check(Object obj) {
+        if (obj == null) {
+            return "0";
+        }
+        return obj.toString();
+    }
+
+    private String getDoctorFormatedString(String doctorIds) {
+
+        if (doctorIds == null || doctorIds.isEmpty()) {
+            return "";
+        }
+
+        if (doctorIds.endsWith(",")) {
+            doctorIds = doctorIds.substring(0, doctorIds.length() - 1);
+        }
+        String[] idsArray = doctorIds.split(",");
+
+        String formatedDoctorsId = "";
+
+        for (int i = 0; i < idsArray.length; i++) {
+            String doctorId = idsArray[i];
+            formatedDoctorsId += " billingService.`refDocId`='" + doctorId + "' OR";
+        }
+
+        if (formatedDoctorsId.endsWith("OR")) {
+            formatedDoctorsId = formatedDoctorsId.substring(0, formatedDoctorsId.length() - 2);
+        }
+
+        formatedDoctorsId = "AND (" + formatedDoctorsId + ")";
+
+        return formatedDoctorsId;
+    }
+
+    private String getRmpFormatedString(String ids) {
+
+        if (ids == null || ids.isEmpty()) {
+            return "";
+        }
+
+        if (ids.endsWith(",")) {
+            ids = ids.substring(0, ids.length() - 1);
+        }
+        String[] idsArray = ids.split(",");
+
+        String formatedRmpId = "";
+
+        for (int i = 0; i < idsArray.length; i++) {
+            String rmpId = idsArray[i];
+            formatedRmpId += " rmp.`id`='" + rmpId + "' OR";
+        }
+
+        if (formatedRmpId.endsWith("OR")) {
+            formatedRmpId = formatedRmpId.substring(0, formatedRmpId.length() - 2);
+        }
+
+        formatedRmpId = "AND (" + formatedRmpId + ")";
+        return formatedRmpId;
+    }
+
+    public List<DiaRmpName> getAllRmp() throws DAOException {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaRmpName.class);
+        List<DiaRmpName> list = criteria.list();
+        return list;
+    }
+
+    public DiaCommissionCalAll saveDiaComAll(DiaCommissionCalAll diaAll) throws DAOException {
+        sessionFactory.getCurrentSession().saveOrUpdate(diaAll);
+        return diaAll;
+    }
+
+    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, Date sDate, Date eDate) throws DAOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = sdf.format(sDate) + " 00:00:00";
+        String endDate = sdf.format(eDate) + " 23:59:59";
+        String hql = null;      
+            hql = "from  DiaCommissionCalAll d "
+                    + " where d.refId='"
+                    + docch
+                    + "' AND d.createdDate BETWEEN '"
+                    + startDate
+                    + "' AND '"
+                    + endDate
+                    + "' AND d.status=false AND d.refRmp<1 AND d.diaPatientServiceBill.voided=false order by d.refId asc";
+       
+//        if (docch == 2) {
+//            hql = "from  DiaCommissionCalAll d "
+//                    //  + " where d.refRmpId>='"
+//                    //   + dc
+//                    + " where d.createdDate BETWEEN '"
+//                    + startDate
+//                    + "' AND '"
+//                    + endDate
+//                    + "' AND d.status=false AND d.refRmp>0 AND d.diaPatientServiceBill.voided=false order by d.refRmp asc";
+//        }
+
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createQuery(hql);
+        List<DiaCommissionCalAll> list = q.list();
+        return list;
+    }
+
+    public DiaCommissionCalAll getDiaAllByBillId(int billId) throws DAOException {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaCommissionCalAll.class);
+        criteria.add(Restrictions.eq("diaPatientServiceBill.billId", billId));
+        return (DiaCommissionCalAll) criteria.uniqueResult();
     }
 
 }

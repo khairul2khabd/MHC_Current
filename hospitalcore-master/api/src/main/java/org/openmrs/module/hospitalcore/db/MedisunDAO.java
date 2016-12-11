@@ -15,6 +15,7 @@ import org.openmrs.module.hospitalcore.model.DiaBarcodeGroup;
 import org.openmrs.module.hospitalcore.model.DiaBillingOrder;
 import org.openmrs.module.hospitalcore.model.DiaBillingQueue;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCal;
+import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaid;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaConceptNumeric;
@@ -28,6 +29,7 @@ import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaid;
 import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.hospitalcore.model.DocDetail;
+import org.openmrs.module.hospitalcore.model.DoctorPerformanceInfo;
 import org.openmrs.module.hospitalcore.model.MarDetails;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 
@@ -149,9 +151,20 @@ public interface MedisunDAO {
     public List<DiaBarcodeGroup> listDiaBarcodeGroup() throws DAOException;
 
     public PatientSearch getPatientByPatientIdentifier(String patientId) throws DAOException;
-    
-    public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId)throws DAOException;
-    
+
+    public DiaPatientServiceBill getDiaPatienSerBillByPatientId(int patientId) throws DAOException;
+
     public List<DiaCommissionCal> listDiaComCalByBillId(Integer billId) throws DAOException;
-     
+
+    public List<DiaDocDetails> getAllDoctors() throws DAOException;
+
+    public List<DoctorPerformanceInfo> getDoctorsPerformanceInfo(String sDate, String eDate, String doctorId, String autoCompleteValue) throws DAOException;
+
+    public List<DiaRmpName> getAllRmp() throws DAOException;
+
+    public DiaCommissionCalAll saveDiaComAll(DiaCommissionCalAll diaAll) throws DAOException;
+
+    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, Date sDate, Date eDate) throws DAOException;
+
+    public DiaCommissionCalAll getDiaAllByBillId(int billId) throws DAOException;
 }
