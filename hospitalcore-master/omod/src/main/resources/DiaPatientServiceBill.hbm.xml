@@ -41,7 +41,8 @@
         <property name="refDocId" column="refDocId" />
         <property name="refMarId" column="refMarId" /> 
         <property name="discountAmount" column="discount_amount" /> 
-        <property name="refRmpId" column="refRmpId" />    
+        <property name="refRmpId" column="refRmpId" />  
+        <property name="freeReason" column="free_reason" />    
 		
     </class>
 </hibernate-mapping>
