@@ -318,8 +318,8 @@ public class MedisunServiceImpl extends BaseOpenmrsService implements MedisunSer
         return dao.saveDiaComCal(diaComCal);
     }
 
-    public List<DiaCommissionCal> getDiaComCal(int docId, Date sDate, Date eDate) throws APIException {
-        return dao.getDiaComCal(docId, sDate, eDate);
+    public List<DiaCommissionCal> getDiaComCal(int docId, int status, Date sDate, Date eDate) throws APIException {
+        return dao.getDiaComCal(docId, status, sDate, eDate);
     }
 
     public DiaCommissionCal getDiaComCalById(Integer id) throws APIException {
@@ -446,8 +446,8 @@ public class MedisunServiceImpl extends BaseOpenmrsService implements MedisunSer
         return dao.saveDiaComAll(diaAll);
     }
 
-    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, Date sDate, Date eDate) throws APIException {
-        return dao.listDiaComCalAll(docch, sDate, eDate);
+    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, int status, Date sDate, Date eDate) throws APIException {
+        return dao.listDiaComCalAll(docch, status, sDate, eDate);
     }
 
     public DiaCommissionCalAll getDiaAllByBillId(int billId) throws APIException {

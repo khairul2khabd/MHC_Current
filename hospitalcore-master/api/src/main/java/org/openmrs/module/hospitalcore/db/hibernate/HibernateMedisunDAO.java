@@ -332,28 +332,44 @@ public class HibernateMedisunDAO implements MedisunDAO {
         sessionFactory.getCurrentSession().saveOrUpdate(diaComCal);
         return diaComCal;
     }
- 
-    public List<DiaCommissionCal> getDiaComCal(int docId, Date sDate, Date eDate) throws DAOException {
+
+    public List<DiaCommissionCal> getDiaComCal(int docId, int status, Date sDate, Date eDate) throws DAOException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String startDate = sdf.format(sDate) + " 00:00:00";
         String endDate = sdf.format(eDate) + " 23:59:59";
         String hql = null;
         // hql = "SELECT d.billId, d.patientID  from  DiaPatientServiceBill d "
-        hql = "from  DiaCommissionCal d "
-                //  + "INNER JOIN DiaPatientServiceBillItem di ON d.billId = di.diaPatientServiceBill.billId "
-                + " where d.refId='"
-                + docId
-                + "' AND d.createdDate BETWEEN '"
-                + startDate
-                + "' AND '"
-                + endDate
-                + "' AND d.status=false AND d.diaPatientServiceBill.voided=false AND d.refRmpId<1";
+        if(status==0){
+            hql = "from  DiaCommissionCal d "
+                    //  + "INNER JOIN DiaPatientServiceBillItem di ON d.billId = di.diaPatientServiceBill.billId "
+                    + " where d.refId='"
+                    + docId
+                    + "' AND d.createdDate BETWEEN '"
+                    + startDate
+                    + "' AND '"
+                    + endDate
+                    + "' AND d.status=false AND d.diaPatientServiceBill.voided=false AND d.refRmpId<1";
+        }
+        
+        if(status==1){
+            hql = "from  DiaCommissionCal d "
+                    //  + "INNER JOIN DiaPatientServiceBillItem di ON d.billId = di.diaPatientServiceBill.billId "
+                    + " where d.refId='"
+                    + docId
+                    + "' AND d.createdDate BETWEEN '"
+                    + startDate
+                    + "' AND '"
+                    + endDate
+                    + "' AND d.status=true AND d.diaPatientServiceBill.voided=false AND d.refRmpId<1";
+        }
+        
+            Session session = sessionFactory.getCurrentSession();
+            Query q = session.createQuery(hql);
+            List<DiaCommissionCal> list = q.list();
+            return list;
+        }
 
-        Session session = sessionFactory.getCurrentSession();
-        Query q = session.createQuery(hql);
-        List<DiaCommissionCal> list = q.list();
-        return list;
-    }
+    
 
     public DiaCommissionCal getDiaComCalById(Integer id) throws DAOException {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaCommissionCal.class);
@@ -762,31 +778,33 @@ public class HibernateMedisunDAO implements MedisunDAO {
         return diaAll;
     }
 
-    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, Date sDate, Date eDate) throws DAOException {
+    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, int status, Date sDate, Date eDate) throws DAOException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String startDate = sdf.format(sDate) + " 00:00:00";
         String endDate = sdf.format(eDate) + " 23:59:59";
-        String hql = null;      
-            hql = "from  DiaCommissionCalAll d "
-                    + " where d.refId='"
-                    + docch
-                    + "' AND d.createdDate BETWEEN '"
-                    + startDate
-                    + "' AND '"
-                    + endDate
-                    + "' AND d.status=false AND d.refRmp<1 AND d.diaPatientServiceBill.voided=false order by d.refId asc";
-       
-//        if (docch == 2) {
-//            hql = "from  DiaCommissionCalAll d "
-//                    //  + " where d.refRmpId>='"
-//                    //   + dc
-//                    + " where d.createdDate BETWEEN '"
-//                    + startDate
-//                    + "' AND '"
-//                    + endDate
-//                    + "' AND d.status=false AND d.refRmp>0 AND d.diaPatientServiceBill.voided=false order by d.refRmp asc";
-//        }
-
+        String hql = null;
+        if(status==0){
+        hql = "from  DiaCommissionCalAll d "
+                + " where d.refId='"
+                + docch
+                + "' AND d.createdDate BETWEEN '"
+                + startDate
+                + "' AND '"
+                + endDate
+                + "' AND d.status=false AND d.refRmp<1 AND d.diaPatientServiceBill.voided=false order by d.refId asc";
+        } 
+        
+        if(status==1){
+        hql = "from  DiaCommissionCalAll d "
+                + " where d.refId='"
+                + docch
+                + "' AND d.createdDate BETWEEN '"
+                + startDate
+                + "' AND '"
+                + endDate
+                + "' AND d.status=true AND d.refRmp<1 AND d.diaPatientServiceBill.voided=false order by d.refId asc";
+        }
+        
         Session session = sessionFactory.getCurrentSession();
         Query q = session.createQuery(hql);
         List<DiaCommissionCalAll> list = q.list();

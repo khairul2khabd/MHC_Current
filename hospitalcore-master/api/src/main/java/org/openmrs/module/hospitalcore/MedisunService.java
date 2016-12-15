@@ -107,7 +107,7 @@ public interface MedisunService extends OpenmrsService {
 
     public DiaCommissionCal saveDiaComCal(DiaCommissionCal diaComCal) throws APIException;
 
-    public List<DiaCommissionCal> getDiaComCal(int docId, Date sDate, Date eDate) throws APIException;
+    public List<DiaCommissionCal> getDiaComCal(int docId, int status, Date sDate, Date eDate) throws APIException;
 
     public DiaCommissionCal getDiaComCalById(Integer id) throws APIException;
 
@@ -171,7 +171,7 @@ public interface MedisunService extends OpenmrsService {
     
     public DiaCommissionCalAll saveDiaComAll(DiaCommissionCalAll diaAll) throws APIException;
 
-    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, Date sDate, Date eDate) throws APIException;
+    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, int status, Date sDate, Date eDate) throws APIException;
 
     public DiaCommissionCalAll getDiaAllByBillId(int billId) throws APIException;
 

@@ -100,7 +100,7 @@ public interface MedisunDAO {
 
     public DiaCommissionCal saveDiaComCal(DiaCommissionCal diaComCal) throws DAOException;
 
-    public List<DiaCommissionCal> getDiaComCal(int docId, Date sDate, Date eDate) throws DAOException;
+    public List<DiaCommissionCal> getDiaComCal(int docId, int status, Date sDate, Date eDate) throws DAOException;
 
     public DiaCommissionCal getDiaComCalById(Integer id) throws DAOException;
 
@@ -164,7 +164,7 @@ public interface MedisunDAO {
 
     public DiaCommissionCalAll saveDiaComAll(DiaCommissionCalAll diaAll) throws DAOException;
 
-    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, Date sDate, Date eDate) throws DAOException;
+    public List<DiaCommissionCalAll> listDiaComCalAll(int docch, int status, Date sDate, Date eDate) throws DAOException;
 
     public DiaCommissionCalAll getDiaAllByBillId(int billId) throws DAOException;
 }

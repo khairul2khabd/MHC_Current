@@ -40,6 +40,15 @@ public class DiaPatientServiceBill {
     private Integer refMarId;
     private BigDecimal discountAmount;
     private Integer refRmpId;
+    private String freeReason;
+
+    public String getFreeReason() {
+        return freeReason;
+    }
+
+    public void setFreeReason(String freeReason) {
+        this.freeReason = freeReason;
+    }
      
 
     public Integer getRefRmpId() {

@@ -26,18 +26,9 @@ public class DiaPatientServiceBillCollect {
     private BigDecimal paidAmount;
     private BigDecimal payableAmount;
     private BigDecimal dueAmount;
-    private BigDecimal duePaid;
+    private int duePaid;
     private BigDecimal discountAmount;
     private Boolean duePaidStatus = false;
-
-    public Boolean isDuePaidStatus() {
-        return duePaidStatus;
-    }
-
-    public void setDuePaidStatus(Boolean duePaidStatus) {
-        this.duePaidStatus = duePaidStatus;
-    }
-     
 
     public Integer getBillCollectId() {
         return billCollectId;
@@ -111,11 +102,11 @@ public class DiaPatientServiceBillCollect {
         this.dueAmount = dueAmount;
     }
 
-    public BigDecimal getDuePaid() {
+    public int getDuePaid() {
         return duePaid;
     }
 
-    public void setDuePaid(BigDecimal duePaid) {
+    public void setDuePaid(int duePaid) {
         this.duePaid = duePaid;
     }
 
@@ -126,5 +117,15 @@ public class DiaPatientServiceBillCollect {
     public void setDiscountAmount(BigDecimal discountAmount) {
         this.discountAmount = discountAmount;
     }
+
+    public Boolean isDuePaidStatus() {
+        return duePaidStatus;
+    }
+
+    public void setDuePaidStatus(Boolean duePaidStatus) {
+        this.duePaidStatus = duePaidStatus;
+    }
+
+     
     
 }
