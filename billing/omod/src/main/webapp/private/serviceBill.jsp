@@ -25,6 +25,54 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             return false;
         return true;
     }
+
+    function printDivSubmit() {
+        var netamount = $('#netamount').val();
+        var paidamount = $('#total').val();
+        var cash = $('#paidamount').val();
+        var due = $('#dueamount').val();
+        var disAmount = $('#discountamount').val();
+
+        if (jQuery("#free").is(':checked')) {
+            if (jQuery("#freeReason").val().length <= 0) {
+                alert('Please enter Free reason');
+                $("#freeReason").focus();
+                return false;
+            }
+            else {
+                if (confirm("Are you Sure ?")) {
+                    $('#paidamount').val("0");
+                    $('#dueamount').val("0");
+                    jQuery("#orderBillingForm")
+                            .mask("<img src='" + openmrsContextPath + "/moduleResources/billing/spinner.gif" + "'/>&nbsp;");
+                    jQuery("#orderBillingForm").submit();
+                }
+            }
+        }
+
+        else {
+            if (due < 0 || cash == "" || cash == 0 || disAmount == "")
+            {
+                alert("Cash Amount Empty or Cash Amount has to Getherthen Net Amount Or Discount amount empty is not valid !!!");
+                $("#discountamount").focus();
+                return false;
+            }
+            else {
+                // new add
+                jQuery("#orderBillingForm")
+                        .mask("<img src='" + openmrsContextPath + "/moduleResources/billing/spinner.gif" + "'/>&nbsp;");
+                if (confirm("Are you Sure ?")) {
+
+                    jQuery("#orderBillingForm").submit();
+                }
+                else {
+                    $("#paidamount").focus();
+                    jQuery("#orderBillingForm").unmask();
+                    return false;
+                }
+            }
+        }
+    }
 </script>
 
 <script type="text/javascript">
@@ -35,6 +83,38 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
         $('#discount').val("0");
         $('#paidamount').val("");
         $('#dueamount').val("");
+
+        /////// start payment type
+
+        jQuery("#freeReason").hide();
+        jQuery("#paid").attr('checked', 'checked');
+        $("#free").removeAttr("checked");
+
+        $("#paid").click(function() {
+            $("#freeReason").hide("fast");
+            $('#paidamount').removeAttr("disabled");
+            $("#free").removeAttr("checked");
+        });
+
+        $("#free").click(function() {
+            if (jQuery("#free").is(':checked')) {
+                $("#freeReason").show("fast");
+                $('#paidamount').attr("disabled", "disabled");
+                $("#paid").removeAttr("checked");
+                $('#discountamount').val("0");
+                $('#dueamount').val("");
+                $('#discount').val("0");
+                $('#netamount').val(billAmount);
+                $('#paidamount').val("0");
+            }
+            else {
+                $("#freeReason").hide("fast");
+                $('#paidamount').removeAttr("disabled");
+            }
+
+        });
+
+        /////// end payment type
 
         jQuery("#paidamount").keyup(function(event) {
             if (event.keyCode == 13) {
@@ -409,10 +489,18 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                 </c:if>
             </c:forEach>
             <tr> 
-                <td colspan="3" align="right" 	style="border-right: solid 4px #ccc;"><span style="font-size:20px; font-weight:bold; ">Total Bill</span> </td>
+                <td colspan="3" style="border-right: solid 4px #ccc;">
+                    <textarea placeholder="Please Write If you want Remarks" style="width:70%; text-align:left;" rows="1" title="Remarks" name="rem" id="rem" ></textarea>
+                    <span style="font-size:20px; font-weight:bold; float:right;">Total Bill</span> </td>
                 <td><input type="text" id="totalBill" name="totalBill"  readOnly="true" onclick="alert('This Field Read Only!!!!');"
                            style="width:100px; text-align:center;  color:blue;  font-size:18px; font-weight:bold; "/>
                     <span style="font-size:20px; font-weight:bold;">TK</span></td>
+            </tr>
+            <tr>
+                <td colspan="4"> <input type="checkbox" id="paid" name="paid" value="1" text="Paid"/> Paid &emsp;&emsp;&emsp;
+                    <input type="checkbox" id="free" name="free" value="0" text="Free"/> Free &emsp;
+                    <input type="text" style="height:30px; width:50%; font-size:15px;" placeholder="Free Reason" id="freeReason" name="freeReason" />
+                </td>
             </tr>
         </tbody>
     </table>
@@ -436,12 +524,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                                               style="width:100px; text-align:center; background:#D1E0E0;" onkeyup="lessamountcal(this)"
                                               size="7" value="0" ondblclick="this.value = '';" ></td>
                 </tr>
-                <!--
-<tr>
-    <td colspan="10" align="right"> Vat : &nbsp;</td>
-    <td align="center"><input type="text" id="vat" name="vat" style="width:100px; text-align:center;"
-                              size="7" value="0.00" ></td>
-</tr> -->
+ 
                 <tr>
                     <td colspan="10" align="right"><span style="font-size:18px; font-weight:bold; color:green;"> Net Amount (Tk) :</span> &nbsp;</td>
                     <td align="center"><input type="text" id="netamount" name="netamount" 
@@ -486,7 +569,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
         <div align="center">
             <!-- <input type="submit" class="bu" id="savebill" name="savebill" value="Save bill" /> &nbsp;&nbsp;&nbsp; -->
             <!-- <input type="button" class="bu" onclick="javascript:window.location.href = 'billingqueue.form?'"  value="Cancel" /> -->
-            <input type="button" class="bu" value="Save"  onClick="printDiv2();" /> &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="bu" value="Save"  onClick="printDivSubmit();" /> &nbsp;&nbsp;&nbsp;&nbsp;
             <input type="button" class="bu" value="Add / Edit Service"  onClick="orderDetails('${patient.id}', '${orderId}', '${encounterId}');" /> 
         </div>
 

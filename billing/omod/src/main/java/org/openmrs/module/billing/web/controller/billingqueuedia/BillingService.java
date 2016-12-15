@@ -102,6 +102,7 @@ public class BillingService {
             @RequestParam(value = "refRmpId", required = false) Integer refRmpId,
             @RequestParam(value = "dDate", required = false) String dDate,
             @RequestParam(value = "dTime", required = false) String dTime,
+            @RequestParam(value = "rem", required = false) String remarks,
             //  @RequestParam(value = "discount", required = false) BigDecimal discount,
             @RequestParam(value = "discount", required = false) String discount,
             @RequestParam("indCount") Integer indCount,
@@ -115,6 +116,10 @@ public class BillingService {
 
         //Date birthday = patient.getBirthdate();
         // model.addAttribute("age", PatientUtils.estimateAge(birthday));
+        String fullPaid = request.getParameter("paid");
+        String fullFree = request.getParameter("free");
+        String freeReason = request.getParameter("freeReason");
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date deDate = null;
 
@@ -144,13 +149,36 @@ public class BillingService {
         BigDecimal discountAmount = NumberUtils.createBigDecimal(request.getParameter("discountamount"));
         BigDecimal unitPrice = NumberUtils.createBigDecimal(request.getParameter("unitprice"));
         // BigDecimal discount = NumberUtils.createBigDecimal(request.getParameter("discount"));
+        BigDecimal p = new BigDecimal("0.00");
+
+        if (paidAmount == null) {
+            paidAmount = p;
+        } else {
+            paidAmount = paidAmount;
+        }
+
+        System.out.println("***********paidAmount***" + paidAmount);
 
         String due = null;
-        if (dueAmount.signum() < 1) {
+        boolean status;
+        if ((StringUtils.equals(fullPaid, "1")) && (dueAmount.signum() < 1)) {
             due = "PAID";
+            status = true;
+            totalBill=totalBill;
+        } else if ((StringUtils.equals(fullPaid, null)) && (StringUtils.equals(fullFree, null)) && (dueAmount.signum() < 1)) {
+            due = "PAID";
+            status = true;
+            totalBill=totalBill;
+        } else if ((!StringUtils.equalsIgnoreCase(fullFree, null))) {
+            due = "FREE";
+            status = true;
+            totalBill=p;
         } else {
             due = "DUE";
+            status = false;
+            totalBill=totalBill;
         }
+        System.out.println("***********status***" + due);
 
         DiaPatientServiceBill dpsb = new DiaPatientServiceBill();
         dpsb.setPatient(patient);
@@ -160,16 +188,18 @@ public class BillingService {
         dpsb.setPrinted(Boolean.FALSE);
         dpsb.setReceipt(dr);
         dpsb.setVoided(Boolean.FALSE);
-        dpsb.setActualAmount(totalBill);
+        dpsb.setActualAmount(totalBill);  /// if free actual amount is 0.00
         dpsb.setDueAmount(dueAmount);
         dpsb.setBillingStatus(due);
         dpsb.setRefDocId(refDocId);
         dpsb.setRefMarId(refMarId);
         dpsb.setRefRmpId(refRmpId);
+        dpsb.setComment(remarks);
         dpsb.setDiscountAmount(discountAmount);
-        if (paidAmount.signum() > 0) {
-            dpsb = ms.saveDiaPatientServiceBill(dpsb);
-        }
+        dpsb.setFreeReason(freeReason);
+        //if (paidAmount.signum() > 0) {
+        dpsb = ms.saveDiaPatientServiceBill(dpsb);
+        //}
 
         // if (dpsb != null && dpsb.getBillId() != null ) {
         if (dpsb != null && dpsb.getBillId() != null && orderId != 0) {
@@ -192,10 +222,11 @@ public class BillingService {
         dBillColl.setPayableAmount(netAmount);
         dBillColl.setDueAmount(dueAmount);
         dBillColl.setDiscountAmount(discountAmount);
-
-        if (paidAmount.signum() > 0) {
-            ms.saveDiaPatientServiceBillCollect(dBillColl);
-        }
+        dBillColl.setDuePaidStatus(status);
+        dBillColl.setDuePaid(0);
+        //if (paidAmount.signum() > 0) {
+        ms.saveDiaPatientServiceBillCollect(dBillColl);
+        //}
 
         String sername = null;
         BigDecimal totCom = BigDecimal.ZERO;
@@ -210,10 +241,10 @@ public class BillingService {
             Integer qty = NumberUtils.createInteger(request.getParameter(i.toString() + "servicequantity")); // Quantity
             servicename = request.getParameter(i.toString() + "service");
             service = billingService.getServiceByConceptName(servicename);
-            
+
             if (((!StringUtils.equalsIgnoreCase(service.getCategory().getId().toString(), "5678")))) {
                 sername = servicename + "," + sername;  // for commison
-                
+
                 servicePrice = servicePrice.add(unitPrice);
             }
 
@@ -228,9 +259,9 @@ public class BillingService {
             dBillItem.setCreator(user.getId());
             dBillItem.setVoided(Boolean.FALSE);
             dBillItem.setActualAmount(unitPrice);
-            if (paidAmount.signum() > 0) {
-                ms.saveDiaPatientServiceBillItem(dBillItem);
-            }
+            // if (paidAmount.signum() > 0) {
+            ms.saveDiaPatientServiceBillItem(dBillItem);
+            //}
 
             BigDecimal ind = NumberUtils.createBigDecimal(indCount.toString());
             BigDecimal da = discountAmount.divide(ind, 2, RoundingMode.CEILING);
@@ -272,83 +303,82 @@ public class BillingService {
             dls.setDiaPatientServiceBill(dpsb);
             dls.setSampleId(generateBarcode());
             ms.saveDiaLabSam(dls);
-            
+
         }
-        
+
         if (sername != null && dpsb.getBillingStatus() == "PAID") {
-                sername = sername.replace(",null", "");
+            sername = sername.replace(",null", "");
 
-                DiaCommissionCalAll diaAll = new DiaCommissionCalAll();
-                diaAll.setDiaPatientServiceBill(dpsb);
-                diaAll.setPatient(patient);
-                diaAll.setServiceName(sername);
-                diaAll.setServicePrice(servicePrice);
-                diaAll.setLessAmount(discountAmount);
-                diaAll.setComAmount(totCom);
-                diaAll.setCreatedDate(new Date());
-                diaAll.setCreator(Context.getAuthenticatedUser().getId());
-                diaAll.setRefId(refDocId);
-                diaAll.setRefRmp(refRmpId);
-                diaAll.setRefMar(refMarId);
-                ms.saveDiaComAll(diaAll);
-            }
-        
-            //// Generate Patient Id Barcode4j
-            Code128Bean cod = new Code128Bean();
-            final int reso = 128;
-            cod.setModuleWidth(UnitConv.in2mm(1.0f / reso)); //makes the narrow bar 
-            //width exactly one pixel
-            cod.setHeight(10);
-            cod.setFontSize(3);
-            cod.setFontName("Times New Roman");
-            // cod.doQuietZone(true);
-            cod.getBarWidth(2);
-            // bean.setVerticalQuietZone(1);
-            cod.setMsgPosition(HumanReadablePlacement.HRP_BOTTOM);
+            DiaCommissionCalAll diaAll = new DiaCommissionCalAll();
+            diaAll.setDiaPatientServiceBill(dpsb);
+            diaAll.setPatient(patient);
+            diaAll.setServiceName(sername);
+            diaAll.setServicePrice(servicePrice);
+            diaAll.setLessAmount(discountAmount);
+            diaAll.setComAmount(totCom);
+            diaAll.setCreatedDate(new Date());
+            diaAll.setCreator(Context.getAuthenticatedUser().getId());
+            diaAll.setRefId(refDocId);
+            diaAll.setRefRmp(refRmpId);
+            diaAll.setRefMar(refMarId);
+            ms.saveDiaComAll(diaAll);
+        }
 
-            File outputFilePatId = new File(request.getSession().getServletContext().getRealPath("/barcode/" + patient.getId() + ".png"));
-            // File outputFilePatId = new File("C:\\tomcat6\\webapps\\MEDISUN_HEALTH_CARE_V2_Final\\barcode/" + patient.getId() + ".png"); //Mostofa bhi
+        //// Generate Patient Id Barcode4j
+        Code128Bean cod = new Code128Bean();
+        final int reso = 128;
+        cod.setModuleWidth(UnitConv.in2mm(1.0f / reso)); //makes the narrow bar 
+        //width exactly one pixel
+        cod.setHeight(10);
+        cod.setFontSize(3);
+        cod.setFontName("Times New Roman");
+        // cod.doQuietZone(true);
+        cod.getBarWidth(2);
+        // bean.setVerticalQuietZone(1);
+        cod.setMsgPosition(HumanReadablePlacement.HRP_BOTTOM);
 
-            OutputStream out1 = new FileOutputStream(outputFilePatId);
-            try {
-                BitmapCanvasProvider canvas = new BitmapCanvasProvider(out1, "image/x-png", reso, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        File outputFilePatId = new File(request.getSession().getServletContext().getRealPath("/barcode/" + patient.getId() + ".png"));
+        // File outputFilePatId = new File("C:\\tomcat6\\webapps\\MEDISUN_HEALTH_CARE_V2_Final\\barcode/" + patient.getId() + ".png"); //Mostofa bhi
 
-                cod.generateBarcode(canvas, patient.getPatientIdentifier().getIdentifier());
+        OutputStream out1 = new FileOutputStream(outputFilePatId);
+        try {
+            BitmapCanvasProvider canvas = new BitmapCanvasProvider(out1, "image/x-png", reso, BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
-                canvas.finish();
-            } finally {
-                out1.close();
-            }
+            cod.generateBarcode(canvas, patient.getPatientIdentifier().getIdentifier());
 
-            //// Generate Bill Id Barcode4j
-            Code128Bean codBil = new Code128Bean();
-            final int resou = 128;
-            codBil.setModuleWidth(UnitConv.in2mm(1.0f / resou)); //makes the narrow bar 
-            //width exactly one pixel
-            codBil.setHeight(10);
-            codBil.setFontSize(2);
-            codBil.setFontName("Helvetica");
-            // cod.doQuietZone(true);
-            codBil.getBarWidth(2);
-            // bean.setVerticalQuietZone(1);
-            codBil.setMsgPosition(HumanReadablePlacement.HRP_BOTTOM);
+            canvas.finish();
+        } finally {
+            out1.close();
+        }
 
-            //  File outputFileBillId = new File("C:\\tomcat6\\webapps\\MEDISUN_HEALTH_CARE_V2_Final\\barcode/" + dpsb.getBillId() + ".png"); // Mostofa bhi
-            File outputFileBillId = new File(request.getSession().getServletContext().getRealPath("/barcode/" + dpsb.getBillId() + ".png"));
+        //// Generate Bill Id Barcode4j
+        Code128Bean codBil = new Code128Bean();
+        final int resou = 128;
+        codBil.setModuleWidth(UnitConv.in2mm(1.0f / resou)); //makes the narrow bar 
+        //width exactly one pixel
+        codBil.setHeight(10);
+        codBil.setFontSize(2);
+        codBil.setFontName("Helvetica");
+        // cod.doQuietZone(true);
+        codBil.getBarWidth(2);
+        // bean.setVerticalQuietZone(1);
+        codBil.setMsgPosition(HumanReadablePlacement.HRP_BOTTOM);
 
-            OutputStream outB = new FileOutputStream(outputFileBillId);
-            try {
-                BitmapCanvasProvider canvas = new BitmapCanvasProvider(outB, "image/x-png", reso, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        //  File outputFileBillId = new File("C:\\tomcat6\\webapps\\MEDISUN_HEALTH_CARE_V2_Final\\barcode/" + dpsb.getBillId() + ".png"); // Mostofa bhi
+        File outputFileBillId = new File(request.getSession().getServletContext().getRealPath("/barcode/" + dpsb.getBillId() + ".png"));
 
-                codBil.generateBarcode(canvas, dpsb.getBillId().toString());
+        OutputStream outB = new FileOutputStream(outputFileBillId);
+        try {
+            BitmapCanvasProvider canvas = new BitmapCanvasProvider(outB, "image/x-png", reso, BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
-                canvas.finish();
-            } finally {
-                outB.close();
-            }
+            codBil.generateBarcode(canvas, dpsb.getBillId().toString());
 
-            ///// End 
-        
+            canvas.finish();
+        } finally {
+            outB.close();
+        }
+
+        ///// End 
         model.addAttribute("discountAount", dBillColl.getDiscountAmount());
 
         return "redirect:/module/billing/billprint.htm?patientId=" + patientId;

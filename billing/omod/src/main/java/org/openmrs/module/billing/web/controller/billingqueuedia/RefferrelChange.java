@@ -97,8 +97,10 @@ public class RefferrelChange {
             d.setRefDocId(docIdName);
             d.setRefRmpId(rmpIdName);
             ms.saveDiaPatientServiceBill(d);
+            
+            System.out.println("******************"+d.getBillingStatus());
 
-            if (d.getBillingStatus() == "PAID") {
+            if (d.getBillingStatus().equals("PAID")) {
                 DiaCommissionCalAll dca = ms.getDiaAllByBillId(billId);
                 dca.setRefId(docIdName);
                 dca.setRefRmp(rmpIdName);

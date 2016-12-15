@@ -72,12 +72,7 @@
                     <img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> 
                 </td>
             </tr>
-<!--            <tr> 
-                <td><span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}  </span> </td>
-                <td>Bill Id: <span style="font-weight:bold; font-size:18px; color:red;"> ${billId} </span> 
-                    <img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> 
-                </td>
-            </tr>-->
+           
         </table>
         <table width="60%"  class="kha" style="margin-left: 60px;">
             <tr >
@@ -86,6 +81,7 @@
                 <td style="text-align: center; background:#cdc;"><span class="span">Quantity</span> </td>
                 <td style="text-align: center; background:#cdc;"><span class="span">Rate</span></td>
             </tr>
+            <c:set var="totBill" value="${0.00}"/>
             <c:forEach var="sol" items="${diaBillItemList}" varStatus="index">
                 <c:choose>
                     <c:when test="${index.count mod 2 == 0}">
@@ -103,10 +99,12 @@
                                              id="${index.count}unitprice" name="${index.count}unitprice"
                                              size="7" value="${sol.amount}" class="unitPri" readOnly="true"></td>
                 </tr>
+                <c:set var="totBill" value="${totBill + sol.amount}"/>
+
             </c:forEach>
             <tr>
                 <td colspan="3" align="right" ><span style="font-size:16px; font-weight:bold; ">Total Bill :</span> </td>
-                <td align="right"> <span style="font-size:16px; font-weight:bold;"> ${dpsb.actualAmount}</span> 
+                <td align="right"> <span style="font-size:16px; font-weight:bold;"> ${totBill}</span> 
                 </td>
             </tr>
         </table>
@@ -196,7 +194,6 @@
             <input type="button" class="bu" value="Barcode Print" onClick="barDivPrint();"  />	<br> <br>
         </label>
     </div>
-    
 
     <div id="barDiv"  style="width: 200px; height:80px; display:none; margin-top:10px;  ">  
 
@@ -221,7 +218,6 @@
                 <b style="font-size:11px;"><label id="bartestname"> ${sol.name3} </label> </b> <br><br> 
             </c:if>
         </c:forEach>
-
 
 
     </div>
@@ -351,7 +347,7 @@
         </c:forEach>
         <tr>
             <td colspan="2" align="right" ><span style="font-size:16px; font-weight:bold; ">Total Bill :</span> </td>
-            <td align="right"> <span style="font-size:16px; font-weight:bold;">${dpsb.actualAmount} </span>   </td>
+            <td align="right"> <span style="font-size:16px; font-weight:bold;">${totBill} </span>   </td>
         </tr>
     </table>
     <br>
@@ -434,10 +430,7 @@
             $('#total').val(paid);
             jQuery("#totalValue1").html(toWords(jQuery("#total").val()));
             jQuery("#totalValue2").html(toWords(jQuery("#total").val()));
-
-            bartestname
-
-
+          //  bartestname
         });
 
         function back() {

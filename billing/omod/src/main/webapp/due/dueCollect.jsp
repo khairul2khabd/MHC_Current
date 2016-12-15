@@ -217,6 +217,9 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                 <c:if test="${dpsb.billingStatus == 'VOID'}"> 
                     <span style="font-weight:bold; font-size:20px; color:red;"> VOID </span> 
                 </c:if>
+                <c:if test="${dpsb.billingStatus == 'FREE'}"> 
+                    <span style="font-weight:bold; font-size:20px; color:red;"> FREE </span> 
+                </c:if>
             </td>
             <td><b>Bill Id:</b> <span style="font-weight:bold; font-size:20px; color:blue;"> ${dpsb.billId} </span> </td>
         </tr>  

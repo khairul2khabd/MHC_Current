@@ -73,6 +73,7 @@
         var note = jQuery("#note").val();
         var paid = jQuery("#paid").val();
         var due = jQuery("#due").val();
+        var status = 0;
 
         jQuery.ajax({
             type: "POST",
@@ -89,6 +90,7 @@
                 note: note,
                 paid: paid,
                 due: due,
+                status: status,
                 indCount: indCount
             }),
             success: function(data) {
@@ -98,30 +100,30 @@
         });
     }
 
-    // function validate() {
-    // var dName = document.getElementById("docIdName").value;
-    // var sDate = document.getElementById("sDate").value;
-    // var eDate = document.getElementById("eDate").value;
+    function validate() {
+        var dName = document.getElementById("docIdName").value;
+        var sDate = document.getElementById("sDate").value;
+        var eDate = document.getElementById("eDate").value;
 
-    // if (dName == null || dName == "")
-    // {
-    // alert("Please Enter Doctor Name / ID!!");
-    // $("#docIdName").focus();
-    // return false;
-    // }
-    // else if (sDate == null || sDate == "")
-    // {
-    // alert("Please Enter Start Date!!");
-    // $("#sDate").focus();
-    // return false;
-    // }
-    // else if (eDate == null || eDate == "")
-    // {
-    // alert("Please Enter End Date !!");
-    // $("#eDate").focus();
-    // return false;
-    // }
-    // }
+        if (dName == null || dName == "")
+        {
+            alert("Please Enter Doctor Name / ID!!");
+            $("#docIdName").focus();
+            return false;
+        }
+        else if (sDate == null || sDate == "")
+        {
+            alert("Please Enter Start Date!!");
+            $("#sDate").focus();
+            return false;
+        }
+        else if (eDate == null || eDate == "")
+        {
+            alert("Please Enter End Date !!");
+            $("#eDate").focus();
+            return false;
+        }
+    }
 
     function printDiv3() {
         var printer = window.open('left=0', 'top=0', 'width=300,height=300');
@@ -139,25 +141,25 @@
         window.location = "reportsView.form";
     }
 
-    function viewCommissionPaid() {
-        var docIdName = jQuery("#docIdName").val();
-        var sDate = jQuery("#sDate").val();
-        var eDate = jQuery("#eDate").val();
-        var status = jQuery("#status").val();
-        alert(status);
-        jQuery.ajax({
-            type: "GET",
-            url: getContextPath() + "/module/billing/comPaidView.htm",
-            data: ({
-                docIdName: docIdName,
-                sDate: sDate,
-                eDate: eDate
-            }),
-            success: function(data) {
-                jQuery("#paidData").html(data);
-            },
-        });
-    }
+//    function viewCommissionPaid() {
+//        var docIdName = jQuery("#docIdName").val();
+//        var sDate = jQuery("#sDate").val();
+//        var eDate = jQuery("#eDate").val();
+//        var status = jQuery("#status").val();
+//        alert(status);
+//        jQuery.ajax({
+//            type: "GET",
+//            url: getContextPath() + "/module/billing/comPaidView.htm",
+//            data: ({
+//                docIdName: docIdName,
+//                sDate: sDate,
+//                eDate: eDate
+//            }),
+//            success: function(data) {
+//                jQuery("#paidData").html(data);
+//            },
+//        });
+//    }
 
     function viewCommission() {
         if (SESSION.checkSession()) {
@@ -189,7 +191,7 @@
                     jQuery("#commissionCalForm").submit();
                 }
                 else if (status == "1") {
-                    viewCommissionPaid();
+                    jQuery("#commissionCalForm").submit();
                 }
             }
 
@@ -218,16 +220,22 @@
             <option value="1"  >  Paid </option>
         </select>
 
-<!--        <input type="submit"  value="Get View" class="bu-normal"  /> -->
+        <!-- <input type="submit"  value="Get View" class="bu-normal"  />  -->
         <input type="button" onclick="viewCommission();" value="Get View" class="bu-normal"  /> 
-        <div id="billingqueue" style="padding:4px;"></div>
+        <div id="billingqueue" style="padding:4px;"></div> 
     </div>
 
     <div id="paidData" style="padding:4px;"></div>
-    <div id="viewData" style="padding:4px;"></div>
+
 
     <div class="box1" >
-        <c:if test="${not empty docInfo.id}">
+        <c:if test="${status eq '0'}">
+            <center> <span style="font-size:16px;  font-weight:bold;"> Due </span> </center>
+            </c:if>
+            <c:if test="${status eq '1'}">
+            <center> <span style="font-size:16px;  font-weight:bold;"> Paid </span> </center>
+            </c:if>
+            <c:if test="${not empty docInfo.id}">
             <div style="padding-left:100px; padding-bottom:7px; color:#000;"> Dr Code : <span style="font-size:16px; font-weight:bold;"> ${docInfo.id} </span> ||  
                 Doctor Name : <span style="font-size:16px; font-weight:bold;"> ${docInfo.doctorName} </span>  
                 <label style="float:right; padding-right:100px; font-size:14px;"> Commission Showing Date : <openmrs:formatDate date="${startDate}" /> - <openmrs:formatDate date="${endDate}" /> </label>
@@ -317,32 +325,48 @@
     </div>
     <br>
     <c:if test="${not empty diaComCal}">
-        <div  style="margin-left:100px;">
-            <span style="font-size:16px; font-weight:bold; color:#000;">Total Service Amount    : </span>
-            <input type="value" id="totalBill" name="totalBill"  readOnly="true" value="${serPriceTotal}"
-                   style="width:150px; text-align:right;  color:blue;  font-size:18px; font-weight:bold; background-color:#fff; "/> 
+        <c:if test="${status eq '0'}">
+            <div  style="margin-left:100px;">
+                <span style="font-size:16px; font-weight:bold; color:#000;">Total Service Amount    : </span>
+                <input type="value" id="totalBill" name="totalBill"  readOnly="true" value="${serPriceTotal}"
+                       style="width:150px; text-align:right;  color:blue;  font-size:18px; font-weight:bold; background-color:#fff; "/> 
 
-            <span style="font-size:16px; padding-left:50px; font-weight:bold; color:#000;">Total Payable Amount : &nbsp; </span> 
-            <input type="value" id="dcomm" name="dcomm"  readOnly="true" value="${refPayable}"  style="width:150px; text-align:right;  color:blue;  font-size:18px; font-weight:bold; background-color:#fff; "/>   &emsp;&emsp;
-            <br><br>
+                <span style="font-size:16px; padding-left:50px; font-weight:bold; color:#000;">Total Payable Amount : &nbsp; </span> 
+                <input type="value" id="dcomm" name="dcomm"  readOnly="true" value="${refPayable}"  style="width:150px; text-align:right;  color:blue;  font-size:18px; font-weight:bold; background-color:#fff; "/>   &emsp;&emsp;
+                <br><br>
+                <span style="font-size:16px; padding-left: 0px; font-weight:bold; color:#000;">Doctor Commission : &emsp; </span> 
+                <input type="value" id="docNet" name="docNet"  readOnly="true" value="${refPayable}"  style="width:150px; height:35px; text-align:right;  color:green;  font-size:18px; font-weight:bold; background-color:#fff;"/>   
+                &emsp;&emsp;&emsp;
+                <span style="font-size:16px; padding-left: 0px; font-weight:bold; color:#000;">Paid Amount : </span> &emsp;  &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="value" id="paid" name="paid" style="width:150px; text-align:center; height:35px; color:red;  font-size:18px; font-weight:bold; background-color:#fff;"
+                       onkeyup="dueamountcal(this)" onkeypress="return isNumberKey(event)"	/>
+                &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;
+                <span style="font-size:16px; padding-left: 0px; font-weight:bold; color:#000;">Due Amount : </span> &emsp;  &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="value" id="due" name="due" style="width:150px; text-align:center;  color:blue;  font-size:18px; font-weight:bold; background-color:#fff;" />
+            </div>
+            <br>
+            <textarea style="border-radius:10px 2px 10px 2px; height:50px; width:45%; padding:5px; font-size:18px; line-height: 180%; margin-left:100px;" placeholder="note"
+                      type="text" id="note" name="note"></textarea> &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="bs" value="Save" onclick="saveCommission();" /> &nbsp;&nbsp;&nbsp;
+            <input type="button" id="printbill" class="bs" value="Print" onclick="printDiv3();" /> 
+        </c:if>
+    </c:if>
 
-            <span style="font-size:16px; padding-left: 0px; font-weight:bold; color:#000;">Doctor Commission : &emsp; </span> 
-            <input type="value" id="docNet" name="docNet"  readOnly="true" value="${refPayable}"  style="width:150px; height:35px; text-align:right;  color:green;  font-size:18px; font-weight:bold; background-color:#fff;"/>   
-
-            &emsp;&emsp;&emsp;
-            <span style="font-size:16px; padding-left: 0px; font-weight:bold; color:#000;">Paid Amount : </span> &emsp;  &nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="value" id="paid" name="paid" style="width:150px; text-align:center; height:35px; color:red;  font-size:18px; font-weight:bold; background-color:#fff;"
-                   onkeyup="dueamountcal(this)" onkeypress="return isNumberKey(event)"	/>
-
-            &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;
-            <span style="font-size:16px; padding-left: 0px; font-weight:bold; color:#000;">Due Amount : </span> &emsp;  &nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="value" id="due" name="due" style="width:150px; text-align:center;  color:blue;  font-size:18px; font-weight:bold; background-color:#fff;" />
-        </div>
-        <br>
-        <textarea style="border-radius:10px 2px 10px 2px; height:50px; width:45%; padding:5px; font-size:18px; line-height: 180%; margin-left:100px;" placeholder="note"
-                  type="text" id="note" name="note"></textarea> &nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button" class="bs" value="Save" onclick="saveCommission();" /> &nbsp;&nbsp;&nbsp;
-        <input type="button" id="printbill" class="bs" value="Print" onclick="printDiv3();" /> 
+    <c:if test="${not empty diaComCal}">
+        <c:if test="${status eq '1'}">
+            <div  style="margin-left:100px;">
+                <span style="font-size:16px; font-weight:bold; color:#000;">Total Service Amount    : </span>
+                <input type="value" id="totalBill" name="totalBill"  readOnly="true" value="${serPriceTotal}"
+                       style="width:150px; text-align:right;  color:blue;  font-size:18px; font-weight:bold; background-color:#fff; "/> 
+                <span style="font-size:16px; padding-left:50px; font-weight:bold; color:#000;">Total Payable Amount : &nbsp; </span> 
+                <input type="value" id="dcomm" name="dcomm"  readOnly="true" value="${refPayable}"  style="width:150px; text-align:right;  color:blue;  font-size:18px; font-weight:bold; background-color:#fff; "/>   &emsp;&emsp;
+                <br><br>
+                <span style="font-size:16px; padding-left: 0px; font-weight:bold; color:#000;">Doctor Commission : &emsp; </span> 
+                <input type="value" id="docNet" name="docNet"  readOnly="true" value="${refPayable}"  style="width:150px; height:35px; text-align:right;  color:green;  font-size:18px; font-weight:bold; background-color:#fff;"/>   
+            </div>
+            <br>
+            <input type="button" id="printbill" class="bs" value="Print" onclick="printDiv3();" /> 
+        </c:if>
     </c:if>
     &emsp; &emsp; <input type="button" class="bs" value="Back" onclick="back();" />
 

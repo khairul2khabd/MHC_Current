@@ -51,11 +51,14 @@ public class CommissionPayment {
             @RequestParam("docIdName") Integer docId,
             @RequestParam(value = "sDate", required = false) String startDate,
             @RequestParam(value = "eDate", required = false) String endDate,
+            @RequestParam(value = "status", required = false) int status,
             Model model) {
         //Patient patient = Context.getPatientService().getPatient(patientId);
         //model.addAttribute("patientId", patientId);
         //Integer doctorId = Integer.valueOf(Integer.parseInt(request.getParameter("selectedDocId")));
         MedisunService ms = Context.getService(MedisunService.class);
+
+        model.addAttribute("status", status);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
@@ -66,22 +69,38 @@ public class CommissionPayment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        if (status == 0) {
+            List<DiaCommissionCal> diaComCal = ms.getDiaComCal(docId, status, date, date1);
+            model.addAttribute("diaComCal", diaComCal);
+            model.addAttribute("diaComCalSize", diaComCal.size());
 
-        List<DiaCommissionCal> diaComCal = ms.getDiaComCal(docId, date, date1);
-        model.addAttribute("diaComCal", diaComCal);
-        model.addAttribute("diaComCalSize", diaComCal.size());
+            List<DiaCommissionCalPaid> diaComPaid = ms.getDiaComCalPaidByIdandDate(docId, date, date1);
+            model.addAttribute("diaComPaid", diaComPaid);
 
-        List<DiaCommissionCalPaid> diaComPaid = ms.getDiaComCalPaidByIdandDate(docId, date, date1);
-        model.addAttribute("diaComPaid", diaComPaid);
+            List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(docId, status, date, date1);
+            model.addAttribute("listDiaComAll", listDiaComAll);
 
-        List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(docId, date, date1);
-        model.addAttribute("listDiaComAll", listDiaComAll);
+            model.addAttribute("startDate", date);
+            model.addAttribute("endDate", date1);
 
-        model.addAttribute("startDate", date);
-        model.addAttribute("endDate", date1);
+            DocDetail docInfo = ms.getDocInfoById(docId);
+            model.addAttribute("docInfo", docInfo);
+            System.out.println("***********00000000000");
+        } else if (status == 1) {
+            List<DiaCommissionCal> diaComCal = ms.getDiaComCal(docId, status, date, date1);
+            model.addAttribute("diaComCal", diaComCal);
 
-        DocDetail docInfo = ms.getDocInfoById(docId);
-        model.addAttribute("docInfo", docInfo);
+            List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(docId, status, date, date1);
+            model.addAttribute("listDiaComAll", listDiaComAll);
+
+            model.addAttribute("startDate", date);
+            model.addAttribute("endDate", date1);
+
+            DocDetail docInfo = ms.getDocInfoById(docId);
+            model.addAttribute("docInfo", docInfo);
+
+            System.out.println("***********1111111111");
+        }
 
         if (Context.getAuthenticatedUser() != null && Context.getAuthenticatedUser().getId() != null) {
             return "module/billing/reports/comView";
@@ -100,6 +119,7 @@ public class CommissionPayment {
             @RequestParam(value = "note", required = false) String note,
             @RequestParam(value = "sDateValue", required = false) Date startDate,
             @RequestParam(value = "eDateValue", required = false) Date endDate,
+            @RequestParam(value = "status", required = false) int status,
             Model model) {
 
         MedisunService ms = Context.getService(MedisunService.class);
@@ -134,24 +154,21 @@ public class CommissionPayment {
         diaAdj.setCreatedDate(new Date());
         ms.saveDiaComPaidAdj(diaAdj);
 
-        
-        List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(docId, startDate, endDate);
-        for (int i = 0; i < listDiaComAll.size(); i++) {            
+        List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(docId, status, startDate, endDate);
+        for (int i = 0; i < listDiaComAll.size(); i++) {
             DiaCommissionCalAll dAll = (DiaCommissionCalAll) listDiaComAll.get(i);
             dAll.setStatus(Boolean.TRUE);
-            dAll.setCreatedDate(new Date());
             ms.saveDiaComAll(dAll);
         }
 
-        List<DiaCommissionCal> diaComCal = ms.getDiaComCal(comID, startDate, endDate);
+        List<DiaCommissionCal> diaComCal = ms.getDiaComCal(comID, status, startDate, endDate);
 
         // List<DiaCommissionCal> diaList = ms.getDiaComCalByBillId(comID); //  Get By Ref Id then save it
         for (int i = 0; i < diaComCal.size(); i++) {
             DiaCommissionCal d = (DiaCommissionCal) diaComCal.get(i);
             d.setStatus(Boolean.TRUE);
             d.setDiaComPaid(dpaid);
-            d.setCreatedDate(new Date());
-            ms.saveDiaComCal(d);            
+            ms.saveDiaComCal(d);
         }
 
         return "module/billing/reports/comView";
