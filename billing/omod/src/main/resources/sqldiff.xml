@@ -969,8 +969,58 @@
             ) ENGINE=INNODB DEFAULT CHARSET=utf8
         </sql>
     </diff>
-   
     
+    <diff>
+        <version>6.1.6</version>
+        <author>Md Khairul Islam</author>
+        <date>15 Dec 2016</date>
+        <description>
+            Add column  For item show or hide in
+            dia_commission_calculation table
+        </description>
+        <sql>
+            ALTER TABLE `dia_commission_calculation`
+            ADD( `hs_status` BIT(1) DEFAULT NULL);
+        </sql>
+    </diff>
     
+    <diff>
+        <version>6.1.7</version>
+        <author>Md Khairul Islam</author>
+        <date>15 Dec 2016</date>
+        <description>
+            for broker paid
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_others_paid` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `bill_id` INT(11) DEFAULT NULL,
+            `patient_id` INT(11) DEFAULT NULL,
+            `paid_amount` DECIMAL(19,2) DEFAULT NULL,
+            `created_date` DATETIME DEFAULT NULL,
+            `creator` INT(11) DEFAULT NULL, 
+            `broker_name` VARCHAR(300) DEFAULT NULL,          
+            PRIMARY KEY (`id`),
+            KEY `fk_diaothers_bill_id` (`bill_id`),
+            KEY `fk_diaothers_patient_id` (`patient_id`),
+            CONSTRAINT `fk_diaothers_patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
+            CONSTRAINT `fk_diaothers_bill_id` FOREIGN KEY (`bill_id`) REFERENCES `dia_billing_patient_service_bill` (`bill_id`)
+            ) ENGINE=INNODB DEFAULT CHARSET=utf8
+        </sql>
+    </diff>
+    
+    <diff>
+        <version>6.1.8</version>
+        <author>Md Khairul Islam</author>
+        <date>15 Dec 2016</date>
+        <description>
+            Add column  For Doctor given commission percentage
+            dia_billing_receipt table
+        </description>
+        <sql>
+            ALTER TABLE `dia_billing_receipt`
+            ADD( `doctor_given` DECIMAL(19,2) DEFAULT NULL);
+        </sql>
+    </diff>
     
 </sqldiff>

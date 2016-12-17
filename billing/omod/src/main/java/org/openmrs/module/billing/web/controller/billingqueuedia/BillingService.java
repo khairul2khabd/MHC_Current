@@ -119,14 +119,22 @@ public class BillingService {
         String fullPaid = request.getParameter("paid");
         String fullFree = request.getParameter("free");
         String freeReason = request.getParameter("freeReason");
-
+        BigDecimal doctorGivenPer = NumberUtils.createBigDecimal(request.getParameter("docGivPer"));
+        BigDecimal p = new BigDecimal("0.00");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date deDate = null;
 
         if (StringUtils.isNotBlank(dDate)) {
             deDate = sdf.parse(dDate);
         }
-
+//        System.out.println("***********ddddd"+doctorGivenPer);
+//        if (doctorGivenPer == null) {
+//            doctorGivenPer=p;
+//        }
+//        else{
+//            doctorGivenPer=doctorGivenPer;
+//        }
+//                
         DiaBillingQueue dbq = ms.getDiaBillingQueue(orderId);
 
         DiaReceipt dr = new DiaReceipt();
@@ -134,7 +142,8 @@ public class BillingService {
         dr.setDeliveryDate(deDate);
         dr.setDeliveryTime(dTime);
         dr.setServiceId(orderId);
-        ms.saveDiaReceipt(dr);
+        dr.setDoctorGiven(doctorGivenPer);  //
+        ms.saveDiaReceipt(dr); 
 
         User user = Context.getAuthenticatedUser();
 
@@ -149,7 +158,6 @@ public class BillingService {
         BigDecimal discountAmount = NumberUtils.createBigDecimal(request.getParameter("discountamount"));
         BigDecimal unitPrice = NumberUtils.createBigDecimal(request.getParameter("unitprice"));
         // BigDecimal discount = NumberUtils.createBigDecimal(request.getParameter("discount"));
-        BigDecimal p = new BigDecimal("0.00");
 
         if (paidAmount == null) {
             paidAmount = p;
@@ -163,11 +171,11 @@ public class BillingService {
         boolean status;
         if ((StringUtils.equals(fullPaid, "1")) && (dueAmount.signum() < 1)) {
             due = "PAID";
-            status = true;
+            status = false;
             totalBill=totalBill;
         } else if ((StringUtils.equals(fullPaid, null)) && (StringUtils.equals(fullFree, null)) && (dueAmount.signum() < 1)) {
             due = "PAID";
-            status = true;
+            status = false;
             totalBill=totalBill;
         } else if ((!StringUtils.equalsIgnoreCase(fullFree, null))) {
             due = "FREE";
@@ -294,6 +302,7 @@ public class BillingService {
                     diaComCal.setCreator(user.getId());
                     diaComCal.setRefId(dpsb.getRefDocId());
                     diaComCal.setRefRmpId(dpsb.getRefRmpId());
+                    diaComCal.setHsStatus(Boolean.FALSE);
                     ms.saveDiaComCal(diaComCal);
                 }
             }
@@ -312,7 +321,7 @@ public class BillingService {
             DiaCommissionCalAll diaAll = new DiaCommissionCalAll();
             diaAll.setDiaPatientServiceBill(dpsb);
             diaAll.setPatient(patient);
-            diaAll.setServiceName(sername);
+            //diaAll.setServiceName(sername);
             diaAll.setServicePrice(servicePrice);
             diaAll.setLessAmount(discountAmount);
             diaAll.setComAmount(totCom);

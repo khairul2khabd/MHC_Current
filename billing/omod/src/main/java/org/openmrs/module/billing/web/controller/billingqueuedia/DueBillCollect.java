@@ -144,6 +144,7 @@ public class DueBillCollect {
         dBillColl.setDueAmount(dueAmount);
         dBillColl.setDiscountAmount(secLess);
         dBillColl.setDuePaidStatus(true);
+       // dBillColl.setDuePaid(duePaid);
         ms.saveDiaPatientServiceBillCollect(dBillColl);
 
         model.addAttribute("dBillCollect", dBillColl);

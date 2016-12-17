@@ -32,6 +32,8 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
         var cash = $('#paidamount').val();
         var due = $('#dueamount').val();
         var disAmount = $('#discountamount').val();
+        var docPercentage = $('#docGivPer').val();
+
 
         if (jQuery("#free").is(':checked')) {
             if (jQuery("#freeReason").val().length <= 0) {
@@ -43,6 +45,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                 if (confirm("Are you Sure ?")) {
                     $('#paidamount').val("0");
                     $('#dueamount').val("0");
+                    $('#docGivPer').val("0.0");
                     jQuery("#orderBillingForm")
                             .mask("<img src='" + openmrsContextPath + "/moduleResources/billing/spinner.gif" + "'/>&nbsp;");
                     jQuery("#orderBillingForm").submit();
@@ -62,8 +65,13 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                 jQuery("#orderBillingForm")
                         .mask("<img src='" + openmrsContextPath + "/moduleResources/billing/spinner.gif" + "'/>&nbsp;");
                 if (confirm("Are you Sure ?")) {
-
-                    jQuery("#orderBillingForm").submit();
+                    if (docPercentage == "") {
+                        $('#docGivPer').val("0.00");
+                        jQuery("#orderBillingForm").submit();
+                    }
+                    else {
+                        jQuery("#orderBillingForm").submit();
+                    }
                 }
                 else {
                     $("#paidamount").focus();
@@ -73,6 +81,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             }
         }
     }
+
 </script>
 
 <script type="text/javascript">
@@ -83,6 +92,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
         $('#discount').val("0");
         $('#paidamount').val("");
         $('#dueamount').val("");
+        $('#docGivPer').val("0.0");
 
         /////// start payment type
 
@@ -93,6 +103,9 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
         $("#paid").click(function() {
             $("#freeReason").hide("fast");
             $('#paidamount').removeAttr("disabled");
+            $('#docGivPer').removeAttr("readOnly");
+            $('#discountamount').removeAttr("readOnly");
+            $('#discount').removeAttr("readOnly");
             $("#free").removeAttr("checked");
         });
 
@@ -100,16 +113,22 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
             if (jQuery("#free").is(':checked')) {
                 $("#freeReason").show("fast");
                 $('#paidamount').attr("disabled", "disabled");
+                $('#docGivPer').attr("readOnly", "true");
+                $('#discountamount').attr("readOnly", "true");
+                $('#discount').attr("readOnly", "true");
                 $("#paid").removeAttr("checked");
                 $('#discountamount').val("0");
                 $('#dueamount').val("");
                 $('#discount').val("0");
                 $('#netamount').val(billAmount);
                 $('#paidamount').val("0");
+
+
             }
             else {
                 $("#freeReason").hide("fast");
                 $('#paidamount').removeAttr("disabled");
+
             }
 
         });
@@ -524,7 +543,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                                               style="width:100px; text-align:center; background:#D1E0E0;" onkeyup="lessamountcal(this)"
                                               size="7" value="0" ondblclick="this.value = '';" ></td>
                 </tr>
- 
+
                 <tr>
                     <td colspan="10" align="right"><span style="font-size:18px; font-weight:bold; color:green;"> Net Amount (Tk) :</span> &nbsp;</td>
                     <td align="center"><input type="text" id="netamount" name="netamount" 
@@ -536,7 +555,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                     <td align="center">
                         <input type="text" id="paidamount" name="paidamount"  placeholder="Cash Paid" onkeypress="return isNumberKey(event)" 
                                style="width:150px; height:40px; color:blue; font-weight:bold; font-size:18px; text-align:center;"   
-                               size="7"  onkeyup="dueamountcal(this)" ></td>
+                               size="7"  onkeyup="dueamountcal(this)" /></td>
                 </tr>
                 <!--
                 <tr>
@@ -551,6 +570,13 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
                                                            style="color:red; font-size:18px; font-weight:bold; text-align:center; background:#D1E0E0;"
                                                            size="7" value="0.00" readOnly="true">                        
                     </td>
+                </tr>
+                <tr>
+                    <td colspan="10" align="right"><span style="font-size:16px; font-weight:bold; color:black;"> Doctor Given Percentage(%) :</span> &nbsp; </td>
+                    <td align="center"><input type="text" id="docGivPer" name="docGivPer"    onkeypress="return isNumberKeyDot(event)" 
+                                              style="width:100px;  color:blue; font-weight:bold; font-size:18px; text-align:center;"   
+                                              ondblclick="this.value = '';"  /> %</td>
+                </tr>
             </table>
         </div>
     </div>
