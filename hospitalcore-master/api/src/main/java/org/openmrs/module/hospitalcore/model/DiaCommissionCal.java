@@ -39,6 +39,15 @@ public class DiaCommissionCal {
     private DiaCommissionCalPaid diaComPaid;
     private Integer refRmpId;
     private DiaRmpCommCalculationPaid diaRmpComPaid;
+    private Boolean hsStatus=false;
+
+    public Boolean getHsStatus() {
+        return hsStatus;
+    }
+
+    public void setHsStatus(Boolean hsStatus) {
+        this.hsStatus = hsStatus;
+    }
 
     public DiaRmpCommCalculationPaid getDiaRmpComPaid() {
         return diaRmpComPaid;

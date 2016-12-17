@@ -37,6 +37,8 @@
         <many-to-one name="diaRmpComPaid" column="rmp_com_paid_id" 
                      class="org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaid"
                      lazy="false" foreign-key="fk_diarmpcommissioncal_paidid_idx" />
+        
+        <property name="hsStatus" column="hs_status" />
 		 
                 			
     </class>

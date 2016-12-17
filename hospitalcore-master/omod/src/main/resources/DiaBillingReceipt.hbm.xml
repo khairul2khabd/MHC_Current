@@ -15,5 +15,6 @@
                 <property name="serviceId" column="order_id" />
                 <property name="deliveryDate" column="delivery_date" />
                 <property name="deliveryTime" column="delivery_time" />
+                <property name="doctorGiven" column="doctor_given" />
 	</class>
 </hibernate-mapping>

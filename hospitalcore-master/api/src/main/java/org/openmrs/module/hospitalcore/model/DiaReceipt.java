@@ -5,6 +5,7 @@
  */
 package org.openmrs.module.hospitalcore.model;
 
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.Date;
 
@@ -19,12 +20,21 @@ public class DiaReceipt {
     private Integer id;
 
     private Date paidDate;
-    
+
     private Integer serviceId;
-    
+
     private Date deliveryDate;
-    
+
     private String deliveryTime;
+    private BigDecimal doctorGiven;
+
+    public BigDecimal getDoctorGiven() {
+        return doctorGiven;
+    }
+
+    public void setDoctorGiven(BigDecimal doctorGiven) {
+        this.doctorGiven = doctorGiven;
+    }
 
     public String getDeliveryTime() {
         return deliveryTime;
@@ -33,8 +43,6 @@ public class DiaReceipt {
     public void setDeliveryTime(String deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
-    
-    
 
     public Date getDeliveryDate() {
         return deliveryDate;
