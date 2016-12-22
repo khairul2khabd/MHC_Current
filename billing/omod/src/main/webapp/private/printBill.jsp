@@ -42,7 +42,7 @@
                 <td><strong>Patient ID :</strong> &nbsp;<span style="font-size:18px; font-weight:bold;">
                         ${patientSearch.identifier} </span>
 
-                    <img src="${pageContext.request.contextPath}/barcode/${patient.patientId}.png" /> 
+                    <!--<img src="${pageContext.request.contextPath}/barcode/${patient.patientId}.png" /> --> 
 
                 </td>
                 <td><strong>Date :</strong> &nbsp; <fmt:formatDate value="${dpsb.createdDate}" pattern="dd-MM-yyyy HH:mm:ss" />
@@ -67,10 +67,12 @@
                 </tr> 
             </c:if>	
             <tr> 
-                <td><span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}, ${docInfo.degree}  </span> </td>
-                <td>Bill Id: <span style="font-weight:bold; font-size:18px; color:red;"> ${billId} </span> 
-                    <img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> 
+                <td>
+                    <span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}, ${docInfo.degree}  </span> <br />
+                    <span style="font-size:14px; font-weight:bold;"> RMP :   ${rmpInfo.name}, ${rmpInfo.degree}  </span> 
+                    <!--<img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> -->
                 </td>
+                <td>Bill Id: <span style="font-weight:bold; font-size:18px; color:red;"> ${billId} </span> </td>
             </tr>
            
         </table>
@@ -285,7 +287,7 @@
             <td><span style="font-size:13px;">Patient ID :</span> &nbsp;<span style="font-size:18px; font-weight:bold;">
                     ${patientSearch.identifier} </span>  
 
-                <img src="${pageContext.request.contextPath}/barcode/${patient.patientId}.png" /> 
+               <!-- <img src="${pageContext.request.contextPath}/barcode/${patient.patientId}.png" /> -->
             </td>
             <td><strong>Date :</strong> &nbsp; <fmt:formatDate value="${dpsb.createdDate}" pattern="dd-MM-yyyy HH:mm:ss" />
                     <!-- <input type="text" style="border:none; font-size:13px;" value="${dpsb.createdDate}"  /> --> 
@@ -309,9 +311,12 @@
             </tr> 
         </c:if>	
         <tr> 
-            <td><span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}  </span> </td>
+            <td>
+               <span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}, ${docInfo.degree}  </span> <br />
+               <span style="font-size:14px; font-weight:bold;"> RMP :   ${rmpInfo.name}, ${rmpInfo.degree}  </span> 
+            </td>
             <td><span style="font-size:14px;"> Bill Id: </span><span style="font-weight:bold; font-size:18px; color:red;"> ${billId} </span>
-                <img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> 
+                <!--<img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> -->
             </td>
         </tr>
     </table>

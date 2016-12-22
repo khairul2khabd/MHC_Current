@@ -36,6 +36,7 @@ import org.openmrs.module.hospitalcore.model.DiaPatientServiceBill;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBillCollect;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBillItem;
 import org.openmrs.module.hospitalcore.model.DiaReceipt;
+import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.hospitalcore.model.DocDetail;
 import org.openmrs.module.hospitalcore.model.MarDetails;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
@@ -74,7 +75,7 @@ public class BillingService {
         model.addAttribute("age", PatientUtils.estimateAge(birthday));
 
         DocDetail docInfo = ms.getDocInfoById(refDocId);
-        model.addAttribute("docInfo", docInfo);
+        model.addAttribute("docInfo", docInfo);     
 
         MarDetails marInfo = ms.getMarInfoById(refMarId);
         model.addAttribute("marInfo", marInfo);
@@ -165,8 +166,6 @@ public class BillingService {
             paidAmount = paidAmount;
         }
 
-        System.out.println("***********paidAmount***" + paidAmount);
-
         String due = null;
         boolean status;
         if ((StringUtils.equals(fullPaid, "1")) && (dueAmount.signum() < 1)) {
@@ -186,7 +185,6 @@ public class BillingService {
             status = false;
             totalBill=totalBill;
         }
-        System.out.println("***********status***" + due);
 
         DiaPatientServiceBill dpsb = new DiaPatientServiceBill();
         dpsb.setPatient(patient);
@@ -216,6 +214,7 @@ public class BillingService {
         model.addAttribute("billId", dpsb.getBillId());
         model.addAttribute("orderId", orderId);
         model.addAttribute("refDocId", refDocId);
+        model.addAttribute("refRmpId", refRmpId);
         model.addAttribute("paid", paidAmount);
         model.addAttribute("dDate", dDate);
         model.addAttribute("dTime", dTime);

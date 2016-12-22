@@ -43,6 +43,7 @@ import org.openmrs.module.hospitalcore.model.DiaBarcodeGroup;
 import org.openmrs.module.hospitalcore.model.DiaLabSampleid;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBill;
 import org.openmrs.module.hospitalcore.model.DiaPatientServiceBillItem;
+import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.hospitalcore.model.DocDetail;
 import org.openmrs.module.hospitalcore.model.Lab;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
@@ -66,6 +67,7 @@ public class BillPrint {
     @RequestMapping(value = "/module/billing/billprint.htm", method = RequestMethod.GET)
     public String billPrintView(@RequestParam("patientId") Integer patientId,
             @RequestParam(value = "refDocId", required = false) Integer refDocId,
+            @RequestParam(value = "refRmpId", required = false) Integer refRmpId,
             @RequestParam(value = "billId", required = false) Integer billId,
             @RequestParam(value = "orderId", required = false) Integer orderId,
             @RequestParam(value = "date", required = false) String dStr, HttpServletRequest request, Model model) throws Exception {
@@ -84,6 +86,9 @@ public class BillPrint {
 
         DocDetail docInfo = ms.getDocInfoById(refDocId);
         model.addAttribute("docInfo", docInfo);
+        
+        DiaRmpName rmpInfo = ms.getDiaRmpById(refRmpId);
+        model.addAttribute("rmpInfo", rmpInfo);
 
         List<BillableService> diaBillOrderList = ms.getDiaBillingOrderandPatientId(orderId, patientId);
         model.addAttribute("billOrderList", diaBillOrderList);
