@@ -144,7 +144,6 @@
             MarketedBy.hbm.xml
             RefMarketedBy.hbm.xml
             DiaPatient.hbm.xml
-            rmpName.hbm.xml
             DiaPatientEdit.hbm.xml
             DiaPersonEdit.hbm.xml
             DiaPersonNameEdit.hbm.xml 

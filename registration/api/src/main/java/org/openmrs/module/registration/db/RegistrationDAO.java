@@ -32,6 +32,7 @@ import org.openmrs.PersonAttribute;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.User;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.hospitalcore.model.MarDetails;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.registration.model.DiaPatient;
@@ -43,7 +44,6 @@ import org.openmrs.module.registration.model.MarketedBy;
 import org.openmrs.module.registration.model.RegistrationFee;
 import org.openmrs.module.registration.model.RefDoctor;
 import org.openmrs.module.registration.model.RefMarketedBy;
-import org.openmrs.module.registration.model.RmpName;
 
 public interface RegistrationDAO {
 
@@ -105,15 +105,15 @@ public interface RegistrationDAO {
 
     public DiaPatient getDiaPatientById(int patientId) throws DAOException;
 
-    public RmpName saveRmp(RmpName rmp) throws DAOException;
+    public DiaRmpName saveRmp(DiaRmpName rmp) throws DAOException;
 
-    public List<RmpName> getRmpNameAll() throws DAOException;
+    public List<DiaRmpName> getRmpNameAll() throws DAOException;
     
-    public List<RmpName> searchRmpName(String text)throws DAOException;
+    public List<DiaRmpName> searchRmpName(String text)throws DAOException;
     
-    public RmpName getRmpById(int rmpId)throws DAOException;
+    public DiaRmpName getRmpById(int rmpId)throws DAOException;
     
-    public RmpName reSaveRmpById(RmpName rmp)throws DAOException;
+    public DiaRmpName saveRmpByIdForEdit(DiaRmpName rmp)throws DAOException;
     ////
     public DiaPatientEdit getDiaPaEditByPatientId(Integer patientId)throws DAOException;
     

@@ -74,23 +74,23 @@
             </tr>
             <tr style="background:#fff;">
                 <td ><b>&nbsp; Doctor Degree :</b></td>
-                <td ><input type="text" id="docDeg" name="docDeg" placeholder="Please Enter Doctor Name" autofocus/></td>
+                <td ><input type="text" id="docDeg" name="docDeg" placeholder="Please Enter Doctor's Degree" autofocus/></td>
             </tr>
             <tr style="background:#CCCCCC;">
                 <td ><b>&nbsp; Designation :</b></td>
-                <td ><input type="text" id="designation" name="designation" placeholder="Please Enter Doctor Name" autofocus/></td>
+                <td ><input type="text" id="designation" name="designation" placeholder="Please Enter Doctor's Designation" autofocus/></td>
             </tr>
             <tr style="background:#fff;">
                 <td ><b>&nbsp; Phone :</b></td>
-                <td ><input type="text" id="phone" name="phone" placeholder="Please Enter Doctor Name" autofocus/></td>
+                <td ><input type="text" id="phone" name="phone" placeholder="Please Enter Doctor's Phone" autofocus/></td>
             </tr>
             <tr style="background:#CCCCCC;">
                 <td ><b>&nbsp; Address :</b></td>
-                <td ><input type="text" id="address" name="address" placeholder="Please Enter Doctor Name" autofocus/></td>
+                <td ><input type="text" id="address" name="address" placeholder="Please Enter Address" autofocus/></td>
             </tr>
             <tr style="background:#fff;">
                 <td ><b>&nbsp; Marketed by :</b></td>
-                <td ><input type="text" id="marketed" name="marketed" placeholder="Please Enter Doctor Name" autofocus/></td>
+                <td ><input type="text" id="marketed" name="marketed" placeholder="Please Enter Marketed By" autofocus/></td>
             </tr>
             <tr style="background:transparent; ">
                 <td> </td>
@@ -137,7 +137,7 @@
     <script>
         function myFunction(id) {
             var url = "editRefDoc.htm?id=" + id
-                    + "&KeepThis=true&TB_iframe=true&width=800&height=500";
+                    + "&KeepThis=true&TB_iframe=true&width=800&height=600";
             tb_show("Edit Doctor Info", url);
         }
     </script>

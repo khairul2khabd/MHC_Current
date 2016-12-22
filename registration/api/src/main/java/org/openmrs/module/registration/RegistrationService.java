@@ -43,8 +43,8 @@ import org.openmrs.module.registration.model.RefDoctor;
 import org.openmrs.module.registration.model.MarketedBy;
 import org.openmrs.module.registration.model.RefMarketedBy;
 import org.openmrs.PersonName;
+import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.registration.model.DiaPatientEdit;
-import org.openmrs.module.registration.model.RmpName;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.registration.model.DiaPersonEdit;
 import org.openmrs.module.registration.model.DiaPersonNameEdit;
@@ -113,15 +113,15 @@ public interface RegistrationService extends OpenmrsService {
     
     public DiaPatient getDiaPatientById(int patientId) throws APIException;
     
-    public RmpName saveRmp(RmpName rmp)throws APIException;
+    public DiaRmpName saveRmp(DiaRmpName rmp)throws APIException;
     
-    public List <RmpName> getRmpNameAll() throws APIException;
+    public List <DiaRmpName> getRmpNameAll() throws APIException;
     
-    public List<RmpName> searchRmpName(String text)throws APIException;
+    public List<DiaRmpName> searchRmpName(String text)throws APIException;
     
-    public RmpName getRmpById(int rmpId)throws APIException;
+    public DiaRmpName getRmpById(int rmpId)throws APIException;
     
-    public RmpName reSaveRmpById(RmpName rmp)throws APIException;
+    public DiaRmpName saveRmpByIdForEdit(DiaRmpName rmp)throws APIException;
    
     // For Patient Edit
     

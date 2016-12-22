@@ -32,6 +32,7 @@ import org.openmrs.PersonAttributeType;
 import org.openmrs.User;
 import org.openmrs.api.APIException;
 import org.openmrs.api.impl.BaseOpenmrsService;
+import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.hospitalcore.model.MarDetails;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.registration.RegistrationService;
@@ -45,7 +46,6 @@ import org.openmrs.module.registration.model.MarketedBy;
 import org.openmrs.module.registration.model.RefDoctor;
 import org.openmrs.module.registration.model.RefMarketedBy;
 import org.openmrs.module.registration.model.RegistrationFee;
-import org.openmrs.module.registration.model.RmpName;
 
 public class RegistrationServiceImpl extends BaseOpenmrsService implements
 		RegistrationService {
@@ -179,24 +179,24 @@ public class RegistrationServiceImpl extends BaseOpenmrsService implements
         return dao.getDiaPatientById(patientId);
     }
 
-    public RmpName saveRmp(RmpName rmp) throws APIException {
+    public DiaRmpName saveRmp(DiaRmpName rmp) throws APIException {
         return dao.saveRmp(rmp);
     }
 
-    public List<RmpName> getRmpNameAll() throws APIException {
+    public List<DiaRmpName> getRmpNameAll() throws APIException {
         return dao.getRmpNameAll();
     }
 
-    public List<RmpName> searchRmpName(String text) throws APIException {
+    public List<DiaRmpName> searchRmpName(String text) throws APIException {
         return dao.searchRmpName(text);
     }
 
-    public RmpName getRmpById(int rmpId) throws APIException {
+    public DiaRmpName getRmpById(int rmpId) throws APIException {
         return dao.getRmpById(rmpId);
     }
 
-    public RmpName reSaveRmpById(RmpName rmp) throws APIException {
-        return dao.reSaveRmpById(rmp);
+    public DiaRmpName saveRmpByIdForEdit(DiaRmpName rmp) throws APIException {
+        return dao.saveRmpByIdForEdit(rmp);
     }
 
     public DiaPatientEdit getDiaPaEditByPatientId(Integer patientId) throws APIException {

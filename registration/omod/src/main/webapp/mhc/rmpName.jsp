@@ -11,7 +11,12 @@
 <script>
     $(document).ready(function() {
         jQuery("#rmpName").val("");
-
+        jQuery("#designation").val("");
+        jQuery("#phone").val("");
+        jQuery("#address").val("");
+        jQuery("#refferedCode").val("");
+        jQuery("#terr").val("");
+        
         $("input").focus(function() {
             $(this).css("background-color", "#0101DF");
             $(this).css("font-size", "16px");
@@ -35,6 +40,14 @@
         }, 10)
     }
 </script>
+<script>
+    $(function() {
+        $("#queueList").simplePagination({
+            previousButtonClass: "btn btn-danger",
+            nextButtonClass: "btn btn-danger"
+        });
+    });
+</script>
 <div class="div1">
     <form method="post" class="abc" id="refRmp" action="refRmp.htm" onsubmit="return validate()">
         <h1>Add / Edit RMP Name</h1>
@@ -43,22 +56,55 @@
             <tr style="background:#CCCCCC;">
                 <td ><b>&nbsp; RMP Name :</b></td>
                 <td ><input type="text" id="rmpName" name="rmpName" placeholder="Please Enter RMP Name" autofocus/></td>
-                <td><input class="button" type="submit" value="Add"   class="button"/></td>
+            </tr>
+            <tr style="background:#fff;">
+                <td ><b>&nbsp; RMP Degree :</b></td>
+                <td ><input type="text" id="rmpDegree" name="rmpDegree" placeholder="Please Enter RMP Degree" autofocus/></td>
+            </tr>
+            <tr style="background:#CCCCCC;">
+                <td ><b>&nbsp; Designation :</b></td>
+                <td ><input type="text" id="designation" name="designation" placeholder="Please Enter RMP Designation" autofocus/></td>
+            </tr>
+            <tr style="background:#fff;">
+                <td ><b>&nbsp; Phone :</b></td>
+                <td ><input type="text" id="phone" name="phone" placeholder="Please Enter RMP Phone No" autofocus/></td>
+            </tr>
+            <tr style="background:#CCCCCC;">
+                <td ><b>&nbsp; Address :</b></td>
+                <td ><input type="text" id="address" name="address" placeholder="Please Enter RMP Address" autofocus/></td>
+            </tr>
+            <tr style="background:#fff;">
+                <td ><b>&nbsp; Marketed by :</b></td>
+                <td ><input type="text" id="marketedBy" name="marketedBy" placeholder="Please Enter RMP Marketed by" autofocus/></td>
+            </tr>
+            <tr style="background:transparent; ">
+                <td> </td>
+                <td   style="float:right;"><input class="button" type="submit" value="Add" class="button"/></td>
             </tr>
         </table>
         <br>
 
-        <table cellpadding="5" cellspacing="0" width="100%" id="queueList">
-            <tr align="center" >
+        <table cellpadding="5" cellspacing="0" width="100%" id="queueList" style="font-size: 13px;">
+            <tr align="left" >
                 <th>RMP ID</th>
-                <th>RMP Name</th>
+                <th style="width:15%">RMP Name</th>
+                <th>RMP Degree</th>
+                <th>Designation</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Marketed by</th>
             </tr>
             <c:if test="${not empty rmp}">
                 <c:forEach items="${rmp}" var="rmp" varStatus="varStatus">
-                    <tr  align="center" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } ' >
+                    <tr  align="left" class='${varStatus.index % 2 == 0 ? "oddRow" : "evenRow" } ' >
 
                         <td>${rmp.id}</td>
                         <td>${rmp.name}</td>
+                        <td>${rmp.degree} </td>
+                        <td>${rmp.designation}</td>
+                        <td>${rmp.phone}</td>
+                        <td>${rmp.address}</td>
+                        <td>${rmp.marketed_by} </td>
                         <td>        
                             <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"  value="Edit" onclick="myFunction('${rmp.id}')"/> 
                             <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all"  value="Remove" onclick="ADMISSION.removeOrNoBed('${pAdmission.id}', '1');"/>
@@ -73,7 +119,7 @@
     </form>
     <script>
         function myFunction(id) {
-            var url = "editRmp.htm?id=" + id + "&KeepThis=true&TB_iframe=true&width=800&height=500";
+            var url = "editRmp.htm?id=" + id + "&KeepThis=true&TB_iframe=true&width=800&height=600";
             tb_show("Edit RMP Name", url);
         }
     </script>
@@ -81,14 +127,15 @@
 </div>
 <style>
     .div1{
-        width: 80%;
+        width: 90%;
         min-height: 600px;
         position:absolute;
-        left:300px;
+        left:100px;
         top:50px;
+        font-size: 14px;
     }
     .abc { 
-        max-width: 80%;
+        max-width: 90%;
         min-height: 600px;
         padding: 20px 20px 20px 20px;
         font: 16px Arial, Tahoma, Helvetica, sans-serif;

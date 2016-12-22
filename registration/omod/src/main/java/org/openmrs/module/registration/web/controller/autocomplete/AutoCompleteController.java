@@ -8,11 +8,11 @@ package org.openmrs.module.registration.web.controller.autocomplete;
 import java.util.ArrayList;
 import java.util.List;
 import org.openmrs.api.context.Context; 
+import org.openmrs.module.hospitalcore.model.DiaRmpName;
 //import org.openmrs.module.hospitalcore.MedisunService;
 import org.openmrs.module.hospitalcore.model.MarDetails;
 import org.openmrs.module.registration.RegistrationService;
 import org.openmrs.module.registration.model.DocDetails;
-import org.openmrs.module.registration.model.RmpName;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,7 +63,7 @@ public class AutoCompleteController {
       //  model.addAttribute("docById", docById);
         
         RegistrationService rs=Context.getService(RegistrationService.class);
-        List<RmpName> rmp = rs.searchRmpName(text);
+        List<DiaRmpName> rmp = rs.searchRmpName(text);
         model.addAttribute("rmpId", rmp);
         return "/module/registration/autocomplete/autoCompleteRmpName";
     }

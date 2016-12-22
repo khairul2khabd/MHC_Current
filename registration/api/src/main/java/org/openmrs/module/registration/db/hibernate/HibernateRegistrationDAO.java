@@ -49,6 +49,7 @@ import org.openmrs.PersonAttributeType;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.hospitalcore.model.MarDetails;
 import org.openmrs.module.hospitalcore.model.PatientSearch;
 import org.openmrs.module.hospitalcore.util.DateUtils;
@@ -63,7 +64,6 @@ import org.openmrs.module.registration.model.MarketedBy;
 import org.openmrs.module.registration.model.RefDoctor;
 import org.openmrs.module.registration.model.RefMarketedBy;
 import org.openmrs.module.registration.model.RegistrationFee;
-import org.openmrs.module.registration.model.RmpName;
 import org.openmrs.module.registration.util.RegistrationConstants;
 
 public class HibernateRegistrationDAO implements RegistrationDAO {
@@ -335,34 +335,34 @@ public class HibernateRegistrationDAO implements RegistrationDAO {
         return (DiaPatient) criteria.uniqueResult();
     }
 
-    public RmpName saveRmp(RmpName rmp) throws DAOException {
+    public DiaRmpName saveRmp(DiaRmpName rmp) throws DAOException {
         sessionFactory.getCurrentSession().saveOrUpdate(rmp);
         return rmp;
     }
 
-    public List<RmpName> getRmpNameAll() throws DAOException {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(RmpName.class);
-        List<RmpName> list = criteria.list();
+    public List<DiaRmpName> getRmpNameAll() throws DAOException {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaRmpName.class);
+        List<DiaRmpName> list = criteria.list();
         return list;
     }
 
-    public List<RmpName> searchRmpName(String text) throws DAOException {
+    public List<DiaRmpName> searchRmpName(String text) throws DAOException {
         String hql = null;
-        hql = "from  RmpName o where o.name LIKE '%" + text + "%' OR o.id LIKE '" + text + "%')";
+        hql = "from  DiaRmpName o where o.name LIKE '%" + text + "%' OR o.id LIKE '" + text + "%')";
         Session session = sessionFactory.getCurrentSession();
         Query q = session.createQuery(hql);
-        List<RmpName> list = q.list();
+        List<DiaRmpName> list = q.list();
         return list;
     }
 
-    public RmpName getRmpById(int rmpId) throws DAOException {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(RmpName.class);
+    public DiaRmpName getRmpById(int rmpId) throws DAOException {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DiaRmpName.class);
         criteria.add(Restrictions.eq("id", rmpId));
-        return (RmpName) criteria.uniqueResult();
+        return (DiaRmpName) criteria.uniqueResult();
     }
 
-    public RmpName reSaveRmpById(RmpName rmp) throws DAOException {
-        return (RmpName) sessionFactory.getCurrentSession().merge(rmp);
+    public DiaRmpName saveRmpByIdForEdit(DiaRmpName rmp) throws DAOException {
+        return (DiaRmpName) sessionFactory.getCurrentSession().merge(rmp);
     }
 
     public DiaPatientEdit getDiaPaEditByPatientId(Integer patientId) throws DAOException {

@@ -184,25 +184,6 @@
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         </sql>
     </diff>
-    
-    <diff>
-        <version>1.0.0</version>
-        <author>Md Khairul Islam</author>
-        <date>May 2nd 2016</date>
-        <description>
-            RMP Name
-        </description>
-        <sql>
-            CREATE TABLE IF NOT EXISTS `dia_rmp_by` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `name` varchar(55) DEFAULT NULL,
-            `creator` INT(11) NOT NULL DEFAULT '0',
-            `created_date` datetime NOT NULL,
-            PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        </sql>
-    </diff>
-    
     <diff>
         <version>1.0.1</version>
         <author>Md Khairul Islam</author>
@@ -231,6 +212,25 @@
             ADD COLUMN `marketed_by` VARCHAR(200) DEFAULT NULL           
         </sql>
     </diff>
+    
+    <diff>
+        <version>1.0.0</version>
+        <author>Md Khairul Islam</author>
+        <date>May 2nd 2016</date>
+        <description>
+            RMP Name
+        </description>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `dia_rmp_by` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `name` varchar(55) DEFAULT NULL,
+            `creator` INT(11) NOT NULL DEFAULT '0',
+            `created_date` datetime NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+    
     <diff>
         <version>1.0.3</version>
         <author>Md Khairul Islam</author>
@@ -247,8 +247,6 @@
             ADD COLUMN `marketed_by` VARCHAR(200) DEFAULT NULL           
         </sql>
     </diff>
-
-
 </sqldiff>
 
 

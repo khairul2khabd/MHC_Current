@@ -21,9 +21,9 @@ import org.openmrs.module.registration.model.MarketedBy;
 import org.openmrs.module.registration.model.RefDoctor;
 import org.openmrs.module.registration.model.MarketedBy;
 import org.openmrs.module.hospitalcore.MedisunService;
+import org.openmrs.module.hospitalcore.model.DiaRmpName;
 import org.openmrs.module.hospitalcore.model.DocDetail;
 import org.openmrs.module.hospitalcore.model.MarDetails;
-import org.openmrs.module.registration.model.RmpName;
 
 /**
  *
@@ -151,21 +151,36 @@ public class RefDocName {
     @RequestMapping(value = "/refRmp.htm", method = RequestMethod.GET)
     public String viewRMPForm(Model model) {
         RegistrationService rs=Context.getService(RegistrationService.class);
-        List<RmpName> rmp = rs.getRmpNameAll();
+        List<DiaRmpName> rmp = rs.getRmpNameAll();
         model.addAttribute("rmp",rmp);
 
         return "/module/registration/mhc/rmpName";
     }
     
     @RequestMapping(value = "/refRmp.htm", method = RequestMethod.POST)
-    public String saveRMPForm(@RequestParam("rmpName") String rmpName,Model model) {
-    RegistrationService rs=Context.getService(RegistrationService.class);
-    
-        RmpName rmp=new RmpName();
-        rmp.setName(rmpName);
-        rmp.setCreatedDate(new Date());
-        rmp.setCreator(Context.getAuthenticatedUser().getId());
-        rs.saveRmp(rmp);         
+    public String saveRMPForm(@RequestParam("rmpName") String rmpName,
+                              @RequestParam(value="rmpDegree",required = false) String rmpDegree,
+                              @RequestParam(value="designation",required = false) String designation,
+                              @RequestParam(value="phone",required = false) String phone,
+                              @RequestParam(value="address",required = false) String address,
+                              @RequestParam(value="marketedBy",required = false) String marketedBy,
+            
+                              Model model) {
+        
+        RegistrationService registrationService = Context.getService(RegistrationService.class);
+        
+        DiaRmpName rmpInfo=new DiaRmpName();
+        
+        rmpInfo.setName(rmpName);
+        rmpInfo.setDegree(rmpDegree);
+        rmpInfo.setDesignation(designation);
+        rmpInfo.setPhone(phone);
+        rmpInfo.setAddress(address);
+        rmpInfo.setMarketed_by(marketedBy);
+        rmpInfo.setCreatedDate(new Date());
+        rmpInfo.setCreator(Context.getAuthenticatedUser().getId());
+        registrationService.saveRmp(rmpInfo);
+        
         return "/module/registration/mhc/rmpName";
     }
     
@@ -173,7 +188,7 @@ public class RefDocName {
     public String editRmp(@RequestParam("id") int marId, Model model) {
 
         RegistrationService rs = Context.getService(RegistrationService.class);
-        RmpName rmp=rs.getRmpById(marId);
+        DiaRmpName rmp=rs.getRmpById(marId);
         model.addAttribute("rmp",rmp);
         return "/module/registration/mhc/editRmpName";
     }
@@ -181,11 +196,25 @@ public class RefDocName {
     @RequestMapping(value = "/editSaveRmp.htm", method = RequestMethod.POST)
     public String editSaveRmp(@RequestParam("id") Integer rmpId, HttpServletRequest request, Model model) {
 
+        RegistrationService registrationService = Context.getService(RegistrationService.class);
+        
+        DiaRmpName rmpInfo = registrationService.getRmpById(rmpId);
+        
         String name = request.getParameter("rmpName");
-        RegistrationService rs = Context.getService(RegistrationService.class);
-        RmpName rmp=rs.getRmpById(rmpId);
-        rmp.setName(name);
-        rs.reSaveRmpById(rmp);
+        String degree = request.getParameter("rmpDegree");
+        String designation = request.getParameter("designation");
+        String address = request.getParameter("address");
+        String marketed_by = request.getParameter("marketedBy");
+        String phone = request.getParameter("phone");
+        
+        rmpInfo.setName(name);
+        rmpInfo.setDegree(degree);
+        rmpInfo.setDesignation(designation);
+        rmpInfo.setPhone(phone);
+        rmpInfo.setAddress(address);
+        rmpInfo.setMarketed_by(marketed_by);
+        
+        registrationService.saveRmpByIdForEdit(rmpInfo);
 
         return "/module/registration/thickbox/success";
     }
