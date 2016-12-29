@@ -167,4 +167,8 @@ public interface MedisunDAO {
     public List<DiaCommissionCalAll> listDiaComCalAll(int docch, int status, Date sDate, Date eDate) throws DAOException;
 
     public DiaCommissionCalAll getDiaAllByBillId(int billId) throws DAOException;
+    
+    public List<DiaCommissionCal> getDiaComCalRmpStatus(int rmpId, int status, Date sDate, Date eDate) throws DAOException;
+    
+    public List<DiaCommissionCalAll> listDiaComCalAllRmp(int rmpId, int status, Date sDate, Date eDate) throws DAOException;
 }
