@@ -324,7 +324,7 @@ src="${pageContext.request.contextPath}/moduleResources/billing/scripts/jquery/j
 
                 <openmrs:hasPrivilege privilege="Second Less">
                     <style>
-                        .a{display: ;}
+                        .a{display:;}
                     </style>
                 </openmrs:hasPrivilege>
                 <openmrs:hasPrivilege privilege="Second Less No">

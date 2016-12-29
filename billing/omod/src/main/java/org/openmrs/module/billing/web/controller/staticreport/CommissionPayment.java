@@ -74,8 +74,8 @@ public class CommissionPayment {
             model.addAttribute("diaComCal", diaComCal);
             model.addAttribute("diaComCalSize", diaComCal.size());
 
-            List<DiaCommissionCalPaid> diaComPaid = ms.getDiaComCalPaidByIdandDate(docId, date, date1);
-            model.addAttribute("diaComPaid", diaComPaid);
+//            List<DiaCommissionCalPaid> diaComPaid = ms.getDiaComCalPaidByIdandDate(docId, date, date1);
+//            model.addAttribute("diaComPaid", diaComPaid);
 
             List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(docId, status, date, date1);
             model.addAttribute("listDiaComAll", listDiaComAll);
@@ -101,14 +101,11 @@ public class CommissionPayment {
 
             System.out.println("***********1111111111");
         }
-
         if (Context.getAuthenticatedUser() != null && Context.getAuthenticatedUser().getId() != null) {
             return "module/billing/reports/comView";
         } else {
             return "redirect:/login.htm";
-        }
-
-        //  return "module/studentmanagement/session/checkSession";   
+        }  
     }
 
     @RequestMapping(value = "/module/billing/comSave.form", method = RequestMethod.POST)

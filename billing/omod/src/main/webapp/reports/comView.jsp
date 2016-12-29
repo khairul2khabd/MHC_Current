@@ -140,27 +140,7 @@
     function back() {
         window.location = "reportsView.form";
     }
-
-//    function viewCommissionPaid() {
-//        var docIdName = jQuery("#docIdName").val();
-//        var sDate = jQuery("#sDate").val();
-//        var eDate = jQuery("#eDate").val();
-//        var status = jQuery("#status").val();
-//        alert(status);
-//        jQuery.ajax({
-//            type: "GET",
-//            url: getContextPath() + "/module/billing/comPaidView.htm",
-//            data: ({
-//                docIdName: docIdName,
-//                sDate: sDate,
-//                eDate: eDate
-//            }),
-//            success: function(data) {
-//                jQuery("#paidData").html(data);
-//            },
-//        });
-//    }
-
+ 
     function viewCommission() {
         if (SESSION.checkSession()) {
             var dName = document.getElementById("docIdName").value;

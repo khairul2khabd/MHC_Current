@@ -278,7 +278,7 @@
 </form> 
 
 <form>
-    <div style="display: ; font-size:14px;"   id="p" >
+    <div style="display:none; font-size:14px;"   id="p" >
         <center> <b style="font-size:18px;"> BILL </b> </br> 
             Period :  <%= request.getParameter("sDate") %> - <%= request.getParameter("eDate") %>
         </center> <br>
