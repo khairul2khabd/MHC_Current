@@ -53,6 +53,7 @@
     function saveCommission() {
         var paid = document.getElementById("paid").value;
         //  var docNet = document.getElementById("docNet").value;
+        alert(paid);
         if (paid == null || paid == "")
         {
             alert("Paid Amount Empty or Zero !!!");
@@ -77,7 +78,7 @@
 
         jQuery.ajax({
             type: "POST",
-            url: getContextPath() + "/module/billing/comSave.form",
+            url: getContextPath() + "/module/billing/rmpComSave.form",
             data: ({
                 comId: comId,
                 sDateValue: sDateValue,
@@ -95,7 +96,7 @@
             }),
             success: function(data) {
                 alert("Successfully added!");
-                window.location.href = openmrsContextPath + "/module/billing/comView.htm"
+                window.location.href = openmrsContextPath + "/module/billing/rmpComView.htm"
             },
         });
     }
@@ -519,5 +520,22 @@
     }
     function back() {
         window.location = "reportsView.form";
+    }
+    function dueamountcal(incon)
+    {
+        var paidamount = incon.value;
+        var netamount = $('#docNet').val();
+        $('#due').val(netamount - paidamount);
+        var paid = document.getElementById("paid").value;
+        var docNet = document.getElementById("docNet").value;
+        var due = document.getElementById("due").value;
+        if (due < 0)
+        {
+            alert("Paid Amount Grether than Doctor Commission Amount !!!");
+            $("#paid").focus();
+            $("#paid").val("");
+            $("#due").val("");
+            return false;
+        }
     }
 </script>

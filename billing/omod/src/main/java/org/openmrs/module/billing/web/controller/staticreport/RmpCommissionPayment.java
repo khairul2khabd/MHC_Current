@@ -18,6 +18,7 @@ import org.openmrs.module.hospitalcore.MedisunService;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCal;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalAll;
 import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaid;
+import org.openmrs.module.hospitalcore.model.DiaCommissionCalPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaid;
 import org.openmrs.module.hospitalcore.model.DiaRmpCommCalculationPaidAdj;
 import org.openmrs.module.hospitalcore.model.DiaRmpName;
@@ -50,7 +51,7 @@ public class RmpCommissionPayment {
             Model model) {
 
         MedisunService ms = Context.getService(MedisunService.class);
-        
+
         model.addAttribute("status", status);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -78,12 +79,18 @@ public class RmpCommissionPayment {
 
             DiaRmpName rmpInfo = ms.getDiaRmpById(rmpId);
             model.addAttribute("docInfo", rmpInfo);
-            System.out.println("***********00000000000");
-        } else if (status == 1) {
-            List<DiaCommissionCal> diaComCal = ms.getDiaComCal(rmpId, status, date, date1);
+            System.out.println("***********00000000000*****" + status);
+             System.out.println("***********diaComCal******" + diaComCal);
+            
+            System.out.println("***********listDiaComAll******" + listDiaComAll);
+           
+        } 
+        if (status == 1) {
+            List<DiaCommissionCal> diaComCal = ms.getDiaComCalRmpStatus(rmpId, status, date, date1);
             model.addAttribute("diaComCal", diaComCal);
+            model.addAttribute("diaComCalSize", diaComCal.size());
 
-            List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAll(rmpId, status, date, date1);
+            List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAllRmp(rmpId, status, date, date1);
             model.addAttribute("listDiaComAll", listDiaComAll);
 
             model.addAttribute("startDate", date);
@@ -92,7 +99,11 @@ public class RmpCommissionPayment {
             DiaRmpName rmpInfo = ms.getDiaRmpById(rmpId);
             model.addAttribute("docInfo", rmpInfo);
 
-            System.out.println("***********1111111111");
+            System.out.println("***********1111111111******" + status);
+
+            System.out.println("***********diaComCal******" + diaComCal);
+            
+            System.out.println("***********listDiaComAll******" + listDiaComAll);
         }
 
         if (Context.getAuthenticatedUser() != null && Context.getAuthenticatedUser().getId() != null) {
@@ -106,12 +117,13 @@ public class RmpCommissionPayment {
 
     @RequestMapping(value = "/module/billing/rmpComSave.form", method = RequestMethod.POST)
     public String saveCommission(HttpServletRequest request,
-            @RequestParam("comId") Integer comId,
+            @RequestParam("comId") Integer comID,
             @RequestParam("indCount") Integer indCount,
             @RequestParam("docId") Integer docId,
             @RequestParam(value = "note", required = false) String note,
             @RequestParam(value = "sDateValue", required = false) Date startDate,
             @RequestParam(value = "eDateValue", required = false) Date endDate,
+            @RequestParam(value = "status", required = false) int status,
             Model model) {
 
         MedisunService ms = Context.getService(MedisunService.class);
@@ -124,39 +136,102 @@ public class RmpCommissionPayment {
         BigDecimal paid = NumberUtils.createBigDecimal(request.getParameter("paid"));
         BigDecimal due = NumberUtils.createBigDecimal(request.getParameter("due"));
 
-        DiaRmpCommCalculationPaid drmp = new DiaRmpCommCalculationPaid();
-        drmp.setServiceAmount(serviceAmount);
-        drmp.setNetAmount(netAmount);
-        drmp.setLessAmount(lessAount);
-        drmp.setRmpCommission(docComm);
-        drmp.setCreatedDate(new Date());
-        drmp.setCreator(user);
-        drmp.setRmpId(comId);
-        drmp.setPaidAmount(paid);
-        drmp.setDueAmount(due);
-        drmp.setNote(note);
-        ms.saveRmpComPaid(drmp);
+        DiaCommissionCalPaid dpaid = new DiaCommissionCalPaid();
+        dpaid.setServiceAmount(serviceAmount);
+        dpaid.setNetAmount(netAmount);
+        dpaid.setLessAmount(lessAount);
+        dpaid.setDocCommission(docComm);
+        dpaid.setCreatedDate(new Date());
+        dpaid.setCreator(user);
+        dpaid.setDocId(docId);
+        dpaid.setPaidAmount(paid);
+        dpaid.setDueAmount(due);
+        dpaid.setNote(note);
+        ms.saveDiaComCalPaid(dpaid);
 
-        DiaRmpCommCalculationPaidAdj diaRmpAdj = new DiaRmpCommCalculationPaidAdj();
-        diaRmpAdj.setDiaRmpComPaid(drmp);
-        diaRmpAdj.setPayableAmount(docComm);
-        diaRmpAdj.setPaidAmount(paid);
-        diaRmpAdj.setDueAmount(due);
-        diaRmpAdj.setUser(user);
-        diaRmpAdj.setCreatedDate(new Date());
-        ms.saveDiaRmpAdj(diaRmpAdj);
+        DiaCommissionCalPaidAdj diaAdj = new DiaCommissionCalPaidAdj();
+        diaAdj.setDiaComPaid(dpaid);
+        diaAdj.setPayableAmount(docComm);
+        diaAdj.setPaidAmount(paid);
+        diaAdj.setDueAmount(due);
+        diaAdj.setUser(user);
+        diaAdj.setCreatedDate(new Date());
+        ms.saveDiaComPaidAdj(diaAdj);
 
-        List<DiaCommissionCal> diaRmpComCal = ms.getDiaComCalRmp(comId, startDate, endDate);
+        List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAllRmp(docId, status, startDate, endDate);
+        for (int i = 0; i < listDiaComAll.size(); i++) {
+            DiaCommissionCalAll dAll = (DiaCommissionCalAll) listDiaComAll.get(i);
+            dAll.setStatus(Boolean.TRUE);
+            ms.saveDiaComAll(dAll);
+        }
+
+        List<DiaCommissionCal> diaComCal = ms.getDiaComCalRmpStatus(comID, status, startDate, endDate);
 
         // List<DiaCommissionCal> diaList = ms.getDiaComCalByBillId(comID); //  Get By Ref Id then save it
-        for (int i = 0; i < diaRmpComCal.size(); i++) {
-            DiaCommissionCal d = (DiaCommissionCal) diaRmpComCal.get(i);
+        for (int i = 0; i < diaComCal.size(); i++) {
+            DiaCommissionCal d = (DiaCommissionCal) diaComCal.get(i);
             d.setStatus(Boolean.TRUE);
-            d.setDiaRmpComPaid(drmp);
+            d.setDiaComPaid(dpaid);
             ms.saveDiaComCal(d);
         }
 
         return "module/billing/reports/rmpComView";
 
     }
+
+//    @RequestMapping(value = "/module/billing/rmpComSave.form", method = RequestMethod.POST)
+//    public String saveCommission(HttpServletRequest request,
+//            @RequestParam("comId") Integer comId,
+//            @RequestParam("indCount") Integer indCount,
+//            @RequestParam("docId") Integer docId,
+//            @RequestParam(value = "note", required = false) String note,
+//            @RequestParam(value = "sDateValue", required = false) Date startDate,
+//            @RequestParam(value = "eDateValue", required = false) Date endDate,
+//            Model model) {
+//
+//        MedisunService ms = Context.getService(MedisunService.class);
+//        User user = Context.getAuthenticatedUser();
+//
+//        BigDecimal serviceAmount = NumberUtils.createBigDecimal(request.getParameter("totalBill"));
+//        BigDecimal netAmount = NumberUtils.createBigDecimal(request.getParameter("dcomm"));
+//        BigDecimal lessAount = NumberUtils.createBigDecimal(request.getParameter("lamount"));
+//        BigDecimal docComm = NumberUtils.createBigDecimal(request.getParameter("docNet"));
+//        BigDecimal paid = NumberUtils.createBigDecimal(request.getParameter("paid"));
+//        BigDecimal due = NumberUtils.createBigDecimal(request.getParameter("due"));
+//
+//        DiaRmpCommCalculationPaid drmp = new DiaRmpCommCalculationPaid();
+//        drmp.setServiceAmount(serviceAmount);
+//        drmp.setNetAmount(netAmount);
+//        drmp.setLessAmount(lessAount);
+//        drmp.setRmpCommission(docComm);
+//        drmp.setCreatedDate(new Date());
+//        drmp.setCreator(user);
+//        drmp.setRmpId(comId);
+//        drmp.setPaidAmount(paid);
+//        drmp.setDueAmount(due);
+//        drmp.setNote(note);
+//        ms.saveRmpComPaid(drmp);
+//
+//        DiaRmpCommCalculationPaidAdj diaRmpAdj = new DiaRmpCommCalculationPaidAdj();
+//        diaRmpAdj.setDiaRmpComPaid(drmp);
+//        diaRmpAdj.setPayableAmount(docComm);
+//        diaRmpAdj.setPaidAmount(paid);
+//        diaRmpAdj.setDueAmount(due);
+//        diaRmpAdj.setUser(user);
+//        diaRmpAdj.setCreatedDate(new Date());
+//        ms.saveDiaRmpAdj(diaRmpAdj);
+//
+//        List<DiaCommissionCal> diaRmpComCal = ms.getDiaComCalRmp(comId, startDate, endDate);
+//
+//        // List<DiaCommissionCal> diaList = ms.getDiaComCalByBillId(comID); //  Get By Ref Id then save it
+//        for (int i = 0; i < diaRmpComCal.size(); i++) {
+//            DiaCommissionCal d = (DiaCommissionCal) diaRmpComCal.get(i);
+//            d.setStatus(Boolean.TRUE);
+//            d.setDiaRmpComPaid(drmp);
+//            ms.saveDiaComCal(d);
+//        }
+//
+//        return "module/billing/reports/rmpComView";
+//
+//    }
 }
