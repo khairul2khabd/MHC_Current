@@ -824,7 +824,7 @@ public class HibernateMedisunDAO implements MedisunDAO {
         if (status == 0) {
             hql = "from  DiaCommissionCal d "
                     //  + "INNER JOIN DiaPatientServiceBillItem di ON d.billId = di.diaPatientServiceBill.billId "
-                    + " where d.refId='"
+                    + " where d.refRmpId='"
                     + rmpId
                     + "' AND d.createdDate BETWEEN '"
                     + startDate
@@ -836,7 +836,7 @@ public class HibernateMedisunDAO implements MedisunDAO {
         if (status == 1) {
             hql = "from  DiaCommissionCal d "
                     //  + "INNER JOIN DiaPatientServiceBillItem di ON d.billId = di.diaPatientServiceBill.billId "
-                    + " where d.refId='"
+                    + " where d.refRmpId='"
                     + rmpId
                     + "' AND d.createdDate BETWEEN '"
                     + startDate
@@ -864,7 +864,7 @@ public class HibernateMedisunDAO implements MedisunDAO {
                     + startDate
                     + "' AND '"
                     + endDate
-                    + "' AND d.status=false AND d.refRmp>0 AND d.diaPatientServiceBill.voided=false order by d.refId asc";
+                    + "' AND d.status=false AND d.refRmp>0 AND d.diaPatientServiceBill.voided=false order by d.refRmp asc";
         }
 
         if (status == 1) {
@@ -875,7 +875,7 @@ public class HibernateMedisunDAO implements MedisunDAO {
                     + startDate
                     + "' AND '"
                     + endDate
-                    + "' AND d.status=true AND d.refRmp>0 AND d.diaPatientServiceBill.voided=false order by d.refId asc";
+                    + "' AND d.status=true AND d.refRmp>0 AND d.diaPatientServiceBill.voided=false order by d.refRmp asc";
         }
 
         Session session = sessionFactory.getCurrentSession();
