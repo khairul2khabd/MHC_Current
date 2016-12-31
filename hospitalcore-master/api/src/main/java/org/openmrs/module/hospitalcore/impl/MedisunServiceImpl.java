@@ -461,5 +461,13 @@ public class MedisunServiceImpl extends BaseOpenmrsService implements MedisunSer
     public List<DiaCommissionCalAll> listDiaComCalAllRmp(int rmpId, int status, Date sDate, Date eDate) throws APIException {
         return dao.listDiaComCalAllRmp(rmpId, status, sDate, eDate);
     }
+
+    public List<DiaCommissionCal> getDiaComRmpNew(int rmpId, Date sDate, Date eDate) throws APIException {
+        return dao.getDiaComRmpNew(rmpId, sDate, eDate);
+    }
+
+//    public List<DiaCommissionCalAll> listDiaComCalAllRmpNew(int rmpId, Date sDate, Date eDate) throws APIException {
+//        return dao.listDiaComCalAllRmpNew(rmpId, sDate, eDate);
+//    }
     
 }

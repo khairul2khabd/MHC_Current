@@ -179,4 +179,7 @@ public interface MedisunService extends OpenmrsService {
     
     public List<DiaCommissionCalAll> listDiaComCalAllRmp(int rmpId, int status, Date sDate, Date eDate) throws APIException;
 
+    public List<DiaCommissionCal> getDiaComRmpNew(int rmpId, Date sDate, Date eDate)throws APIException;
+    
+//    public List<DiaCommissionCalAll> listDiaComCalAllRmpNew(int rmpId, Date sDate, Date eDate) throws APIException;
 }

@@ -868,14 +868,14 @@ public class HibernateMedisunDAO implements MedisunDAO {
         }
 
         if (status == 1) {
-            hql = "from  DiaCommissionCalAll d "
-                    + " where d.refRmp='"
+            hql = "from  DiaCommissionCalAll a "
+                    + " where a.refRmp='"
                     + rmpId
-                    + "' AND d.createdDate BETWEEN '"
+                    + "' AND a.createdDate BETWEEN '"
                     + startDate
                     + "' AND '"
                     + endDate
-                    + "' AND d.status=true AND d.refRmp>0 AND d.diaPatientServiceBill.voided=false order by d.refRmp asc";
+                    + "' AND a.status=true AND a.refRmp>0 AND a.diaPatientServiceBill.voided=false order by a.refRmp asc";
         }
 
         Session session = sessionFactory.getCurrentSession();
@@ -883,5 +883,49 @@ public class HibernateMedisunDAO implements MedisunDAO {
         List<DiaCommissionCalAll> list = q.list();
         return list;
     }
+
+    public List<DiaCommissionCal> getDiaComRmpNew(int rmpId, Date sDate, Date eDate) throws DAOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = sdf.format(sDate) + " 00:00:00";
+        String endDate = sdf.format(eDate) + " 23:59:59";
+        String hql = null;
+        // hql = "SELECT d.billId, d.patientID  from  DiaPatientServiceBill d "
+
+        hql = "from  DiaCommissionCal d "
+                //  + "INNER JOIN DiaPatientServiceBillItem di ON d.billId = di.diaPatientServiceBill.billId "
+                + " where d.refRmpId='"
+                + rmpId
+                + "' AND d.createdDate BETWEEN '"
+                + startDate
+                + "' AND '"
+                + endDate
+                + "' AND d.status=true AND d.diaPatientServiceBill.voided=false";
+
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createQuery(hql);
+        List<DiaCommissionCal> list = q.list();
+        return list;
+    }
+
+//    public List<DiaCommissionCalAll> listDiaComCalAllRmpNew(int rmpId, Date sDate, Date eDate) throws DAOException {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        String startDate = sdf.format(sDate) + " 00:00:00";
+//        String endDate = sdf.format(eDate) + " 23:59:59";
+//        String hql = null;
+//         
+//            hql = "from  DiaCommissionCalAll d "
+//                    + " where d.refRmp='"
+//                    + rmpId
+//                    + "' AND d.createdDate BETWEEN '"
+//                    + startDate
+//                    + "' AND '"
+//                    + endDate
+//                    + "' AND d.diaPatientServiceBill.voided=false AND d.status=true  order by d.refRmp asc";
+//        
+//        Session session = sessionFactory.getCurrentSession();
+//        Query q = session.createQuery(hql);
+//        List<DiaCommissionCalAll> list = q.list();
+//        return list;
+//    }
 
 }
