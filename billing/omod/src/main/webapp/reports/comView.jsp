@@ -289,7 +289,9 @@
                             <tr>
                                 <td colspan="4" style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:16px; color:#000;"> Total &emsp;</td>
                                 <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${serPriceTotal} </td>
-                                <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${totalLess}</td>
+                                <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${totalLess}
+                                <input type="hidden" id="lamount" name="lamount" value="${totalLess}" />
+                                </td>
                                 <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${totalReferral} </td>
                                 <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> </td>
                                 <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${refPayable} </td>
@@ -354,7 +356,10 @@
 
 <form>
     <div style="display:none; font-size:14px;"   id="p" >
-        <center> <b style="font-size:18px;"> BILL </b> </br> 
+        <center>  
+            <c:if test="${status eq '0'}"> <b style="font-size:18px;"> BILL (Due)</b> </c:if>
+            <c:if test="${status eq '1'}"> <b style="font-size:18px;"> BILL (Paid)</b> </c:if>
+            </br> 
             Period :  <%= request.getParameter("sDate") %> - <%= request.getParameter("eDate") %>
         </center> <br>
         <b> Dr Code : ${docInfo.id}  &emsp;&emsp;&emsp; ${docInfo.doctorName}, ${docInfo.degree} </b> <br>

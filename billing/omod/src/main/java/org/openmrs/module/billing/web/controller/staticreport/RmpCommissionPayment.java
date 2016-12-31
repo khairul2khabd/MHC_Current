@@ -69,8 +69,6 @@ public class RmpCommissionPayment {
             model.addAttribute("diaComCal", diaComCal);
             model.addAttribute("diaComCalSize", diaComCal.size());
 
-//            List<DiaCommissionCalPaid> diaComPaid = ms.getDiaComCalPaidByIdandDate(docId, date, date1);
-//            model.addAttribute("diaComPaid", diaComPaid);
             List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAllRmp(rmpId, status, date, date1);
             model.addAttribute("listDiaComAll", listDiaComAll);
 
@@ -80,17 +78,14 @@ public class RmpCommissionPayment {
             DiaRmpName rmpInfo = ms.getDiaRmpById(rmpId);
             model.addAttribute("docInfo", rmpInfo);
             System.out.println("***********00000000000*****" + status);
-             System.out.println("***********diaComCal******" + diaComCal);
-            
-            System.out.println("***********listDiaComAll******" + listDiaComAll);
-           
-        } 
-        if (status == 1) {
-            List<DiaCommissionCal> diaComCal = ms.getDiaComCalRmpStatus(rmpId, status, date, date1);
-            model.addAttribute("diaComCal", diaComCal);
-            model.addAttribute("diaComCalSize", diaComCal.size());
 
-            List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAllRmp(rmpId, status, date, date1);
+        }
+        if (status == 1) {
+ 
+            List<DiaCommissionCal> diaComCal = ms.getDiaComRmpNew(rmpId, date, date1);
+            model.addAttribute("diaComCal", diaComCal);
+
+            List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAllRmp(rmpId,status, date, date1);
             model.addAttribute("listDiaComAll", listDiaComAll);
 
             model.addAttribute("startDate", date);
@@ -100,10 +95,6 @@ public class RmpCommissionPayment {
             model.addAttribute("docInfo", rmpInfo);
 
             System.out.println("***********1111111111******" + status);
-
-            System.out.println("***********diaComCal******" + diaComCal);
-            
-            System.out.println("***********listDiaComAll******" + listDiaComAll);
         }
 
         if (Context.getAuthenticatedUser() != null && Context.getAuthenticatedUser().getId() != null) {
@@ -136,27 +127,27 @@ public class RmpCommissionPayment {
         BigDecimal paid = NumberUtils.createBigDecimal(request.getParameter("paid"));
         BigDecimal due = NumberUtils.createBigDecimal(request.getParameter("due"));
 
-        DiaCommissionCalPaid dpaid = new DiaCommissionCalPaid();
+        DiaRmpCommCalculationPaid dpaid = new DiaRmpCommCalculationPaid();
         dpaid.setServiceAmount(serviceAmount);
         dpaid.setNetAmount(netAmount);
         dpaid.setLessAmount(lessAount);
-        dpaid.setDocCommission(docComm);
+        dpaid.setRmpCommission(docComm);
         dpaid.setCreatedDate(new Date());
         dpaid.setCreator(user);
-        dpaid.setDocId(docId);
+        dpaid.setRmpId(comID);
         dpaid.setPaidAmount(paid);
         dpaid.setDueAmount(due);
         dpaid.setNote(note);
-        ms.saveDiaComCalPaid(dpaid);
+        ms.saveRmpComPaid(dpaid);
 
-        DiaCommissionCalPaidAdj diaAdj = new DiaCommissionCalPaidAdj();
-        diaAdj.setDiaComPaid(dpaid);
+        DiaRmpCommCalculationPaidAdj diaAdj = new DiaRmpCommCalculationPaidAdj();
+        diaAdj.setDiaRmpComPaid(dpaid);
         diaAdj.setPayableAmount(docComm);
         diaAdj.setPaidAmount(paid);
         diaAdj.setDueAmount(due);
         diaAdj.setUser(user);
         diaAdj.setCreatedDate(new Date());
-        ms.saveDiaComPaidAdj(diaAdj);
+        ms.saveDiaRmpAdj(diaAdj);
 
         List<DiaCommissionCalAll> listDiaComAll = ms.listDiaComCalAllRmp(docId, status, startDate, endDate);
         for (int i = 0; i < listDiaComAll.size(); i++) {
@@ -171,7 +162,7 @@ public class RmpCommissionPayment {
         for (int i = 0; i < diaComCal.size(); i++) {
             DiaCommissionCal d = (DiaCommissionCal) diaComCal.get(i);
             d.setStatus(Boolean.TRUE);
-            d.setDiaComPaid(dpaid);
+            d.setDiaRmpComPaid(dpaid);
             ms.saveDiaComCal(d);
         }
 

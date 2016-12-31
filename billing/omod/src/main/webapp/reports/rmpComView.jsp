@@ -53,7 +53,7 @@
     function saveCommission() {
         var paid = document.getElementById("paid").value;
         //  var docNet = document.getElementById("docNet").value;
-        alert(paid);
+        //alert(paid);
         if (paid == null || paid == "")
         {
             alert("Paid Amount Empty or Zero !!!");
@@ -202,7 +202,13 @@
     </div>
 
     <div class="box1" >
-        <c:if test="${not empty docInfo.id}">
+        <c:if test="${status eq '0'}">
+            <center> <span style="font-size:16px;  font-weight:bold;"> Due </span> </center>
+            </c:if>
+            <c:if test="${status eq '1'}">
+            <center> <span style="font-size:16px;  font-weight:bold;"> Paid </span> </center>
+            </c:if>
+            <c:if test="${not empty docInfo.id}">
             <div style="padding-left:100px; padding-bottom:7px; color:#000;"> Rmp Code : <span style="font-size:16px; font-weight:bold;"> ${docInfo.id} </span> ||  
                 RMP Name : <span style="font-size:16px; font-weight:bold;"> ${docInfo.name} </span>  
                 <label style="float:right; padding-right:100px; font-size:14px;"> Commission Showing Date : <openmrs:formatDate date="${startDate}" /> - <openmrs:formatDate date="${endDate}" /> </label>
@@ -276,7 +282,9 @@
                             <tr>
                                 <td colspan="4" style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:16px; color:#000;"> Total &emsp;</td>
                                 <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${serPriceTotal} </td>
-                                <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${totalLess}</td>
+                                <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${totalLess}
+                                    <input type="hidden" id="lamount" name="lamount" value="${totalLess}" />
+                                </td>
                                 <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${totalReferral} </td>
                                 <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> </td>
                                 <td style="border-right:1px solid #D8D8D8; text-align:right; font-weight:bold; font-size:14px; color:#000;"> ${refPayable} </td>
@@ -338,8 +346,11 @@
 </form> 
 
 <form>
-    <div style="display: ; font-size:14px;"   id="p" >
-        <center> <b style="font-size:18px;"> BILL </b> </br> 
+    <div style="display:none; font-size:14px;"   id="p" >
+        <center> 
+            <c:if test="${status eq '0'}"> <b style="font-size:18px;"> BILL (Due)</b> </c:if>
+            <c:if test="${status eq '1'}"> <b style="font-size:18px;"> BILL (Paid)</b> </c:if>
+            </br> 
             Period :  <%= request.getParameter("sDate") %> - <%= request.getParameter("eDate") %>
         </center> <br>
         <b> RMP Code : ${docInfo.id}  &emsp;&emsp;&emsp; ${docInfo.name}, ${docInfo.degree} </b> <br>
