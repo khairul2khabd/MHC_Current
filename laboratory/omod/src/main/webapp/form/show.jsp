@@ -138,7 +138,7 @@
                                     <c:if test="${parameter.id eq 'Calcium Oxalate' && value eq 'Nil'}">
                                         <option value='${value}' selected>Nil</option>
                                     </c:if>
-                                    <c:if test="${parameter.id eq  'Amor. Phosphate' && value eq 'Nil'}">
+                                    <c:if test="${parameter.id eq  'Amorphous Phosphate' && value eq 'Nil'}">
                                         <option value='${value}' selected>Nil</option>
                                     </c:if>
                                     <c:if test="${parameter.id eq  'Uric  Acid' && value eq 'Nil'}">

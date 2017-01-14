@@ -19,13 +19,13 @@
     <c:forEach var="test" items="${investigation}">
         <c:choose>
             <c:when test="${investigation eq '2311' || investigation eq '2577' || investigation eq '5158' || investigation eq '3937' 
-                            || investigation eq '4252' || investigation eq '5213' }">
+                         || investigation eq '4252' || investigation eq '5213' || investigation eq '5239'}">
                     <div class="div1">   <h2>BIOCHEMISTRY REPORT</h2></div><br>
             </c:when>
             <c:when test="${investigation eq '2543'}">
                 <div class="div1">   <h2>ELECTROLYTES REPORT</h2></div><br>
             </c:when>
-            <c:when test="${investigation eq '2415' || investigation eq '5148'}">
+            <c:when test="${investigation eq '2415' || investigation eq '5148' || investigation eq '5293'}">
                 <div class="div1">   <h2>URINE EXAMINATION REPORT</h2></div><br>
             </c:when>
             <c:when test="${investigation eq '3117'}">
@@ -35,7 +35,8 @@
                 <div class="div1">   <h2>MICROBIOLOGY REPORT</h2></div><br>
             </c:when>
             <c:when test="${investigation eq '3945' || investigation eq '5216' || 
-                            investigation eq '3092' || investigation eq '5254' }">
+                            investigation eq '3092' || investigation eq '5254' ||
+                            investigation eq '5290' || investigation eq '5258'}">
                     <div class="div1"><h2>IMMUNOLOGY REPORT</h2></div><br>
             </c:when>
             <c:when test="${investigation eq '5142'}">
@@ -50,7 +51,7 @@
             <c:when test="${investigation eq '4679' || investigation eq '5692'}">
                 <div class="div1">    <h2>HAEMATOLOGY REPORT </h2></div><br>
             </c:when> 
-            <c:when test="${investigation eq '2400' || investigation eq '5225'}">
+            <c:when test="${investigation eq '2400' || investigation eq '5225' || investigation eq '5708'}">
                 <div class="div1"> <h2>SEROLOGY REPORT </h2></div><br>
             </c:when> 
             <c:when test="${investigation eq '5718'}">
@@ -91,7 +92,7 @@
         <tbody>
             <c:forEach var="test" items="${investigation}">
                 <c:choose>
-                    <c:when test="${investigation eq '2311' || investigation eq '4252'}">
+                    <c:when test="${investigation eq '2311' || investigation eq '4252' || investigation eq '5239'}">
                         <!--  <h2>DEPARTMENT OF BIOCHEMISTRY</h2> <br> -->
                     <h3>Estimations are carried out by Vitros-250 Random Access Automated Chemistry Analyzer</h3>
                 </c:when>
@@ -102,7 +103,7 @@
                 <c:when test="${investigation eq '2734'}">
                     <h2>DEPARTMENT OF MICROBIOLOGY</h2>
                 </c:when>
-                <c:when test="${investigation eq '3945'}">
+                <c:when test="${investigation eq '3945' || investigation eq '5290' || investigation eq '5258'}">
                     <!-- <h2>DEPARTMENT OF IMMUNOLOGY</h2>  Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer<br> -->
                     <span style="margin-top:100px"><i>Estimations are carried out by Maglumi-800 Random Access Multibatch chemiluminescence immunoassay (CLIA) Analyzer</i></span>
                 </c:when>
@@ -257,13 +258,13 @@
         <c:forEach var="test" items="${investigation}">
             <c:choose>
                 <c:when test="${investigation eq '2311' || investigation eq '2577' || investigation eq '5158' || investigation eq '3937' 
-                                || investigation eq '4252' || investigation eq '5213' }">
+                             || investigation eq '4252' || investigation eq '5213' || investigation eq '5239'}">
                         <div class="div1">   <h2>BIOCHEMISTRY REPORT</h2></div><br>
                 </c:when>
                 <c:when test="${investigation eq '2543'}">
                     <div class="div1">   <h2>ELECTROLYTES REPORT</h2></div><br>
                 </c:when>
-                <c:when test="${investigation eq '2415' || investigation eq '5148'}">
+                <c:when test="${investigation eq '2415' || investigation eq '5148' || investigation eq '5293'}">
                     <div class="div1">   <h2>URINE EXAMINATION REPORT</h2></div><br>
                 </c:when>
                 <c:when test="${investigation eq '3117'}">
@@ -273,7 +274,7 @@
                     <div class="div1">    <h2>MICROBIOLOGY REPORT</h2></div><br>
                 </c:when>
                 <c:when test="${investigation eq '3945' || investigation eq '5216' || investigation eq '3092'
-                                || investigation eq '5254'}">
+                             || investigation eq '5254' || investigation eq '5290' || investigation eq '5258'}">
                         <div class="div1"><h2>IMMUNOLOGY REPORT</h2></div><br>
                 </c:when>				
                 <c:when test="${investigation eq '5142'}">
@@ -288,7 +289,7 @@
                 <c:when test="${investigation eq '4679' || investigation eq '5692'}">
                     <div class="div1">   <h2>HAEMATOLOGY REPORT</h2></div><br>
                 </c:when> 
-                <c:when test="${investigation eq '2400' || investigation eq '5225'}">
+                <c:when test="${investigation eq '2400' || investigation eq '5225' || investigation eq '5708'}">
                     <div class="div1"> <h2>SEROLOGY REPORT </h2> </div><br>
                 </c:when> 
                 <c:when test="${investigation eq '5718'}">
@@ -319,7 +320,7 @@
                             <td colspan="4"><%@ include file="../patientreport/reportformat/patientInfo.jsp"%> <br></td>
                         </tr>
 
-                        <c:if test="${investigation eq '2311' || investigation eq '4252'}">
+                        <c:if test="${investigation eq '2311' || investigation eq '4252' || investigation eq '5239'}">
                             <tr>
                                 <td colspan="4" align="center">
                                     <span style="margin-top:100px; font-size:18px; font-weight: bold; text-align:center;"><i> Estimations are carried out by Vitros-250 Random Access Automated Chemistry Analyzer </i></span>
@@ -347,7 +348,7 @@
                                 </td>
                             </tr>
                         </c:if>
-                        <c:if test="${investigation eq '3945'}">
+                        <c:if test="${investigation eq '3945' || investigation eq '5290' || investigation eq '5258'}">
                             <tr>
                                 <td colspan="4" align="center">
                                     <span style="margin-top:100px; font-size:16px; font-weight: bold; text-align:center;"><i> Estimations are carried out by Maglumi-800 Random Access Multibatch chemiluminescence immunoassay (CLIA) Analyzer</i></span>

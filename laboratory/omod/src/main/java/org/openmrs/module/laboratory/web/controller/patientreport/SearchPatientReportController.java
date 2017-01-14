@@ -160,8 +160,8 @@ public class SearchPatientReportController {
             model.addAttribute("haeBlood", haeBlood); // For Blood Haematology
 
             model.addAttribute("bioBlood", bioBlood); // For Urine Biochemistry
+            
             model.addAttribute("bioUrine", bioUrine); // For Urine Biochemistry
-
             model.addAttribute("pathStool", pathStool); // For Stool Path
             model.addAttribute("pathSoptUrine", pathSoptUrine); // For spot urine Path
             model.addAttribute("pathUrine", pathUrine); //For urine Path
@@ -206,6 +206,8 @@ public class SearchPatientReportController {
                         || (test.getConcept().getId() == 4250) || (test.getConcept().getId() == 2227)
                         || (test.getConcept().getId() == 5860) || (test.getConcept().getId() == 5861)
                         || (test.getConcept().getId() == 5206) || (test.getConcept().getId() == 5213)
+                        || (test.getConcept().getId() == 5290) || (test.getConcept().getId() == 5293)
+                        || (test.getConcept().getId() == 5258)
                         //Microbiology filter here 
                         || (test.getConcept().getId() == 5889)
                         //immu filter here 
@@ -340,6 +342,7 @@ public class SearchPatientReportController {
                     && (test.getConcept().getId() != 4250) && (test.getConcept().getId() != 2227)
                     && (test.getConcept().getId() != 5860) && (test.getConcept().getId() != 5861)
                     && (test.getConcept().getId() != 5206) && (test.getConcept().getId() != 5213)
+                    && (test.getConcept().getId() != 5293) && (test.getConcept().getId() != 5258)
                     //Microbiology filter here 
                     && (test.getConcept().getId() != 5889)
                     ///immu concept start here 
@@ -360,7 +363,7 @@ public class SearchPatientReportController {
                     && (test.getConcept().getId() != 5221) && (test.getConcept().getId() != 2561)
                     && (test.getConcept().getId() != 2261) && (test.getConcept().getId() != 2262)
                     && (test.getConcept().getId() != 6043) && (test.getConcept().getId() != 6044)
-                    && (test.getConcept().getId() != 6010)) {
+                    && (test.getConcept().getId() != 6010) && (test.getConcept().getId() != 5290)) {
 
                 Encounter encounter = test.getEncounter();
                 for (Obs obs : encounter.getAllObs()) {

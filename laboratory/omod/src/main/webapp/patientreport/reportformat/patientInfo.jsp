@@ -43,20 +43,20 @@
                 <c:forEach var="test" items="${investigation}">
                     <c:choose>
                         <c:when test="${investigation eq '2311'}">
-                            <!--  <h2>DEPARTMENT OF BIOCHEMISTRY</h2> <br> --> 
+                            <!--  <h2>DEPARTMENT OF BIOCHEMISTRY</h2> <br> -->
                             <c:if test="${not empty bioBlood}"> Blood</c:if>
                             <c:if test="${not empty bioBlood && not empty bioUrine}"> &#38;</c:if>							
                             <c:if test="${not empty bioUrine}"> Urine</c:if>
                         </c:when>
                         <c:when test="${investigation eq '2543' || investigation eq '2577' || investigation eq '5158'
-                                        || investigation eq '5225' || investigation eq '5692' || investigation eq '2734'
-                                        || investigation eq '5255' }">
+                                     || investigation eq '5225' || investigation eq '5692' || investigation eq '2734'
+                                     || investigation eq '5255' || investigation eq '5708' || investigation eq '5258'}">
                                 Blood  
                         </c:when>
                         <c:when test="${investigation eq '4252' }">
                             24 Hours Urine
                         </c:when>
-                        <c:when test="${investigation eq '5213' }">
+                        <c:when test="${investigation eq '5213' || investigation eq '5239' }">
                             Spot Urine
                         </c:when>
                         <c:when test="${investigation eq '3945' || investigation eq '5216' || investigation eq '3092'}"> 
@@ -88,6 +88,9 @@
                         </c:when>
                         <c:when test="${investigation eq '2413'}">   
                             Semen
+                        </c:when>
+                        <c:when test="${investigation eq '5290'}">   
+                            Blood Anerobic
                         </c:when>
                         <c:when test="${investigation eq '2400'}">
                             <!--  <h2>DEPARTMENT OF Serology </h2> -->

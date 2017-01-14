@@ -215,20 +215,25 @@
                     <option value="2577">PT (PROTHROMBIN TIME)</option>
                     <option value="2415">URINE ROUTINE EXAMINATION</option>
                     <option value="3117">STOOL ROUTINE EXAMINATION</option>
-                    <option value="5718">MANTOUX TEST</option>
-                    <option value="3937">CREATININE CLEARANCE RATE (CCR)</option>
-                    <option value="4252">URINARY TOTAL PROTEIN</option>
-                    <option value="5148">URINE FOR KETONE BODIES</option>
-                    <option value="5216">ANTI-NUCLEAR AB (ANA) & All</option> 
                     <option value="3092">&#946;-hCG</option>
                     <option value="5225">C3 C4</option>
                     <option value="5692">BT CT</option>
-                    <option value="5213">URINE MICROALBUMIN</option>
                     <option value="5254">ANTI CCP-AB</option>
-                    <option value="2413">SEMEN ANALYSIS</option>
+                    <option value="5718">MANTOUX TEST</option>
                     <option value="5255">HSV I & II-IgG</option>
-                    <option value="5709">DENGUE IgG/IgM/ALL</option>
+                    <option value="5708">TRIPLE ANTIGEN</option>
+                    <option value="2413">SEMEN ANALYSIS</option>
+                    <option value="5258">H. PYLORI - IgG</option>
+                    <option value="5290">SERUM VITAMIN-D</option>
                     <option value="6010">OCCULT BLOOD TEST</option>
+                    <option value="5709">DENGUE IgG/IgM/ALL</option>
+                    <option value="5213">URINE MICROALBUMIN</option>
+                    <option value="5293">BENCE-JONES PROTEIN</option>
+                    <option value="4252">URINARY TOTAL PROTEIN</option>
+                    <option value="5148">URINE FOR KETONE BODIES</option>
+                    <option value="5216">ANTI-NUCLEAR AB (ANA) & All</option> 
+                    <option value="5239">ALBUMIN CREATININE RATIO (ACR)</option>
+                    <option value="3937">CREATININE CLEARANCE RATE (CCR)</option>
                 </select>
             </td> 
             <td>

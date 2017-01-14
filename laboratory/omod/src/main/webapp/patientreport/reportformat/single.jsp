@@ -127,7 +127,7 @@
             <td align="left" style="padding-left:5px;">
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '6044' && t.groupName eq '6044' }">
-                        ${t.value}
+                        ${t.test}
                     </c:if> 
                 </c:forEach>
             </td>
@@ -148,6 +148,7 @@
         </tr> 
     </c:if>
 </c:forEach>
+       
 <!-- HSV I & II-IgG-->
 <c:forEach items="${te}" var="te"> 
     <c:if test="${investigation eq '5255' && te.concept.conceptId eq '5255' }">

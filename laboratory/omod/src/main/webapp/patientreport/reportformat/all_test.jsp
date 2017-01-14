@@ -248,7 +248,7 @@
 
 <!--Albumin Creatinine Ration-->
 <c:forEach items="${te}" var="te">  
-    <c:if test="${investigation eq '2311' && te.concept.conceptId eq '5239' }">
+    <c:if test="${investigation eq '5239' && te.concept.conceptId eq '5239' }">
         <tr> <td colspan="4">&nbsp;&nbsp;<b>Albumin Creatinine Ratio</b> </td> </tr>	
         <tr>
             <td style="width:40%;"> 
@@ -1950,11 +1950,9 @@
                 </c:forEach> 
             </td>
             <td align="left" style="padding-left:10px; font-size: 11px;">
-                <c:forEach items="${tmn}" var="t">
-                    <c:if test="${t.investigation eq '6068'}">
-                        <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                    </c:if>
-                </c:forEach> 
+                <0.9 : Negative <br/>
+                0.9-1.1 : Borderline positive <br/>
+                >1.1 : Positive 
             </td>	
         </tr>
         <tr>
@@ -3370,14 +3368,14 @@
 
 <!-- Triple Antigen -->
 <c:forEach items="${te}" var="te">  
-    <c:if test="${investigation eq '2400' && te.concept.conceptId eq '5708' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b>Triple Antigen</b> </td> </tr>	
+    <c:if test="${investigation eq '5708' && te.concept.conceptId eq '5708' }">
+        <tr> <td colspan="4">&nbsp;&nbsp;<b style="font-size:16px;"><u>Triple Antigen:</u></b></td></tr>	
         <tr>
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5967' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        ${t.testName}  
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Widal Reaction:&nbsp; ${t.testName}  
                     </c:if>	 
                 </c:forEach>
             </td>
@@ -3409,7 +3407,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '4259' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         ${t.testName}  
                     </c:if>	 
                 </c:forEach>
@@ -3442,7 +3440,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '4260' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         ${t.testName}  
                     </c:if>	 
                 </c:forEach>
@@ -3475,7 +3473,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5966' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         ${t.testName}  
                     </c:if>	 
                 </c:forEach>
@@ -3508,7 +3506,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5969' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         ${t.testName}  
                     </c:if>	 
                 </c:forEach>
@@ -3541,7 +3539,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5970' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         ${t.testName}  
                     </c:if>	 
                 </c:forEach>
@@ -3574,7 +3572,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '2385' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         ${t.testName}  
                     </c:if>	 
                 </c:forEach>
@@ -3607,7 +3605,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '2386' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         ${t.testName}  
                     </c:if>	 
                 </c:forEach>
@@ -3640,7 +3638,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '2387' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         ${t.testName}  
                     </c:if>	 
                 </c:forEach>
@@ -3673,7 +3671,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5918' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         <i> ${t.testName} </i>
                     </c:if>	 
                 </c:forEach>
@@ -3706,7 +3704,7 @@
             <td> 
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5919' && t.groupName eq '5708'}">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &ensp;&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         <span style="font-style: italic;"> ${t.testName}  </span>
                     </c:if>	 
                 </c:forEach>
@@ -4411,8 +4409,7 @@
         </tr>
     </c:if>
 </c:forEach>
-
-
+        
 <style> 
     table.report {
         font-family:arial;
