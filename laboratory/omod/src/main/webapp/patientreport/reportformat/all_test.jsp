@@ -4056,9 +4056,85 @@
     </c:if>
 </c:forEach>
 
+<!-- Anti TG Ab -->
+<c:forEach items="${te}" var="te">  
+    <c:if test="${investigation eq '2925' && te.concept.conceptId eq '5273' }">	
+        <tr>
+            <td style="width:40%;"> 
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5273' && t.groupName eq '5273'}">
+                        &nbsp;&nbsp;
+                        ${t.testName}  
+                    </c:if>	 
+                </c:forEach>
+            </td>
+            <td align="left" style="padding-left:5px;">
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5273' && t.groupName eq '5273'}">
+                        ${t.value}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td style="padding-left:20px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5273' && t.groupName eq '5273'}">
+                        ${t.unit}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td align="left" style="padding-left:10px; font-size: 11px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5273' && t.groupName eq '5273'}">
+                        <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                    </c:if>
+                </c:forEach> 
+            </td>
+        </tr>
+    </c:if>     
+</c:forEach>
+
+<!-- Anti TPO Ab -->
+<c:forEach items="${te}" var="te">  
+    <c:if test="${investigation eq '2925' && te.concept.conceptId eq '5274' }">
+        <tr>
+            <td style="width:40%;"> 
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5274' && t.groupName eq '5274'}">
+                        &nbsp;&nbsp;
+                        ${t.testName}  
+                    </c:if>	 
+                </c:forEach>
+            </td>
+            <td align="left" style="padding-left:5px;">
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5274' && t.groupName eq '5274'}">
+                        ${t.value}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td style="padding-left:20px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5274' && t.groupName eq '5274'}">
+                        ${t.unit}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td align="left" style="padding-left:10px; font-size: 11px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5274' && t.groupName eq '5274'}">
+                        <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                    </c:if>
+                </c:forEach> 
+            </td>
+        </tr>
+    </c:if>     
+</c:forEach>
+        
 <!-- Anti Thyroid Ab -->
 <c:forEach items="${te}" var="te">  
-    <c:if test="${investigation eq '3945' && te.concept.conceptId eq '2925' }">
+    <c:if test="${investigation eq '2925' && te.concept.conceptId eq '2925' }">
         <tr> <td colspan="4">&nbsp;&nbsp;<b>Anti Thyroid Ab</b></td> </tr>	
         <tr>
             <td style="width:40%;"> 

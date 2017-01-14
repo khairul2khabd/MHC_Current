@@ -225,6 +225,7 @@
                     <option value="2413">SEMEN ANALYSIS</option>
                     <option value="5258">H. PYLORI - IgG</option>
                     <option value="5290">SERUM VITAMIN-D</option>
+                    <option value="2925">ANTI THYROID AB</option>
                     <option value="6010">OCCULT BLOOD TEST</option>
                     <option value="5709">DENGUE IgG/IgM/ALL</option>
                     <option value="5213">URINE MICROALBUMIN</option>

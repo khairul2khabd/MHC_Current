@@ -36,7 +36,8 @@
             </c:when>
             <c:when test="${investigation eq '3945' || investigation eq '5216' || 
                             investigation eq '3092' || investigation eq '5254' ||
-                            investigation eq '5290' || investigation eq '5258'}">
+                            investigation eq '5290' || investigation eq '5258' ||
+                            investigation eq '2925'}">
                     <div class="div1"><h2>IMMUNOLOGY REPORT</h2></div><br>
             </c:when>
             <c:when test="${investigation eq '5142'}">
@@ -103,7 +104,7 @@
                 <c:when test="${investigation eq '2734'}">
                     <h2>DEPARTMENT OF MICROBIOLOGY</h2>
                 </c:when>
-                <c:when test="${investigation eq '3945' || investigation eq '5290' || investigation eq '5258'}">
+                <c:when test="${investigation eq '3945' || investigation eq '5290' || investigation eq '5258' || investigation eq '2925'}">
                     <!-- <h2>DEPARTMENT OF IMMUNOLOGY</h2>  Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer<br> -->
                     <span style="margin-top:100px"><i>Estimations are carried out by Maglumi-800 Random Access Multibatch chemiluminescence immunoassay (CLIA) Analyzer</i></span>
                 </c:when>
@@ -273,8 +274,10 @@
                 <c:when test="${investigation eq '2734'}">
                     <div class="div1">    <h2>MICROBIOLOGY REPORT</h2></div><br>
                 </c:when>
-                <c:when test="${investigation eq '3945' || investigation eq '5216' || investigation eq '3092'
-                             || investigation eq '5254' || investigation eq '5290' || investigation eq '5258'}">
+                <c:when test="${investigation eq '3945' || investigation eq '5216' || 
+                                investigation eq '3092' || investigation eq '5254' || 
+                                investigation eq '5290' || investigation eq '5258' ||
+                                investigation eq '2925'}">
                         <div class="div1"><h2>IMMUNOLOGY REPORT</h2></div><br>
                 </c:when>				
                 <c:when test="${investigation eq '5142'}">
@@ -348,7 +351,7 @@
                                 </td>
                             </tr>
                         </c:if>
-                        <c:if test="${investigation eq '3945' || investigation eq '5290' || investigation eq '5258'}">
+                        <c:if test="${investigation eq '3945' || investigation eq '5290' || investigation eq '5258' || investigation eq '2925'}">
                             <tr>
                                 <td colspan="4" align="center">
                                     <span style="margin-top:100px; font-size:16px; font-weight: bold; text-align:center;"><i> Estimations are carried out by Maglumi-800 Random Access Multibatch chemiluminescence immunoassay (CLIA) Analyzer</i></span>

@@ -228,7 +228,8 @@ public class SearchPatientReportController {
                         || (test.getConcept().getId() == 5221) || (test.getConcept().getId() == 2561)
                         || (test.getConcept().getId() == 2261) || (test.getConcept().getId() == 2262)
                         || (test.getConcept().getId() == 6043) || (test.getConcept().getId() == 6044)
-                        || (test.getConcept().getId() == 6010)) {
+                        || (test.getConcept().getId() == 6010) || (test.getConcept().getId() == 5273)
+                        || (test.getConcept().getId() == 5274)) {
 
                     Encounter encounter = test.getEncounter();
                     for (Obs obs : encounter.getAllObs()) {
@@ -363,7 +364,8 @@ public class SearchPatientReportController {
                     && (test.getConcept().getId() != 5221) && (test.getConcept().getId() != 2561)
                     && (test.getConcept().getId() != 2261) && (test.getConcept().getId() != 2262)
                     && (test.getConcept().getId() != 6043) && (test.getConcept().getId() != 6044)
-                    && (test.getConcept().getId() != 6010) && (test.getConcept().getId() != 5290)) {
+                    && (test.getConcept().getId() != 6010) && (test.getConcept().getId() != 5290)
+                    && (test.getConcept().getId() != 5273) && (test.getConcept().getId() != 5274)) {
 
                 Encounter encounter = test.getEncounter();
                 for (Obs obs : encounter.getAllObs()) {
