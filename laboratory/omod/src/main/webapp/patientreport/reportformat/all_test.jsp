@@ -249,7 +249,7 @@
 <!--Albumin Creatinine Ration-->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5239' && te.concept.conceptId eq '5239' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b>Albumin Creatinine Ratio</b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b>Albumin Creatinine Ratio(ACR)</b> </td> </tr>	
         <tr>
             <td style="width:40%;"> 
                 <c:forEach items="${tmn}" var="t">

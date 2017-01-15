@@ -697,7 +697,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5832' && t.groupName eq '5769'}"> 
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}  ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -762,7 +762,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5840' && t.groupName eq '5769'}"> 
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}  ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -5221,7 +5221,7 @@
             <td align="left" style="padding-left:5px;">
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5967' && t.groupName eq '2406'}">
-                        <b> ${t.value}  </b>
+                        ${t.value}
                     </c:if>
                 </c:forEach> 
             </td>
@@ -5573,7 +5573,7 @@
 <!-- VDRL Q+Q -->
 <c:forEach items="${te}" var="te"> 
     <c:if test="${investigation eq '2400' && te.concept.conceptId eq '6024' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b>VDRL(Q+Q)</b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>VDRL(Q+Q)</u></b> </td> </tr>	
         <tr>
             <td style="width:40%;"> 
                 <c:forEach items="${tmn}" var="t">
@@ -5646,7 +5646,7 @@
 <!-- TPHA Q+Q -->
 <c:forEach items="${te}" var="te"> 
     <c:if test="${investigation eq '2400' && te.concept.conceptId eq '6074' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b>TPHA(Q+Q)</b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>TPHA(Q+Q)</u></b> </td> </tr>	
         <tr>
             <td style="width:40%;"> 
                 <c:forEach items="${tmn}" var="t">
@@ -6139,7 +6139,6 @@
 <!-- Bence-Jones Protein -->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5293' && te.concept.conceptId eq '5293' }">
-        <tr> <td colspan="4"><b style="text-decoration: center;"><i>Laboratory Report</i></b></td> </tr>
         <tr>
             <td> 
                 <c:forEach items="${tmn}" var="t">

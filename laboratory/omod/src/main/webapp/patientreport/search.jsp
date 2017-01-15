@@ -93,32 +93,35 @@
         <tbody>
             <c:forEach var="test" items="${investigation}">
                 <c:choose>
+                    <c:when test="${investigation eq '5293'}">
+                        <h3><i>Laboratory Report</i></h3>
+                    </c:when>
                     <c:when test="${investigation eq '2311' || investigation eq '4252' || investigation eq '5239'}">
-                        <!--  <h2>DEPARTMENT OF BIOCHEMISTRY</h2> <br> -->
-                    <h3>Estimations are carried out by Vitros-250 Random Access Automated Chemistry Analyzer</h3>
-                </c:when>
-                <c:when test="${investigation eq '5158' || investigation eq '5225' || investigation eq '5254'}">
-                    <!--  <h2> HbA1c </h2> <br> -->
-                    <h3>Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer</h3>
-                </c:when>
-                <c:when test="${investigation eq '2734'}">
-                    <h2>DEPARTMENT OF MICROBIOLOGY</h2>
-                </c:when>
-                <c:when test="${investigation eq '3945' || investigation eq '5290' || investigation eq '5258' || investigation eq '2925'}">
-                    <!-- <h2>DEPARTMENT OF IMMUNOLOGY</h2>  Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer<br> -->
-                    <span style="margin-top:100px"><i>Estimations are carried out by Maglumi-800 Random Access Multibatch chemiluminescence immunoassay (CLIA) Analyzer</i></span>
-                </c:when>
-                <c:when test="${investigation eq '5216'}">
-                    <!-- <h2> ANA </h2> --> 
-                    <span style="margin-top:100px"><i>Estimations are carried out by Micro plate Reader (ELISA)</i></span>
-                </c:when>
-                <c:when test="${investigation eq '5213'}">
-                    <!-- <h2> Urine Microalbumin</h2> --> 
-                    <span style="margin-top:100px"><i>Estimations are carried out by Cybow TM -Reader-300 Access Automated Urine Analyzer </i></span>
-                </c:when>
-                <c:when test="${investigation eq '2543'}">
+                            <!--  <h2>DEPARTMENT OF BIOCHEMISTRY</h2> <br> -->
+                        <h3>Estimations are carried out by Vitros-250 Random Access Automated Chemistry Analyzer</h3>
+                    </c:when>
+                    <c:when test="${investigation eq '5158' || investigation eq '5225' || investigation eq '5254'}">
+                        <!--  <h2> HbA1c </h2> <br> -->
+                        <h3>Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer</h3>
+                    </c:when>
+                    <c:when test="${investigation eq '2734'}">
+                        <h2>DEPARTMENT OF MICROBIOLOGY</h2>
+                    </c:when>
+                    <c:when test="${investigation eq '3945' || investigation eq '5290' || investigation eq '5258' || investigation eq '2925'}">
+                        <!-- <h2>DEPARTMENT OF IMMUNOLOGY</h2>  Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer<br> -->
+                        <span style="margin-top:100px"><i>Estimations are carried out by Maglumi-800 Random Access Multibatch chemiluminescence immunoassay (CLIA) Analyzer</i></span>
+                    </c:when>
+                    <c:when test="${investigation eq '5216'}">
+                        <!-- <h2> ANA </h2> --> 
+                        <span style="margin-top:100px"><i>Estimations are carried out by Micro plate Reader (ELISA)</i></span>
+                    </c:when>
+                    <c:when test="${investigation eq '5213'}">
+                        <!-- <h2> Urine Microalbumin</h2> --> 
+                        <span style="margin-top:100px"><i>Estimations are carried out by Cybow TM -Reader-300 Access Automated Urine Analyzer </i></span>
+                    </c:when>
+                    <c:when test="${investigation eq '2543'}">
                     <!-- S. ELECTROLYTES -->
-                    <span style="margin-top:100px; text-align:center; font-size:17px; font-weight: bold;">
+                        <span style="margin-top:100px; text-align:center; font-size:17px; font-weight: bold;">
                         <i>Estimations are carried out by Vitros-250 Random Access Automated Chemistry Analyzer</i></span>			 
                     </c:when>
                     <c:when test="${investigation eq '3937'}">
@@ -322,7 +325,14 @@
                         <tr>
                             <td colspan="4"><%@ include file="../patientreport/reportformat/patientInfo.jsp"%> <br></td>
                         </tr>
-
+                        <c:if test="${investigation eq '5293'}">
+                            <tr>
+                                <td colspan="4" align="center">
+                                    <span style="margin-top:100px; font-size:18px; font-weight: bold; text-align:center;">
+                                        <i> Laboratory Report </i></span>
+                                </td>
+                            </tr>
+                        </c:if>
                         <c:if test="${investigation eq '2311' || investigation eq '4252' || investigation eq '5239'}">
                             <tr>
                                 <td colspan="4" align="center">
