@@ -44,9 +44,9 @@
                     <c:choose>
                         <c:when test="${investigation eq '2311'}">
                             <!--  <h2>DEPARTMENT OF BIOCHEMISTRY</h2> <br> -->
-                            <c:if test="${not empty bioBlood}"> Blood</c:if>
-                            <c:if test="${not empty bioBlood && not empty bioUrine}"> &#38;</c:if>							
-                            <c:if test="${not empty bioUrine}"> Urine</c:if>
+                            <c:if test="${not empty bioBlood}"> Blood  </c:if> 
+                            <c:if test="${not empty bioBlood && not empty bioUrine}"> &#38;</c:if>
+                            <c:if test="${not empty bioUrine}"> Urine</c:if>  
                         </c:when>
                         <c:when test="${investigation eq '2543' || investigation eq '2577' || investigation eq '5158'
                                      || investigation eq '5225' || investigation eq '5692' || investigation eq '2734'

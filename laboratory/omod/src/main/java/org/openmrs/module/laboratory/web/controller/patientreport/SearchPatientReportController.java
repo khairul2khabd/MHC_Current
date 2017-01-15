@@ -155,7 +155,10 @@ public class SearchPatientReportController {
             seroBlood.retainAll(compare); // Ser Blood
 
             model.addAttribute("immBlood", immBlood); // For blood Clinical Immunology
+            System.out.println("immmunology blood"+immBlood);
             model.addAttribute("immUrine", immUrine); // For Urine Clinical Immunology
+            
+            System.out.println("immmunology urine"+immUrine);
 
             model.addAttribute("haeBlood", haeBlood); // For Blood Haematology
 
