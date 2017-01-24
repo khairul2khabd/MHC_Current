@@ -60,7 +60,11 @@
             </c:when> 
             <c:when test="${investigation eq '2413'}">
                 <div class="div1"> <h2>SEMEN ANALYSIS </h2></div><br>
-            </c:when> 
+            </c:when>
+                
+            <c:when test="${investigation eq '5351'}">
+                <div class="div1">   <h2>Biochemical Report</h2></div><br>
+            </c:when>
             <c:otherwise>
                 <!--  <h2>ALL TESTS BY GROUP</h2> -->
             </c:otherwise>                
@@ -303,7 +307,11 @@
                 </c:when> 
                 <c:when test="${investigation eq '2413'}">
                     <div class="div1"> <h2>SEMEN ANALYSIS </h2></div><br>
-                </c:when> 
+                </c:when>
+                    
+                <c:when test="${investigation eq '5351'}">
+                    <div class="div1">   <h2>Biochemical Report</h2></div><br>
+                </c:when>
                 <c:otherwise>
                     <!--  <h2>ALL TESTS BY GROUP</h2> -->
                 </c:otherwise>                

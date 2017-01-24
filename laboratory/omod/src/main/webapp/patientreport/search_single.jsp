@@ -18,7 +18,9 @@
 <center>
     <c:forEach var="test" items="${investigation}">
         <c:choose>
-
+            <c:when test="${investigation eq '5351'}">
+                <div class="div1">   <h2>Biochemical Report</h2></div><br>
+            </c:when>
             <c:when test="${investigation eq '5709'}">
                 <div class="div1">   <h2>SEROLOGY REPORT</h2></div><br>
             </c:when>
@@ -162,6 +164,9 @@
     <center>
         <c:forEach var="test" items="${investigation}">
             <c:choose>
+                <c:when test="${investigation eq '5351'}">
+                    <div class="div1">   <h2>Biochemical Report</h2></div><br>
+                </c:when>
                 <c:when test="${investigation eq '5709'}">
                     <div class="div1">   <h2>SEROLOGY REPORT</h2></div><br>
                 </c:when>

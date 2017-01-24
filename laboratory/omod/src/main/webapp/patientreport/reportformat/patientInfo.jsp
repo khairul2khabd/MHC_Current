@@ -35,7 +35,7 @@
         </tr>
         <tr>
             <td height="25" style="text-align:left; font-size:13px; padding-left:10px; width:18%; font-style: italic; " >Refd. By <span style="float:right; font-style:normal;">:</span>  </td>
-            <td colspan="2" style="font-size:14px;"> <b>&nbsp; ${refBy.doctorName}, ${refBy.degree} </b></td>
+            <td colspan="2" style="font-size:14px;"> <b>&nbsp; ${refBy.doctorName}&nbsp;&nbsp; ${refBy.degree} </b></td>
         </tr>
         <tr>		
             <td height="25" style="padding-left:10px; width:18%; font-size:13px;">Specimen <span style="float:right;">:</span> </td>

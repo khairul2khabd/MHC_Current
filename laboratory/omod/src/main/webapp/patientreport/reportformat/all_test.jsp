@@ -696,7 +696,7 @@
 <!-- CSF For Biochemical Test -->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5351' && te.concept.conceptId eq '5351' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>Biochemical Report</u></b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b style="font-size: 18px;"><u>Biochemical Report:</u></b> </td> </tr>	
         <tr>
             <td style="width:40%;">
                 <c:forEach items="${tmn}" var="t">
@@ -724,7 +724,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5860' && t.groupName eq '5351'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -756,7 +756,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5861' && t.groupName eq '5351'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -767,7 +767,7 @@
 <!-- Pleural Fluid for Biochemical test -->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5351' && te.concept.conceptId eq '5352' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>Biochemical Report</u></b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b style="font-size: 18px;"><u>Biochemical Report:</u></b> </td> </tr>	
         <tr>
             <td style="width:40%;">
                 <c:forEach items="${tmn}" var="t">
@@ -795,7 +795,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5860' && t.groupName eq '5352'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -827,7 +827,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5861' && t.groupName eq '5352'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -838,7 +838,7 @@
 <!-- Ascitic Fluid for Biochemical test -->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5351' && te.concept.conceptId eq '5353' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>Biochemical Report</u></b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b style="font-size: 18px;"><u>Biochemical Report:</u></b> </td> </tr>	
         <tr>
             <td style="width:40%;">
                 <c:forEach items="${tmn}" var="t">
@@ -866,7 +866,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5860' && t.groupName eq '5353'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -898,7 +898,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5861' && t.groupName eq '5353'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -909,7 +909,7 @@
 <!-- Synovial Fluid for Biochemical test -->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5351' && te.concept.conceptId eq '5354' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>Biochemical Report</u></b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b style="font-size: 18px;"><u>Biochemical Report:</u></b>  </td> </tr>	
         <tr>
             <td style="width:40%;">
                 <c:forEach items="${tmn}" var="t">
@@ -937,7 +937,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5860' && t.groupName eq '5354'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -969,7 +969,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5861' && t.groupName eq '5354'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -980,7 +980,7 @@
 <!-- CAPD Fluid for Biochemical Test -->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5351' && te.concept.conceptId eq '5356' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>Biochemical Report</u></b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b style="font-size: 18px;"><u>Biochemical Report:</u></b>  </td> </tr>	
         <tr>
             <td style="width:40%;">
                 <c:forEach items="${tmn}" var="t">
@@ -1008,7 +1008,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5860' && t.groupName eq '5356'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -1040,7 +1040,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5861' && t.groupName eq '5356'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -1051,7 +1051,7 @@
 <!-- Fluid For Biochemical Test -->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5351' && te.concept.conceptId eq '5364' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>Biochemical Report</u></b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b style="font-size: 18px;"><u>Biochemical Report:</u></b> </td> </tr>	
         <tr>
             <td style="width:40%;">
                 <c:forEach items="${tmn}" var="t">
@@ -1079,7 +1079,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5860' && t.groupName eq '5364'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -1111,7 +1111,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5861' && t.groupName eq '5364'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -1122,7 +1122,7 @@
 <!-- Cyst Fluid For Biochemical Test -->
 <c:forEach items="${te}" var="te">  
     <c:if test="${investigation eq '5351' && te.concept.conceptId eq '5370' }">
-        <tr> <td colspan="4">&nbsp;&nbsp;<b><u>Biochemical Report</u></b> </td> </tr>	
+        <tr> <td colspan="4">&nbsp;&nbsp;<b style="font-size: 18px;"><u>Biochemical Report:</u></b> </td> </tr>	
         <tr>
             <td style="width:40%;">
                 <c:forEach items="${tmn}" var="t">
@@ -1150,7 +1150,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5860' && t.groupName eq '5370'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
@@ -1182,7 +1182,7 @@
                 <c:forEach items="${tmn}" var="t">
                     <c:if test="${t.investigation eq '5861' && t.groupName eq '5370'}">
                         <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
-                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal}   ${t.hiNormal} </c:if>
                     </c:if>
                 </c:forEach> 
             </td>
