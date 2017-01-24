@@ -1169,7 +1169,38 @@
                 </c:forEach> 
             </td>
         </tr>
-
+                <tr>
+            <td> 
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5303'}">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        ${t.testName}  
+                    </c:if>	 
+                </c:forEach>
+            </td>
+            <td style="padding-left:20px;"> 
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5303'}">
+                        ${t.value}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td style="padding-left:20px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5303'}">
+                        ${t.unit}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td align="left" style="padding-left:10px; font-size: 11px;">
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '5303'}">
+                        <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                    </c:if>
+                </c:forEach> 
+            </td>
+        </tr>
     </c:if>
 </c:forEach>
 

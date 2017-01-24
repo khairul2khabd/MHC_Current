@@ -51,7 +51,7 @@
                         <c:when test="${investigation eq '2543' || investigation eq '2577' || investigation eq '5158'
                                      || investigation eq '5225' || investigation eq '5692' || investigation eq '2734'
                                      || investigation eq '5255' || investigation eq '5708' || investigation eq '5258'
-                                     || investigation eq '2925'}">
+                                     || investigation eq '2925' || investigation eq '5709'}">
                                 Blood  
                         </c:when>
                         <c:when test="${investigation eq '4252' }">

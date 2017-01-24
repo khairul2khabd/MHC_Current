@@ -162,7 +162,7 @@
     <center>
         <c:forEach var="test" items="${investigation}">
             <c:choose>
-                <c:when test="${investigation eq '2543'}">
+                <c:when test="${investigation eq '5709'}">
                     <div class="div1">   <h2>SEROLOGY REPORT</h2></div><br>
                 </c:when>
                 <c:when test="${investigation eq '5255'}">
