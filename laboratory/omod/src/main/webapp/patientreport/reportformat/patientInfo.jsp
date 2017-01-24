@@ -93,6 +93,19 @@
                         <c:when test="${investigation eq '5290'}">   
                             Blood Anerobic
                         </c:when>
+                            
+                        <c:when test="${investigation eq '5351'}">
+                            <c:forEach items="${te}" var="t">
+                                <c:if test="${t.concept.conceptId eq '5351'}"> CSF Fluid </c:if>
+                                <c:if test="${t.concept.conceptId eq '5352'}"> Pleural Fluid </c:if>
+                                <c:if test="${t.concept.conceptId eq '5353'}"> Ascitic Fluid </c:if>
+                                <c:if test="${t.concept.conceptId eq '5354'}"> Synovial Fluid </c:if>
+                                <c:if test="${t.concept.conceptId eq '5356'}"> CAPD Fluid </c:if>
+                                <c:if test="${t.concept.conceptId eq '5364'}"> Fluid </c:if>
+                                <c:if test="${t.concept.conceptId eq '5370'}"> Cyst Fluid </c:if>
+                            </c:forEach>
+                        </c:when>
+                                
                         <c:when test="${investigation eq '2400'}">
                             <!--  <h2>DEPARTMENT OF Serology </h2> -->
                             <c:if test="${not empty seroBlood}"> Blood </c:if>

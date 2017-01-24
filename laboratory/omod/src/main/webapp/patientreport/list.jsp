@@ -232,7 +232,8 @@
                     <option value="5293">BENCE-JONES PROTEIN</option>
                     <option value="4252">URINARY TOTAL PROTEIN</option>
                     <option value="5148">URINE FOR KETONE BODIES</option>
-                    <option value="5216">ANTI-NUCLEAR AB (ANA) & All</option> 
+                    <option value="5216">ANTI-NUCLEAR AB (ANA) & All</option>
+                    <option value="5351">CSF FOR BIOCHEMICAL TEST & All</option> 
                     <option value="5239">ALBUMIN CREATININE RATIO (ACR)</option>
                     <option value="3937">CREATININE CLEARANCE RATE (CCR)</option>
                 </select>
