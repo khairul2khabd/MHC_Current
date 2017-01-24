@@ -1,7 +1,7 @@
 <%-- 
     Document   : biochemistry
     Created on : Feb 9, 2016, 11:25:59 AM
-    Author     : Khairul
+    Author     : Farzana
 --%>
 <!-- BIOCHEMISTRY -->
 
