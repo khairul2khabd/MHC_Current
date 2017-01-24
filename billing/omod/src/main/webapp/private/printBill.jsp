@@ -69,7 +69,7 @@
             <tr> 
                 <td>
                     <span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}, ${docInfo.degree}  </span> <br />
-                    <span style="font-size:14px; font-weight:bold;"> RMP :   ${rmpInfo.name}, ${rmpInfo.degree}  </span> 
+                    <span style="font-size:14px; font-weight:bold;"> RMP :   ${rmpInfo.id}  </span> 
                     <!--<img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> -->
                 </td>
                 <td>Bill Id: <span style="font-weight:bold; font-size:18px; color:red;"> ${billId} </span> </td>
@@ -313,7 +313,7 @@
         <tr> 
             <td>
                <span style="font-size:14px; font-weight:bold;"> Referred Dr :   ${docInfo.doctorName}, ${docInfo.degree}  </span> <br />
-               <span style="font-size:14px; font-weight:bold;"> RMP :   ${rmpInfo.name}, ${rmpInfo.degree}  </span> 
+               <span style="font-size:14px; font-weight:bold;"> RMP :   ${rmpInfo.id} </span> 
             </td>
             <td><span style="font-size:14px;"> Bill Id: </span><span style="font-weight:bold; font-size:18px; color:red;"> ${billId} </span>
                 <!--<img src="${pageContext.request.contextPath}/barcode/${billId}.png" /> -->
