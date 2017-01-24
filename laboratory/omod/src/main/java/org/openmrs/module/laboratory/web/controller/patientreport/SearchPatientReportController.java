@@ -166,8 +166,6 @@ public class SearchPatientReportController {
             model.addAttribute("pathUrine", pathUrine); //For urine Path
             model.addAttribute("seroBlood", seroBlood);
             
-            System.out.println("Serology blood"+seroBlood);
-            
             model.addAttribute("urine24", urine24); // 24 Hours Urine
 
             model.addAttribute("cs", cs);  // Clinical Pathology cervical smear
