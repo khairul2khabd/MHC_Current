@@ -18,7 +18,7 @@
 <center>
     <c:forEach var="test" items="${investigation}">
         <c:choose>
-            <c:when test="${investigation eq '5351'}">
+            <c:when test="${investigation eq '5351' || investigation eq '3002'}">
                 <div class="div1">   <h2>Biochemical Report</h2></div><br>
             </c:when>
             <c:when test="${investigation eq '5709'}">
@@ -65,8 +65,18 @@
 
                     <c:when test="${investigation eq '5255'}">
                         <!--  <h2>DEPARTMENT OF HAEMATOLOGY</h2> -->
-                    <span style="margin-top:100px;font-size:17px;"><i>(Estimations are carried out by Maglumi-800 Random Access Multibatch Chemiluminescence immunoassay (CLIA) Analyzer)</i></span>
-                </c:when> 
+                        <span style="margin-top:100px;font-size:17px;"><i>(Estimations are carried out by Maglumi-800 Random Access Multibatch Chemiluminescence immunoassay (CLIA) Analyzer)</i></span>
+                    </c:when>
+                    <c:when test="${investigation eq '3002'}">
+                        <!--  <h2>DEPARTMENT OF HAEMATOLOGY</h2> -->
+                        <span style="margin-top:100px;font-size:17px;">
+                            <i> 
+                                <h3>
+                                    Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer
+                                </h3>
+                            </i>
+                        </span>
+                    </c:when> 
                 <c:otherwise>
                     <!--  <h2>ALL TESTS BY GROUP</h2> -->
                 </c:otherwise>                
@@ -164,7 +174,7 @@
     <center>
         <c:forEach var="test" items="${investigation}">
             <c:choose>
-                <c:when test="${investigation eq '5351'}">
+                <c:when test="${investigation eq '5351' || investigation eq '3002'}">
                     <div class="div1">   <h2>Biochemical Report</h2></div><br>
                 </c:when>
                 <c:when test="${investigation eq '5709'}">
@@ -202,6 +212,17 @@
                                 <td colspan="4" align="center">
                                     <span style="margin-top:100px; font-size:17px; font-weight: bold; text-align:center;"><i> 
                                             Estimations are carried out by Maglumi-800 Random Access Multibatch Chemiluminescence immunoassay (CLIA) Analyzer </i></span>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${investigation eq '3002' }">
+                            <tr>
+                                <td colspan="4" align="center">
+                                    <span style="margin-top:100px; font-size:17px; font-weight: bold; text-align:center;">
+                                        <i> 
+                                           Estimations are carried out by Genius-PA54 Random Access Automated Specific Protein Analyzer
+                                        </i>
+                                    </span>
                                 </td>
                             </tr>
                         </c:if>

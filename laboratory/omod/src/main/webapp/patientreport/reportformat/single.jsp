@@ -280,3 +280,77 @@
         </tr> 
     </c:if>
 </c:forEach>
+        
+ 
+<!-- FDP -->
+<c:forEach items="${te}" var="te">  
+    <c:if test="${investigation eq '3002' && te.concept.conceptId eq '3002' }">
+        <tr>
+            <td style="width:40%;"> 
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '3002'}">
+                        &nbsp;&nbsp;
+                        ${t.testName}  
+                    </c:if>	 
+                </c:forEach>
+            </td>
+            <td align="left" style="padding-left:5px;">
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '3002'}">
+                        ${t.value}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td style="padding-left:20px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '3002'}">
+                        ${t.unit}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td align="left" style="padding-left:10px; font-size: 11px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '3002'}">
+                        <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                    </c:if>
+                </c:forEach> 
+            </td>
+        </tr>
+    </c:if>
+    <!-- D-Dimer -->
+    <c:if test="${investigation eq '3002' && te.concept.conceptId eq '3010' }">
+        <tr>
+            <td> 
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '3010'}">
+                        &nbsp;&nbsp; ${t.testName}  
+                    </c:if>	 
+                </c:forEach>
+            </td>
+            <td style="padding-left:20px;"> 
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '3010'}">
+                        ${t.value}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td style="padding-left:20px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '3010'}">
+                        ${t.unit}  
+                    </c:if>
+                </c:forEach> 
+            </td>
+            <td align="left" style="padding-left:10px; font-size: 11px;">  
+                <c:forEach items="${tmn}" var="t">
+                    <c:if test="${t.investigation eq '3010'}">
+                        <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if>
+                        <c:if test="${empty t.refRange}"> ${t.lowNormal} -  ${t.hiNormal} </c:if>
+                    </c:if>
+                </c:forEach> 
+            </td>
+        </tr>
+    </c:if>     
+</c:forEach>
+ 

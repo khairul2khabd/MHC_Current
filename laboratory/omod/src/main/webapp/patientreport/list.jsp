@@ -215,6 +215,7 @@
                     <option value="2577">PT (PROTHROMBIN TIME)</option>
                     <option value="2415">URINE ROUTINE EXAMINATION</option>
                     <option value="3117">STOOL ROUTINE EXAMINATION</option>
+                    <option value="3002">FDP</option>
                     <option value="3092">&#946;-hCG</option>
                     <option value="5225">C3 C4</option>
                     <option value="5692">BT CT</option>

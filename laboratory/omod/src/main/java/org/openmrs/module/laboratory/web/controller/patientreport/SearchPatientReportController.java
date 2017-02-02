@@ -197,17 +197,17 @@ public class SearchPatientReportController {
                         || (test.getConcept().getId() == 5198) || (test.getConcept().getId() == 2228)
                         || (test.getConcept().getId() == 2461) || (test.getConcept().getId() == 5199)
                         || (test.getConcept().getId() == 3993) || (test.getConcept().getId() == 2559)
-                        || (test.getConcept().getId() == 3002) || (test.getConcept().getId() == 5291)
-                        || (test.getConcept().getId() == 5301) || (test.getConcept().getId() == 5163)
-                        || (test.getConcept().getId() == 2229) || (test.getConcept().getId() == 2554)
-                        || (test.getConcept().getId() == 2502) || (test.getConcept().getId() == 5271)
-                        || (test.getConcept().getId() == 3074) || (test.getConcept().getId() == 5266)
-                        || (test.getConcept().getId() == 4248) || (test.getConcept().getId() == 4249)
-                        || (test.getConcept().getId() == 4250) || (test.getConcept().getId() == 2227)
-                        || (test.getConcept().getId() == 5860) || (test.getConcept().getId() == 5861)
-                        || (test.getConcept().getId() == 5206) || (test.getConcept().getId() == 5213)
-                        || (test.getConcept().getId() == 5290) || (test.getConcept().getId() == 5293)
-                        || (test.getConcept().getId() == 5258)
+                        || (test.getConcept().getId() == 5291) || (test.getConcept().getId() == 5301) 
+                        || (test.getConcept().getId() == 5163) || (test.getConcept().getId() == 2229) 
+                        || (test.getConcept().getId() == 2554) || (test.getConcept().getId() == 2502) 
+                        || (test.getConcept().getId() == 5271) || (test.getConcept().getId() == 3074) 
+                        || (test.getConcept().getId() == 5266) || (test.getConcept().getId() == 4248) 
+                        || (test.getConcept().getId() == 4249) || (test.getConcept().getId() == 4250) 
+                        || (test.getConcept().getId() == 2227) || (test.getConcept().getId() == 5860) 
+                        || (test.getConcept().getId() == 5861) || (test.getConcept().getId() == 5206) 
+                        || (test.getConcept().getId() == 5213) || (test.getConcept().getId() == 5290) 
+                        || (test.getConcept().getId() == 5293) || (test.getConcept().getId() == 5258) 
+                        || (test.getConcept().getId() == 3002) || (test.getConcept().getId() == 3010)
                         //Microbiology filter here 
                         || (test.getConcept().getId() == 5889)
                         //immu filter here 
@@ -306,7 +306,7 @@ public class SearchPatientReportController {
         //  return "/module/laboratory/patientreport/search";
         if ((investigation.equals("2415")) || (investigation.equals("3117"))) {
             return "/module/laboratory/patientreport/search_us"; // Biochemistry
-        } else if ((investigation.equals("5709")) || (investigation.equals("5255")) || (investigation.equals("6010"))) {
+        } else if ((investigation.equals("5709")) || (investigation.equals("5255")) || (investigation.equals("6010")) || (investigation.equals("3002"))) {
             System.out.println("*************false **" + investigation);
             return "/module/laboratory/patientreport/search_single"; // Ascitic Fluid for Biochemical test and single
         } else {
@@ -334,16 +334,17 @@ public class SearchPatientReportController {
                     && (test.getConcept().getId() != 5198) && (test.getConcept().getId() != 2228)
                     && (test.getConcept().getId() != 2461) && (test.getConcept().getId() != 5199)
                     && (test.getConcept().getId() != 3993) && (test.getConcept().getId() != 2559)
-                    && (test.getConcept().getId() != 3002) && (test.getConcept().getId() != 5291)
-                    && (test.getConcept().getId() != 5301) && (test.getConcept().getId() != 5163)
-                    && (test.getConcept().getId() != 2229) && (test.getConcept().getId() != 2554)
-                    && (test.getConcept().getId() != 2502) && (test.getConcept().getId() != 5271)
-                    && (test.getConcept().getId() != 3074) && (test.getConcept().getId() != 5266)
-                    && (test.getConcept().getId() != 4248) && (test.getConcept().getId() != 4249)
-                    && (test.getConcept().getId() != 4250) && (test.getConcept().getId() != 2227)
-                    && (test.getConcept().getId() != 5860) && (test.getConcept().getId() != 5861)
-                    && (test.getConcept().getId() != 5206) && (test.getConcept().getId() != 5213)
-                    && (test.getConcept().getId() != 5293) && (test.getConcept().getId() != 5258)
+                    && (test.getConcept().getId() != 5291) && (test.getConcept().getId() != 5301) 
+                    && (test.getConcept().getId() != 5163) && (test.getConcept().getId() != 2229) 
+                    && (test.getConcept().getId() != 2554) && (test.getConcept().getId() != 2502) 
+                    && (test.getConcept().getId() != 5271) && (test.getConcept().getId() != 3074) 
+                    && (test.getConcept().getId() != 5266) && (test.getConcept().getId() != 4248) 
+                    && (test.getConcept().getId() != 4249) && (test.getConcept().getId() != 4250) 
+                    && (test.getConcept().getId() != 2227) && (test.getConcept().getId() != 5860) 
+                    && (test.getConcept().getId() != 5861) && (test.getConcept().getId() != 5206) 
+                    && (test.getConcept().getId() != 5213) && (test.getConcept().getId() != 5293) 
+                    && (test.getConcept().getId() != 5258) && (test.getConcept().getId() != 3002) 
+                    && (test.getConcept().getId() != 3010)
                     //Microbiology filter here 
                     && (test.getConcept().getId() != 5889)
                     ///immu concept start here 

@@ -3203,44 +3203,6 @@
         </tr> 
     </c:if>
 </c:forEach>
-<!--FDP-->
-<c:forEach items="${te}" var="te"> 
-    <c:if test="${investigation eq '2311' && te.concept.conceptId eq '3002' }">
-        <!--  <tr> <td colspan="4">&nbsp;&nbsp;<b> Urine for Ketone Bodies </b> </td> </tr> -->
-        <tr>
-            <td style="width:40%;">
-                <c:forEach items="${tmn}" var="t">
-                    <c:if test="${t.investigation eq '3002' }">
-                        &nbsp;&nbsp;   
-                        ${t.testName}
-                    </c:if>  
-                </c:forEach>
-            </td> 
-            <td align="left" style="padding-left:5px;">
-                <c:forEach items="${tmn}" var="t">
-                    <c:if test="${t.investigation eq '3002' }">
-                        ${t.value}
-                    </c:if> 
-                </c:forEach>
-            </td>
-            <td style="padding-left:20px;">  
-                <c:forEach items="${tmn}" var="t">
-                    <c:if test="${t.investigation eq '3002' }">
-                        ${t.unit}
-                    </c:if>
-                </c:forEach> 
-            </td>
-            <td align="left" style="padding-left:10px; font-size: 11px;">
-                <c:forEach items="${tmn}" var="t">
-                    <c:if test="${t.investigation eq '3002' }">
-                        <c:if test="${not empty t.refRange}"> ${t.refRange} </c:if> 
-                    </c:if>
-                </c:forEach> 
-            </td>
-        </tr> 
-    </c:if>
-</c:forEach>
-
 <!--ESTIMATED GFR-->
 <c:forEach items="${te}" var="te"> 
     <c:if test="${investigation eq '2311' && te.concept.conceptId eq '5291' }">
